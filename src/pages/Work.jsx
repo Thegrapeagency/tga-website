@@ -136,7 +136,7 @@ function CaseSheet({ data, lang, t, onClose }) {
             {videos.length > 1 && (
               <div className="case-videos">
                 {videos.slice(1).map((src, i) => (
-                  <motion.video key={i} src={src} controls playsInline preload="metadata"
+                  <motion.video key={i} src={`${src}#t=0.1`} poster={cover} controls playsInline preload="metadata"
                     initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-10%" }}
                     transition={{ duration: 0.6, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }} />
                 ))}

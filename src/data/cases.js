@@ -167,7 +167,8 @@ export const cases = [
       en: ["Trade-fair activation", "French terrace", "Tasting", "Sales"],
       nl: ["Beursactivatie", "Frans terras", "Proeverij", "Verkoop"],
     },
-    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg"],
+    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg", "/images/mouton-cadet/4.jpg", "/images/mouton-cadet/5.jpg", "/images/mouton-cadet/6.jpg", "/images/mouton-cadet/7.jpg", "/images/mouton-cadet/8.jpg"],
+    videos: ["/videos/mouton-cadet.mp4"],
     headline: { value: "218", label: { en: "Tastings ten metres up", nl: "Proeverijen op tien meter hoogte" } },
     verified: true,
     oneliner: {
