@@ -380,3 +380,18 @@ p { margin: 0 0 1em; }
 .tile::after { content: ""; position: absolute; inset: 0; z-index: 3; border: 1px solid rgba(243,239,204,.10); border-radius: 8px; pointer-events: none; }
 
 @media (hover: none) { .tile__cta { opacity: 1; transform: none; } }
+
+/* ---------- Nav right side + language toggle ---------- */
+.nav__right { display: flex; align-items: center; gap: 14px; }
+.lang-toggle {
+  font-family: var(--font-body); font-size: 13px; letter-spacing: .08em;
+  padding: 9px 14px; border-radius: 999px; border: 1px solid rgba(23,23,23,.18);
+  background: transparent; color: var(--ink); cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.lang-toggle:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+@media (max-width: 720px) {
+  .nav__right { width: 100%; justify-content: space-between; }
+  .nav__right .tabs { flex: 1; }
+}

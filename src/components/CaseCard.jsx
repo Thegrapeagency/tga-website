@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLang, pick } from "../i18n.jsx";
 
 export default function CaseCard({ c, index = 0 }) {
+  const { lang } = useLang();
   const cover = c.images && c.images[0];
   const cls = ["tile", cover ? "tile--photo" : "tile--solid", index % 2 ? "tile--alt" : ""].join(" ");
   return (
@@ -17,10 +19,10 @@ export default function CaseCard({ c, index = 0 }) {
         {!cover && <span className="tile__ghost" aria-hidden="true">{c.brand}</span>}
         <span className="tile__shade" aria-hidden="true" />
         <div className="tile__body">
-          <span className="tile__tag">{c.tag}</span>
+          <span className="tile__tag">{pick(c.tag, lang)}</span>
           <h3 className="tile__brand">{c.brand}</h3>
-          <p className="tile__line">{c.oneliner}</p>
-          <span className="tile__cta">Bekijk case <span aria-hidden="true">→</span></span>
+          <p className="tile__line">{pick(c.oneliner, lang)}</p>
+          <span className="tile__cta">{lang === "en" ? "View case" : "Bekijk case"} <span aria-hidden="true">→</span></span>
         </div>
       </Link>
     </motion.div>

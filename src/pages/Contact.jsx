@@ -1,14 +1,18 @@
 import Page from "../components/Page.jsx";
+import { useLang } from "../i18n.jsx";
 
 const EMAIL = "cheers@thegrapeagency.nl";
 
 export default function Contact() {
+  const { t } = useLang();
+  const c = t.contact;
+
   const onSubmit = (e) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(`Projectaanvraag — ${f.get("brand") || "merk"}`);
+    const subject = encodeURIComponent(`Project — ${f.get("brand") || "brand"}`);
     const body = encodeURIComponent(
-      `Naam: ${f.get("name")}\nMerk / bedrijf: ${f.get("brand")}\nE-mail: ${f.get("email")}\n\n${f.get("message")}`
+      `${c.name}: ${f.get("name")}\n${c.brand}: ${f.get("brand")}\n${c.email}: ${f.get("email")}\n\n${f.get("message")}`
     );
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
   };
@@ -17,15 +21,12 @@ export default function Contact() {
     <Page>
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Contact</p>
-          <h1 className="page-title">Een merk dat ergens moet landen?<br />Laten we praten.</h1>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h1 className="page-title" style={{ whiteSpace: "pre-line" }}>{c.title}</h1>
 
           <div className="contact-grid mt-l">
             <div>
-              <p className="lead">
-                Vertel kort wat je merk is en waar je het wilt neerzetten. We reageren snel en
-                denken meteen mee, ook als je nog geen uitgewerkt plan hebt.
-              </p>
+              <p className="lead">{c.lead}</p>
               <div className="big-contact mt-l">
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               </div>
@@ -37,22 +38,22 @@ export default function Contact() {
 
             <form onSubmit={onSubmit}>
               <div className="field">
-                <label htmlFor="name">Naam</label>
+                <label htmlFor="name">{c.name}</label>
                 <input id="name" name="name" required />
               </div>
               <div className="field">
-                <label htmlFor="brand">Merk / bedrijf</label>
+                <label htmlFor="brand">{c.brand}</label>
                 <input id="brand" name="brand" />
               </div>
               <div className="field">
-                <label htmlFor="email">E-mail</label>
+                <label htmlFor="email">{c.email}</label>
                 <input id="email" name="email" type="email" required />
               </div>
               <div className="field">
-                <label htmlFor="message">Waar wil je je merk neerzetten?</label>
+                <label htmlFor="message">{c.message}</label>
                 <textarea id="message" name="message" rows="5" />
               </div>
-              <button className="btn" type="submit">Verstuur</button>
+              <button className="btn" type="submit">{c.send}</button>
             </form>
           </div>
         </div>

@@ -1,16 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-
-const tabs = [
-  { to: "/werk", label: "Werk" },
-  { to: "/diensten", label: "Diensten" },
-  { to: "/over", label: "Over" },
-  { to: "/contact", label: "Contact" },
-];
+import { useLang } from "../i18n.jsx";
 
 export default function Nav() {
   const { pathname } = useLocation();
   const base = "/" + pathname.split("/")[1];
+  const { lang, setLang, t } = useLang();
+
+  const tabs = [
+    { to: "/werk", label: t.nav.work },
+    { to: "/diensten", label: t.nav.services },
+    { to: "/over", label: t.nav.about },
+    { to: "/contact", label: t.nav.contact },
+  ];
 
   return (
     <header className="nav">
@@ -24,27 +26,36 @@ export default function Nav() {
           />
           <span className="wordmark" style={{ display: "none" }}>
             The Grape Agency
-            <small>Brand activation · wijn</small>
+            <small>Brand activation · wine</small>
           </span>
         </Link>
 
-        <nav className="tabs" aria-label="Hoofdmenu">
-          {tabs.map((t) => {
-            const active = base === t.to;
-            return (
-              <Link key={t.to} to={t.to} className={`tab ${active ? "tab--active" : ""}`}>
-                {active && (
-                  <motion.span
-                    layoutId="tab-pill"
-                    className="tab__pill"
-                    transition={{ type: "spring", stiffness: 480, damping: 38 }}
-                  />
-                )}
-                <span className="tab__label">{t.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="nav__right">
+          <nav className="tabs" aria-label="Menu">
+            {tabs.map((tab) => {
+              const active = base === tab.to;
+              return (
+                <Link key={tab.to} to={tab.to} className={`tab ${active ? "tab--active" : ""}`}>
+                  {active && (
+                    <motion.span
+                      layoutId="tab-pill"
+                      className="tab__pill"
+                      transition={{ type: "spring", stiffness: 480, damping: 38 }}
+                    />
+                  )}
+                  <span className="tab__label">{tab.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+          <button
+            className="lang-toggle"
+            onClick={() => setLang(lang === "en" ? "nl" : "en")}
+            aria-label={lang === "en" ? "Schakel naar Nederlands" : "Switch to English"}
+          >
+            {t.langLabel}
+          </button>
+        </div>
       </div>
     </header>
   );

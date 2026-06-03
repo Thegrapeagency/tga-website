@@ -3,24 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import Page from "../components/Page.jsx";
 import CaseCard from "../components/CaseCard.jsx";
 import { cases, getCase } from "../data/cases.js";
+import { useLang, pick } from "../i18n.jsx";
 
 export default function Work() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { lang, t } = useLang();
   const selected = slug ? getCase(slug) : null;
 
   return (
     <Page>
       <section className="section work-intro">
         <div className="container">
-          <p className="eyebrow">Het werk</p>
-          <h1 className="work-title">
-            Wijnmerken op plekken<br />waar niemand wijn verwacht.
-          </h1>
-          <p className="lead mt-s">
-            Tik op een case. Hij schuift open. Echte activaties voor wijnmerken en importeurs,
-            van dancefestivals tot een reuzenrad op de Vakantiebeurs.
-          </p>
+          <p className="eyebrow">{t.work.eyebrow}</p>
+          <h1 className="work-title">{t.work.title}</h1>
+          <p className="lead mt-s">{t.work.lead}</p>
         </div>
       </section>
 
@@ -44,14 +41,15 @@ export default function Work() {
 
       <AnimatePresence>
         {selected && (
-          <CaseSheet key={selected.slug} data={selected} onClose={() => navigate("/werk")} />
+          <CaseSheet key={selected.slug} data={selected} lang={lang} t={t} onClose={() => navigate("/werk")} />
         )}
       </AnimatePresence>
     </Page>
   );
 }
 
-function CaseSheet({ data, onClose }) {
+function CaseSheet({ data, lang, t, onClose }) {
+  const approach = pick(data.approach, lang) || [];
   return (
     <>
       <motion.div
@@ -72,37 +70,28 @@ function CaseSheet({ data, onClose }) {
       >
         <div className="case-sheet__bar">
           <span className="case-sheet__handle" />
-          <button className="case-sheet__close" onClick={onClose} aria-label="Sluiten">
-            Sluiten ✕
+          <button className="case-sheet__close" onClick={onClose} aria-label={t.work.close}>
+            {t.work.close} ✕
           </button>
         </div>
 
         <div className="case-sheet__scroll">
           <header className="case-hero-inner container">
-            <p className="eyebrow on-dark">{data.tag}</p>
+            <p className="eyebrow on-dark">{pick(data.tag, lang)}</p>
             <h1>{data.brand}</h1>
-            <p className="case-sub">{data.oneliner}</p>
-            {!data.verified && (
-              <span className="draft-flag">Concept · cijfers nog te verifiëren</span>
-            )}
+            <p className="case-sub">{pick(data.oneliner, lang)}</p>
+            {!data.verified && <span className="draft-flag">{t.work.draft}</span>}
             <dl className="case-meta">
-              <div><dt>Klant</dt><dd>{data.client}</dd></div>
-              <div><dt>Waar</dt><dd>{data.where}</dd></div>
-              <div><dt>Diensten</dt><dd>{data.services.join(", ")}</dd></div>
+              <div><dt>{t.work.client}</dt><dd>{pick(data.client, lang)}</dd></div>
+              <div><dt>{t.work.where}</dt><dd>{pick(data.where, lang)}</dd></div>
+              <div><dt>{t.work.services}</dt><dd>{pick(data.services, lang).join(", ")}</dd></div>
             </dl>
           </header>
 
           {(data.video || (data.images && data.images[0])) && (
             <div className="case-sheet__hero container">
               {data.video ? (
-                <video
-                  src={data.video}
-                  poster={data.images && data.images[0]}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
+                <video src={data.video} poster={data.images && data.images[0]} autoPlay muted loop playsInline />
               ) : (
                 <img src={data.images[0]} alt={data.brand} loading="lazy" />
               )}
@@ -111,16 +100,16 @@ function CaseSheet({ data, onClose }) {
 
           <div className="container case-sheet__body">
             <div className="case-body">
-              <p className="lead">{data.intro}</p>
+              <p className="lead">{pick(data.intro, lang)}</p>
 
-              <h3>De uitdaging</h3>
-              <p>{data.challenge}</p>
+              <h3>{t.work.challenge}</h3>
+              <p>{pick(data.challenge, lang)}</p>
 
-              <h3>De aanpak</h3>
-              {data.approach.map((p, i) => <p key={i}>{p}</p>)}
+              <h3>{t.work.approach}</h3>
+              {approach.map((p, i) => <p key={i}>{p}</p>)}
 
-              <h3>Het resultaat</h3>
-              <p>{data.result}</p>
+              <h3>{t.work.result}</h3>
+              <p>{pick(data.result, lang)}</p>
             </div>
 
             {data.images && data.images.length > 1 && (
@@ -132,19 +121,19 @@ function CaseSheet({ data, onClose }) {
             )}
 
             <div className="case-results section--green">
-              <p className="eyebrow on-dark">In cijfers</p>
+              <p className="eyebrow on-dark">{t.work.numbers}</p>
               <div className="results mt-s">
                 {data.results.map((r, i) => (
                   <div className="result" key={i}>
                     <b>{r.value}</b>
-                    <span>{r.label}</span>
+                    <span>{pick(r.label, lang)}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="case-sheet__next">
-              <button className="btn btn--light" onClick={onClose}>← Terug naar het werk</button>
+              <button className="btn btn--light" onClick={onClose}>{t.work.back}</button>
             </div>
           </div>
         </div>
