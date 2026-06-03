@@ -19,8 +19,8 @@ export const cases = [
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
     images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg"],
-    headline: { value: "2", label: { en: "ID&T festivals: Milkshake & Mysteryland", nl: "ID&T-festivals: Milkshake & Mysteryland" } },
-    verified: false,
+    headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
+    verified: true,
     oneliner: {
       en: "Provence rosé at a dance festival, on a terrace we designed and built ourselves.",
       nl: "Provence-rosé op een dancefestival, op een terras dat we zelf ontwikkelden en bouwden.",
@@ -44,13 +44,13 @@ export const cases = [
       ],
     },
     result: {
-      en: "Mirabeau stood at Milkshake and Mysteryland with its own terrace that brought the brand fully to life. [check] Add glasses poured, reach and sales here.",
-      nl: "Mirabeau stond op Milkshake en Mysteryland met een eigen terras dat het merk volledig tot leven bracht. [check] Vul hier glazen, bereik en verkoop in.",
+      en: "Mirabeau stood at Milkshake and Mysteryland with its own terrace that brought the brand fully to life, in front of a combined festival crowd of 145,000.",
+      nl: "Mirabeau stond op Milkshake en Mysteryland met een eigen terras dat het merk volledig tot leven bracht, voor een gecombineerd festivalpubliek van 145.000 bezoekers.",
     },
     results: [
-      { value: "[check]", label: { en: "Glasses of rosé poured", nl: "Glazen rosé geschonken" } },
-      { value: "[check]", label: { en: "Visitors reached", nl: "Bezoekers bereikt" } },
-      { value: "2", label: { en: "ID&T festivals", nl: "ID&T-festivals" } },
+      { value: "145.000", label: { en: "Combined festival visitors", nl: "Festivalbezoekers samen" } },
+      { value: "2", label: { en: "ID&T festivals: Milkshake & Mysteryland", nl: "ID&T-festivals: Milkshake & Mysteryland" } },
+      { value: "1", label: { en: "Bespoke pergola terrace, built in-house", nl: "Eigen pergola-terras, zelf gebouwd" } },
     ],
   },
 
