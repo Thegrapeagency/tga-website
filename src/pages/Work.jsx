@@ -51,6 +51,7 @@ export default function Work() {
 
 function CaseSheet({ data, lang, t, onClose }) {
   const approach = pick(data.approach, lang) || [];
+  const videos = data.videos || (data.video ? [data.video] : []);
   return (
     <>
       <motion.div
@@ -89,10 +90,10 @@ function CaseSheet({ data, lang, t, onClose }) {
             </dl>
           </header>
 
-          {(data.video || (data.images && data.images[0])) && (
+          {(videos[0] || (data.images && data.images[0])) && (
             <div className="case-sheet__hero container">
-              {data.video ? (
-                <video src={data.video} poster={data.images && data.images[0]} autoPlay muted loop playsInline />
+              {videos[0] ? (
+                <video src={videos[0]} poster={data.images && data.images[0]} autoPlay muted loop playsInline />
               ) : (
                 <img src={data.images[0]} alt={data.brand} loading="lazy" />
               )}
@@ -112,6 +113,14 @@ function CaseSheet({ data, lang, t, onClose }) {
               <h3>{t.work.result}</h3>
               <p>{pick(data.result, lang)}</p>
             </div>
+
+            {videos.length > 1 && (
+              <div className="case-videos">
+                {videos.slice(1).map((src, i) => (
+                  <video key={i} src={src} controls playsInline preload="metadata" />
+                ))}
+              </div>
+            )}
 
             {data.images && data.images.length > 1 && (
               <div className="case-gallery">

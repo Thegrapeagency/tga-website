@@ -302,8 +302,11 @@ p { margin: 0 0 1em; }
 
 .case-sheet__hero { margin-top: 10px; }
 .case-sheet__hero img { width: 100%; height: clamp(220px, 42vh, 460px); object-fit: cover; border-radius: 14px; display: block; }
-.case-sheet__hero video { width: 100%; height: auto; max-height: 82vh; object-fit: contain; border-radius: 14px; display: block; background: #0c140e; }
-.case-sheet__hero--video { margin-top: 14px; }
+.case-sheet__hero video { display: block; margin: 0 auto; max-width: 100%; max-height: 80vh; width: auto; height: auto; border-radius: 14px; background: #0c140e; }
+
+/* Additional case videos (e.g. full campaign) */
+.case-videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 50px; }
+.case-videos video { width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px; background: #0c140e; display: block; }
 .case-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 50px; }
 .case-gallery img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; }
 @media (max-width: 720px) { .case-gallery { grid-template-columns: 1fr; } .case-gallery img { height: 220px; } }

@@ -18,6 +18,7 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
+    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg"],
     headline: { value: "2", label: { en: "ID&T festivals: Milkshake & Mysteryland", nl: "ID&T-festivals: Milkshake & Mysteryland" } },
     verified: false,
     oneliner: {
@@ -57,12 +58,21 @@ export const cases = [
     slug: "vacuvin",
     brand: "Vacu Vin",
     client: "Vacu Vin",
-    tag: { en: "Influencer campaign · Swirling Carafe", nl: "Influencercampagne · Swirling Carafe" },
+    tag: { en: "Influencer & video campaign · Swirling Carafe", nl: "Influencer- & videocampagne · Swirling Carafe" },
     where: { en: "TikTok & Instagram", nl: "TikTok & Instagram" },
     services: {
-      en: ["Influencer marketing", "AI-driven creator selection", "Content direction", "Conversion tracking"],
-      nl: ["Influencermarketing", "Creatorselectie via AI", "Contentregie", "Conversiemeting"],
+      en: ["Influencer marketing", "Video campaign (commercials & reels)", "AI-driven creator selection", "Conversion tracking"],
+      nl: ["Influencermarketing", "Videocampagne (commercials & reels)", "Creatorselectie via AI", "Conversiemeting"],
     },
+    images: ["/images/vacuvin/1.jpg", "/images/vacuvin/2.jpg", "/images/vacuvin/3.jpg", "/images/vacuvin/4.jpg", "/images/vacuvin/5.jpg"],
+    videos: [
+      "/videos/vacuvin.mp4",
+      "/videos/vacuvin-commercial2.mp4",
+      "/videos/vacuvin-reel2.mp4",
+      "/videos/vacuvin-amije.mp4",
+      "/videos/vacuvin-story2.mp4",
+      "/videos/vacuvin-story-extra.mp4",
+    ],
     headline: { value: "179K", label: { en: "Views across six creators", nl: "Views over zes creators" } },
     verified: true,
     oneliner: {
@@ -70,8 +80,8 @@ export const cases = [
       nl: "Een wijnaccessoire begeerlijk maken voor een generatie die wijnkennis optioneel vindt, maar stijl niet.",
     },
     intro: {
-      en: "For the launch of Vacu Vin's webshop we put the Swirling Carafe in front of a younger generation. No dusty cellars or raised eyebrows, just style. Enjoying in style shouldn't require a PhD in grape varieties.",
-      nl: "Voor de webshoplancering van Vacu Vin zetten we de Swirling Carafe neer bij een jongere generatie. Geen stoffige wijnkelders en opgetrokken wenkbrauwen, wel stijl. Stijlvol genieten hoeft geen PhD in druivenrassen te vereisen.",
+      en: "For Vacu Vin we ran more than an influencer campaign; we also made a full video campaign. For the launch of the webshop we put the Swirling Carafe in front of a younger generation. No dusty cellars or raised eyebrows, just style. Enjoying in style shouldn't require a PhD in grape varieties.",
+      nl: "Voor Vacu Vin draaiden we niet alleen een influencercampagne; we maakten ook een complete videocampagne. Voor de webshoplancering zetten we de Swirling Carafe neer bij een jongere generatie. Geen stoffige wijnkelders en opgetrokken wenkbrauwen, wel stijl. Stijlvol genieten hoeft geen PhD in druivenrassen te vereisen.",
     },
     challenge: {
       en: "An accessory doesn't sell itself on social. It has to spark something. The brief was to make the Swirling Carafe desirable for 25-to-40-year-old city dwellers who drink wine but aren't looking for a gadget, tied to the webshop launch.",
@@ -81,10 +91,12 @@ export const cases = [
       en: [
         "We selected creators with AI tooling (Influencity, SparkToro and our own filters on real engagement and authenticity) instead of by follower count. We looked for the right vibe within lifestyle/interior or food & drinks, with humour and an edge. No walking hashtags.",
         "The concept 'Swirl it 'till you make it & Swirl with Style' gave every creator the same starting point but the freedom to translate it their own way. Six creators across TikTok and Instagram, each with their own discount code so we could measure sales directly.",
+        "Alongside the creators we produced a full video campaign: commercials and reels that gave the Swirling Carafe its own polished, scroll-stopping look, beyond a product demo.",
       ],
       nl: [
         "We selecteerden creators met AI-tooling (Influencity, SparkToro en eigen filters op echte engagement en authenticiteit) in plaats van op volgersaantal. We zochten mensen met de juiste vibe binnen lifestyle/interieur of food&drinks, met humor en een edgy randje. Geen wandelende hashtags.",
         "Het concept 'Swirl it 'till you make it & Swirl with Style' gaf elke creator hetzelfde uitgangspunt, maar de vrijheid om het in eigen stijl te vertalen. Zes creators op TikTok en Instagram, elk met een eigen kortingscode zodat we verkoop direct konden meten.",
+        "Naast de creators maakten we een complete videocampagne: commercials en reels die de Swirling Carafe een eigen, gelikte look gaven die opvalt in de feed, voorbij een productdemo.",
       ],
     },
     result: {
