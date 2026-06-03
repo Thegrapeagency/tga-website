@@ -8,3 +8,6 @@ vbuild_*
 .vercel
 public/images/**/orig*
 public/images/**/o2.tmp
+
+vite.config.js.timestamp-*
+.git/

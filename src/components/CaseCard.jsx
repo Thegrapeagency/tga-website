@@ -3,27 +3,25 @@ import { motion } from "framer-motion";
 
 export default function CaseCard({ c, index = 0 }) {
   const cover = c.images && c.images[0];
+  const cls = ["tile", cover ? "tile--photo" : "tile--solid", index % 2 ? "tile--alt" : ""].join(" ");
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      className="tile-wrap"
+      initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: (index % 2) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -5 }}
-      style={{ height: "100%" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.05, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link to={`/werk/${c.slug}`} className={`case-card ${cover ? "case-card--img" : ""}`}>
-        {cover && <span className="case-card__bg" style={{ backgroundImage: `url(${cover})` }} aria-hidden="true" />}
-        <span className="case-card__tag">{c.tag}</span>
-        <span className="case-card__brand">{c.brand}</span>
-        <span className="case-card__title">{c.oneliner}</span>
-        <span className="case-card__foot">
-          <span className="case-card__metric">
-            <b>{c.headline.value}</b>
-            <span>{c.headline.label}</span>
-          </span>
-          <span className="case-card__arrow">↗</span>
-        </span>
+      <Link to={`/werk/${c.slug}`} className={cls}>
+        {cover && <img className="tile__img" src={cover} alt={c.brand} loading="lazy" />}
+        {!cover && <span className="tile__ghost" aria-hidden="true">{c.brand}</span>}
+        <span className="tile__shade" aria-hidden="true" />
+        <div className="tile__body">
+          <span className="tile__tag">{c.tag}</span>
+          <h3 className="tile__brand">{c.brand}</h3>
+          <p className="tile__line">{c.oneliner}</p>
+          <span className="tile__cta">Bekijk case <span aria-hidden="true">→</span></span>
+        </div>
       </Link>
     </motion.div>
   );

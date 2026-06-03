@@ -323,3 +323,60 @@ p { margin: 0 0 1em; }
 .fact:first-child { border-top: 0; }
 .fact__k { display: block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
 .fact__v { display: block; font-size: 17px; }
+
+/* ===========================================================
+   WORK TILES — clean uniform portfolio grid (upgrade)
+   =========================================================== */
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 1000px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .work-grid { grid-template-columns: 1fr; } }
+
+.tile-wrap { height: 100%; }
+.tile {
+  position: relative; display: block; height: 100%; aspect-ratio: 4 / 5;
+  border-radius: 8px; overflow: hidden; isolation: isolate;
+  background: var(--green-dark); color: var(--cream);
+  transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease;
+}
+.tile--solid.tile--alt { background: var(--green); }
+.tile:hover { transform: translateY(-4px); box-shadow: 0 26px 50px -28px rgba(12,20,14,.7); }
+
+.tile__img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+  transition: transform .8s cubic-bezier(.16,1,.3,1);
+}
+.tile:hover .tile__img { transform: scale(1.06); }
+
+.tile__ghost {
+  position: absolute; top: -8px; left: 18px; z-index: 0;
+  font-family: var(--font-display); font-size: clamp(70px, 9vw, 120px); line-height: 1;
+  color: rgba(243,239,204,.07); white-space: nowrap; pointer-events: none; user-select: none;
+}
+
+.tile__shade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(12,20,14,0) 32%, rgba(12,20,14,.88) 100%);
+}
+.tile--solid .tile__shade {
+  background: linear-gradient(180deg, rgba(12,20,14,0) 45%, rgba(12,20,14,.45) 100%);
+}
+
+.tile__body {
+  position: absolute; inset: 0; z-index: 2;
+  padding: clamp(18px, 2.2vw, 26px);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 7px;
+}
+.tile__tag { font-family: var(--font-body); font-weight: 400; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--sand); }
+.tile__brand { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 2.4vw, 36px); line-height: 1.02; margin: 0; }
+.tile__line {
+  font-size: 14px; line-height: 1.45; color: rgba(243,239,204,.82); margin: 0; max-width: 36ch;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tile__cta {
+  font-size: 13px; letter-spacing: .03em; color: var(--cream); margin-top: 4px;
+  opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease;
+}
+.tile:hover .tile__cta { opacity: 1; transform: none; }
+.tile::after { content: ""; position: absolute; inset: 0; z-index: 3; border: 1px solid rgba(243,239,204,.10); border-radius: 8px; pointer-events: none; }
+
+@media (hover: none) { .tile__cta { opacity: 1; transform: none; } }

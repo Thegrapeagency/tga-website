@@ -13,7 +13,7 @@ const line = {
 };
 
 const featured = cases.filter((c) =>
-  ["mirabeau", "schlumberger", "mouton-cadet", "19-crimes"].includes(c.slug)
+  ["schlumberger", "19-crimes", "casa-rojo"].includes(c.slug)
 );
 
 export default function Home() {
