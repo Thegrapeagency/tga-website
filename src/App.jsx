@@ -2,6 +2,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
+import Grain from "./components/Grain.jsx";
+import ScrollProgress from "./components/ScrollProgress.jsx";
 import Home from "./pages/Home.jsx";
 import Work from "./pages/Work.jsx";
 import Services from "./pages/Services.jsx";
@@ -16,6 +18,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <AnimatePresence mode="wait">
         <Routes location={location} key={base}>
@@ -28,6 +31,7 @@ export default function App() {
         </Routes>
       </AnimatePresence>
       <Footer />
+      <Grain />
     </>
   );
 }

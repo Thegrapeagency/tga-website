@@ -18,7 +18,7 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
-    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg"],
+    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg"],
     headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
     verified: true,
     oneliner: {
@@ -167,7 +167,8 @@ export const cases = [
       en: ["Trade-fair activation", "French terrace", "Tasting", "Sales"],
       nl: ["Beursactivatie", "Frans terras", "Proeverij", "Verkoop"],
     },
-    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg"],
+    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg", "/images/mouton-cadet/4.jpg", "/images/mouton-cadet/5.jpg", "/images/mouton-cadet/6.jpg", "/images/mouton-cadet/7.jpg", "/images/mouton-cadet/8.jpg"],
+    videos: ["/videos/mouton-cadet.mp4"],
     headline: { value: "218", label: { en: "Tastings ten metres up", nl: "Proeverijen op tien meter hoogte" } },
     verified: true,
     oneliner: {
@@ -215,7 +216,7 @@ export const cases = [
       en: ["Premiere activation", "Rotari trolley", "Styling", "Hosting"],
       nl: ["Premièreactivatie", "Rotari-trolley", "Styling", "Hosting"],
     },
-    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg"],
+    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg", "/images/rotari-premiere/3.jpg", "/images/rotari-premiere/4.jpg", "/images/rotari-premiere/5.jpg"],
     headline: { value: "600", label: { en: "Guests at the premiere", nl: "Gasten op de première" } },
     verified: true,
     oneliner: {
@@ -403,7 +404,7 @@ export const cases = [
       en: ["Wine bar", "Interactive tasting", "In-store activation", "Campaign photoshoot", "Content"],
       nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Campagnefotoshoot", "Content"],
     },
-    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg"],
+    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg", "/images/rotari-italie/4.jpg", "/images/rotari-italie/5.jpg", "/images/rotari-italie/6.jpg"],
     headline: { value: "38.000", label: { en: "Visitors over the weekend", nl: "Bezoekers in het weekend" } },
     verified: true,
     oneliner: {
@@ -572,15 +573,15 @@ export const cases = [
       ],
       nl: [
         "We koppelden de topwijnen van Bemberg aan een lunch van Onno Kokmeijer. Een chef van zijn niveau (twee Michelinsterren bij Ciel Bleu, nummer 2 in de LEKKER500) maakt van de wijnen een reden om te komen, niet een detail erbij.",
-        "We deden het over twee dagen: één dag pers ontvangen, één dag met tickets voor het publiek, zodat de lunch zowel geloofwaardigheid als bereik opbouwde.",
+        "We deden het over twee dagen: een dag pers ontvangen, een dag met tickets voor het publiek, zodat de lunch zowel geloofwaardigheid als bereik opbouwde.",
       ],
     },
     result: {
       en: "A wine house few knew, put on the map through a chef people do know, with one day for press and one for the public. [check] Add guest numbers once confirmed.",
-      nl: "Een wijnhuis dat weinig mensen kenden, op de kaart gezet via een chef die mensen wél kennen, met één dag pers en één dag publiek. [check] Gastaantallen volgen zodra bevestigd.",
+      nl: "Een wijnhuis dat weinig mensen kenden, op de kaart gezet via een chef die mensen wel kennen, met een dag pers en een dag publiek. [check] Gastaantallen volgen zodra bevestigd.",
     },
     results: [
-      { value: "2★", label: { en: "Michelin stars chef Onno Kokmeijer earned at Ciel Bleu", nl: "Michelinsterren van chef Onno Kokmeijer bij Ciel Bleu" } },
+      { value: "2 sterren", label: { en: "Michelin stars chef Onno earned at Ciel Bleu", nl: "Michelinsterren van chef Onno bij Ciel Bleu" } },
       { value: "#2", label: { en: "LEKKER500 ranking", nl: "LEKKER500-notering" } },
       { value: "[check]", label: { en: "Guests (press + tickets)", nl: "Gasten (pers + tickets)" } },
     ],
