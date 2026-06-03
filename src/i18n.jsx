@@ -14,7 +14,7 @@ export function pick(v, lang) {
 export const dict = {
   en: {
     langLabel: "NL",
-    nav: { home: "Home", work: "Work", services: "Services", about: "About", contact: "Contact" },
+    nav: { work: "Work", services: "Services", about: "About", contact: "Contact" },
     hero: {
       l1: "Campaigns, events",
       l2: "and activations.",
@@ -97,7 +97,7 @@ export const dict = {
 
   nl: {
     langLabel: "EN",
-    nav: { home: "Home", work: "Werk", services: "Diensten", about: "Over", contact: "Contact" },
+    nav: { work: "Werk", services: "Diensten", about: "Over", contact: "Contact" },
     hero: {
       l1: "Campagnes, events",
       l2: "en activaties.",

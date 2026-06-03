@@ -18,7 +18,7 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
-    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg"],
+    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg"],
     headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
     verified: true,
     oneliner: {
@@ -167,8 +167,7 @@ export const cases = [
       en: ["Trade-fair activation", "French terrace", "Tasting", "Sales"],
       nl: ["Beursactivatie", "Frans terras", "Proeverij", "Verkoop"],
     },
-    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg", "/images/mouton-cadet/4.jpg", "/images/mouton-cadet/5.jpg", "/images/mouton-cadet/6.jpg", "/images/mouton-cadet/7.jpg", "/images/mouton-cadet/8.jpg"],
-    videos: ["/videos/mouton-cadet.mp4"],
+    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg"],
     headline: { value: "218", label: { en: "Tastings ten metres up", nl: "Proeverijen op tien meter hoogte" } },
     verified: true,
     oneliner: {
@@ -216,7 +215,7 @@ export const cases = [
       en: ["Premiere activation", "Rotari trolley", "Styling", "Hosting"],
       nl: ["Premièreactivatie", "Rotari-trolley", "Styling", "Hosting"],
     },
-    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg", "/images/rotari-premiere/3.jpg", "/images/rotari-premiere/4.jpg", "/images/rotari-premiere/5.jpg"],
+    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg"],
     headline: { value: "600", label: { en: "Guests at the premiere", nl: "Gasten op de première" } },
     verified: true,
     oneliner: {
@@ -262,7 +261,7 @@ export const cases = [
       en: ["Alcohol-free cocktail bar", "Interactive concept", "Styling", "Staffing"],
       nl: ["Alcoholvrije cocktailbar", "Interactief concept", "Styling", "Bemensing"],
     },
-    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg", "/images/rebels-abstinence/4.jpg", "/images/rebels-abstinence/5.jpg", "/images/rebels-abstinence/6.jpg", "/images/rebels-abstinence/7.jpg", "/images/rebels-abstinence/8.jpg"],
+    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg", "/images/rebels-abstinence/4.jpg", "/images/rebels-abstinence/5.jpg", "/images/rebels-abstinence/6.jpg", "/images/rebels-abstinence/7.jpg"],
     headline: { value: "935", label: { en: "Guests: influencers, creators and agencies", nl: "Gasten: influencers, creators en agencies" } },
     verified: true,
     oneliner: {
@@ -308,7 +307,7 @@ export const cases = [
       en: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operations"],
       nl: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operatie"],
     },
-    images: ["/images/casa-rojo/0.jpg", "/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg"],
+    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg"],
     headline: { value: "3", label: { en: "Courses, built up from the wine", nl: "Gangen, opgebouwd vanuit de wijn" } },
     verified: true,
     oneliner: {
@@ -404,7 +403,7 @@ export const cases = [
       en: ["Wine bar", "Interactive tasting", "In-store activation", "Campaign photoshoot", "Content"],
       nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Campagnefotoshoot", "Content"],
     },
-    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg", "/images/rotari-italie/4.jpg", "/images/rotari-italie/5.jpg", "/images/rotari-italie/6.jpg"],
+    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg"],
     headline: { value: "38.000", label: { en: "Visitors over the weekend", nl: "Bezoekers in het weekend" } },
     verified: true,
     oneliner: {
@@ -535,6 +534,55 @@ export const cases = [
       { value: "Moldova", label: { en: "Live link with the winemaker", nl: "Live verbinding met de wijnmaker" } },
       { value: "2.500", label: { en: "Visitors at the Castel Mimi bar", nl: "Bezoekers aan de Castel Mimi-bar" } },
       { value: "Maeve", label: { en: "Michelin lunch by chef Tommy Janssen", nl: "Sterrenlunch door chef Tommy Janssen" } },
+    ],
+  },
+
+  {
+    slug: "bemberg",
+    brand: "Bemberg",
+    client: "Bemberg",
+    tag: { en: "Michelin lunch · press & tickets", nl: "Sterrenlunch · pers & tickets" },
+    where: { en: "[check]", nl: "[check]" },
+    services: {
+      en: ["Concept & experience", "Michelin-level lunch", "Press day", "Ticketed lunch"],
+      nl: ["Concept & experience", "Sterrenlunch", "Persdag", "Ticketlunch"],
+    },
+    images: [
+      "/images/bemberg/1.jpg", "/images/bemberg/2.jpg", "/images/bemberg/3.jpg", "/images/bemberg/4.jpg",
+      "/images/bemberg/5.jpg", "/images/bemberg/6.jpg", "/images/bemberg/7.jpg", "/images/bemberg/8.jpg",
+    ],
+    headline: { value: "Onno", label: { en: "Lunch by two-Michelin-star chef Onno Kokmeijer", nl: "Sterrenlunch door tweesterrenchef Onno Kokmeijer" } },
+    verified: false,
+    oneliner: {
+      en: "A very special wine house, brought to the table by a two-Michelin-star chef.",
+      nl: "Een heel bijzonder wijnhuis, aan tafel gebracht door een tweesterrenchef.",
+    },
+    intro: {
+      en: "Bemberg is a very special wine house. Around its top wines we built an exceptional lunch with chef Onno Kokmeijer, who cooked two Michelin stars at Ciel Bleu and ranked number 2 in the LEKKER500.",
+      nl: "Bemberg is een heel bijzonder wijnhuis. Rond hun topwijnen bouwden we een bijzondere lunch met chef Onno Kokmeijer, die bij Ciel Bleu twee Michelinsterren kookte en op nummer 2 stond in de LEKKER500.",
+    },
+    challenge: {
+      en: "A wine house few people know deserves more than a tasting. The task was to make Bemberg unforgettable and earn it attention from both press and a paying public.",
+      nl: "Een wijnhuis dat weinig mensen kennen verdient meer dan een proeverij. De opdracht was om Bemberg onvergetelijk te maken en aandacht te verdienen, zowel van pers als van een betalend publiek.",
+    },
+    approach: {
+      en: [
+        "We paired Bemberg's top wines with a lunch by Onno Kokmeijer. A chef of his level (two Michelin stars at Ciel Bleu, number 2 in the LEKKER500) turns the wines into a reason to come, not a detail on the side.",
+        "We ran it over two days: one day to receive press, one day with tickets for the public, so the lunch built both credibility and reach.",
+      ],
+      nl: [
+        "We koppelden de topwijnen van Bemberg aan een lunch van Onno Kokmeijer. Een chef van zijn niveau (twee Michelinsterren bij Ciel Bleu, nummer 2 in de LEKKER500) maakt van de wijnen een reden om te komen, niet een detail erbij.",
+        "We deden het over twee dagen: één dag pers ontvangen, één dag met tickets voor het publiek, zodat de lunch zowel geloofwaardigheid als bereik opbouwde.",
+      ],
+    },
+    result: {
+      en: "A wine house few knew, put on the map through a chef people do know, with one day for press and one for the public. [check] Add guest numbers once confirmed.",
+      nl: "Een wijnhuis dat weinig mensen kenden, op de kaart gezet via een chef die mensen wél kennen, met één dag pers en één dag publiek. [check] Gastaantallen volgen zodra bevestigd.",
+    },
+    results: [
+      { value: "2★", label: { en: "Michelin stars chef Onno Kokmeijer earned at Ciel Bleu", nl: "Michelinsterren van chef Onno Kokmeijer bij Ciel Bleu" } },
+      { value: "#2", label: { en: "LEKKER500 ranking", nl: "LEKKER500-notering" } },
+      { value: "[check]", label: { en: "Guests (press + tickets)", nl: "Gasten (pers + tickets)" } },
     ],
   },
 ];
