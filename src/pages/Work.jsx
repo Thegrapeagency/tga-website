@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLenis } from "lenis/react";
 import Page from "../components/Page.jsx";
 import CaseCard from "../components/CaseCard.jsx";
+import Reveal from "../components/Reveal.jsx";
+import Lightbox from "../components/Lightbox.jsx";
 import { cases, getCase } from "../data/cases.js";
+import { bentoSpan } from "../lib/layout.js";
 import { useLang, pick } from "../i18n.jsx";
+
+const GAL_SPAN = ["gal--wide", "gal--tall", "gal--tall", "gal--full", "gal--tall", ""];
 
 export default function Work() {
   const { slug } = useParams();
@@ -27,14 +35,14 @@ export default function Work() {
           <motion.div
             className="work-grid"
             animate={{
-              scale: selected ? 0.97 : 1,
-              opacity: selected ? 0.35 : 1,
-              filter: selected ? "blur(2px)" : "blur(0px)",
+              scale: selected ? 0.985 : 1,
+              opacity: selected ? 0.4 : 1,
+              filter: selected ? "blur(3px)" : "blur(0px)",
             }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             {ordered.map((c, i) => (
-              <CaseCard key={c.slug} c={c} index={i} />
+              <CaseCard key={c.slug} c={c} index={i} span={bentoSpan(i)} />
             ))}
           </motion.div>
         </div>
@@ -50,23 +58,29 @@ export default function Work() {
 }
 
 function CaseSheet({ data, lang, t, onClose }) {
+  const lenis = useLenis();
+  const [lb, setLb] = useState(null);
   const approach = pick(data.approach, lang) || [];
   const videos = data.videos || (data.video ? [data.video] : []);
-  return (
+  const cover = data.images && data.images[0];
+  const heroVideo = videos[0];
+  const gallery = data.images ? data.images.slice(1) : [];
+
+  // Lock background scroll while the sheet is open.
+  useEffect(() => {
+    lenis?.stop();
+    return () => lenis?.start();
+  }, [lenis]);
+
+  return createPortal(
     <>
-      <motion.div
-        className="sheet-scrim"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-      />
+      <motion.div className="sheet-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
       <motion.aside
         className="case-sheet"
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
-        transition={{ type: "spring", stiffness: 260, damping: 32 }}
+        transition={{ type: "spring", stiffness: 240, damping: 32 }}
         role="dialog"
         aria-label={`${data.brand} case`}
       >
@@ -77,7 +91,7 @@ function CaseSheet({ data, lang, t, onClose }) {
           </button>
         </div>
 
-        <div className="case-sheet__scroll">
+        <div className="case-sheet__scroll" data-lenis-prevent>
           <header className="case-hero-inner container">
             <p className="eyebrow on-dark">{pick(data.tag, lang)}</p>
             <h1>{data.brand}</h1>
@@ -90,54 +104,75 @@ function CaseSheet({ data, lang, t, onClose }) {
             </dl>
           </header>
 
-          {(videos[0] || (data.images && data.images[0])) && (
-            <div className="case-sheet__hero container">
-              {videos[0] ? (
-                <video src={videos[0]} poster={data.images && data.images[0]} autoPlay muted loop playsInline />
-              ) : (
-                <img src={data.images[0]} alt={data.brand} loading="lazy" />
-              )}
-            </div>
+          {(heroVideo || cover) && (
+            <motion.div
+              className="case-sheet__hero container"
+              initial={{ opacity: 0, y: 30, clipPath: "inset(8% 4% 8% 4% round 22px)" }}
+              animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 22px)" }}
+              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="case-sheet__hero-media">
+                {heroVideo ? (
+                  <video src={heroVideo} poster={cover} autoPlay muted loop playsInline />
+                ) : (
+                  <img className="case-hero-img" src={cover} alt={data.brand} />
+                )}
+                <span className="case-hero-glow" />
+              </div>
+            </motion.div>
           )}
 
           <div className="container case-sheet__body">
             <div className="case-body">
-              <p className="lead">{pick(data.intro, lang)}</p>
-
-              <h3>{t.work.challenge}</h3>
-              <p>{pick(data.challenge, lang)}</p>
-
-              <h3>{t.work.approach}</h3>
-              {approach.map((p, i) => <p key={i}>{p}</p>)}
-
-              <h3>{t.work.result}</h3>
-              <p>{pick(data.result, lang)}</p>
+              <Reveal as="p" className="lead">{pick(data.intro, lang)}</Reveal>
+              <Reveal as="h3">{t.work.challenge}</Reveal>
+              <Reveal as="p" delay={0.05}>{pick(data.challenge, lang)}</Reveal>
+              <Reveal as="h3">{t.work.approach}</Reveal>
+              {approach.map((p, i) => <Reveal as="p" key={i} delay={0.05 * i}>{p}</Reveal>)}
+              <Reveal as="h3">{t.work.result}</Reveal>
+              <Reveal as="p" delay={0.05}>{pick(data.result, lang)}</Reveal>
             </div>
 
             {videos.length > 1 && (
               <div className="case-videos">
                 {videos.slice(1).map((src, i) => (
-                  <video key={i} src={src} controls playsInline preload="metadata" />
+                  <motion.video key={i} src={src} controls playsInline preload="metadata"
+                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-10%" }}
+                    transition={{ duration: 0.6, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }} />
                 ))}
               </div>
             )}
 
-            {data.images && data.images.length > 1 && (
+            {gallery.length > 0 && (
               <div className="case-gallery">
-                {data.images.slice(1).map((src, i) => (
-                  <img key={i} src={src} alt={`${data.brand} ${i + 2}`} loading="lazy" />
+                {gallery.map((src, i) => (
+                  <motion.button
+                    type="button"
+                    key={i}
+                    className={`gal ${GAL_SPAN[i % GAL_SPAN.length]}`}
+                    onClick={() => setLb(i + 1)}
+                    aria-label={`${data.brand} ${i + 2}`}
+                    initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
+                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    viewport={{ once: true, margin: "-8%" }}
+                    transition={{ duration: 0.65, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <img src={src} alt={`${data.brand} ${i + 2}`} loading="lazy" />
+                  </motion.button>
                 ))}
               </div>
             )}
 
-            <div className="case-results section--green">
+            <div className="case-results">
               <p className="eyebrow on-dark">{t.work.numbers}</p>
-              <div className="results mt-s">
+              <div className="results">
                 {data.results.map((r, i) => (
-                  <div className="result" key={i}>
+                  <motion.div className="result" key={i}
+                    initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                    transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
                     <b>{r.value}</b>
                     <span>{pick(r.label, lang)}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -148,6 +183,15 @@ function CaseSheet({ data, lang, t, onClose }) {
           </div>
         </div>
       </motion.aside>
-    </>
+
+      <Lightbox
+        images={data.images || []}
+        index={lb}
+        onClose={() => setLb(null)}
+        onIndex={setLb}
+        alt={data.brand}
+      />
+    </>,
+    document.body
   );
 }

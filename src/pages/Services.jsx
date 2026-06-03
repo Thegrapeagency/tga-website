@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Page from "../components/Page.jsx";
+import Aurora from "../components/Aurora.jsx";
+import Reveal from "../components/Reveal.jsx";
+import Magnetic from "../components/Magnetic.jsx";
 import { useLang, pick } from "../i18n.jsx";
 
 const services = [
@@ -60,9 +63,9 @@ export default function Services() {
     <Page>
       <section className="section">
         <div className="container">
-          <p className="eyebrow">{t.services.eyebrow}</p>
-          <h1 className="page-title" style={{ whiteSpace: "pre-line" }}>{t.services.title}</h1>
-          <p className="lead mt-s">{t.services.lead}</p>
+          <Reveal as="p" className="eyebrow">{t.services.eyebrow}</Reveal>
+          <Reveal as="h1" delay={0.05} className="page-title" style={{ whiteSpace: "pre-line" }}>{t.services.title}</Reveal>
+          <Reveal as="p" delay={0.1} className="lead mt-s">{t.services.lead}</Reveal>
 
           <div className="svc-grid mt-l">
             {services.map((s, i) => (
@@ -82,9 +85,10 @@ export default function Services() {
       </section>
 
       <section className="section section--green">
+        <Aurora />
         <div className="container">
-          <p className="statement">{t.services.statement}</p>
-          <div className="mt-l"><Link to="/contact" className="btn btn--light">{t.services.cta}</Link></div>
+          <Reveal as="p" className="statement">{t.services.statement}</Reveal>
+          <Reveal delay={0.15} className="mt-l"><Magnetic><Link to="/contact" className="btn btn--light">{t.services.cta} <span className="btn__arrow" aria-hidden="true">→</span></Link></Magnetic></Reveal>
         </div>
       </section>
     </Page>

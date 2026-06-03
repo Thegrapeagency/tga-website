@@ -18,7 +18,7 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
-    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg"],
+    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg"],
     headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
     verified: true,
     oneliner: {
@@ -215,7 +215,7 @@ export const cases = [
       en: ["Premiere activation", "Rotari trolley", "Styling", "Hosting"],
       nl: ["Premièreactivatie", "Rotari-trolley", "Styling", "Hosting"],
     },
-    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg"],
+    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg", "/images/rotari-premiere/3.jpg", "/images/rotari-premiere/4.jpg", "/images/rotari-premiere/5.jpg"],
     headline: { value: "600", label: { en: "Guests at the premiere", nl: "Gasten op de première" } },
     verified: true,
     oneliner: {
@@ -261,7 +261,7 @@ export const cases = [
       en: ["Alcohol-free cocktail bar", "Interactive concept", "Styling", "Staffing"],
       nl: ["Alcoholvrije cocktailbar", "Interactief concept", "Styling", "Bemensing"],
     },
-    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg"],
+    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg", "/images/rebels-abstinence/4.jpg", "/images/rebels-abstinence/5.jpg", "/images/rebels-abstinence/6.jpg", "/images/rebels-abstinence/7.jpg", "/images/rebels-abstinence/8.jpg"],
     headline: { value: "935", label: { en: "Guests: influencers, creators and agencies", nl: "Gasten: influencers, creators en agencies" } },
     verified: true,
     oneliner: {
@@ -403,7 +403,7 @@ export const cases = [
       en: ["Wine bar", "Interactive tasting", "In-store activation", "Campaign photoshoot", "Content"],
       nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Campagnefotoshoot", "Content"],
     },
-    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg"],
+    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg", "/images/rotari-italie/4.jpg", "/images/rotari-italie/5.jpg", "/images/rotari-italie/6.jpg"],
     headline: { value: "38.000", label: { en: "Visitors over the weekend", nl: "Bezoekers in het weekend" } },
     verified: true,
     oneliner: {
