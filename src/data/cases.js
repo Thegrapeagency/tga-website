@@ -300,6 +300,37 @@ export const cases = [
       { value: "[check]", label: "Bezoekers Nacht van de Wijn" },
     ],
   },
+
+  {
+    slug: "castel-mimi",
+    brand: "Castel Mimi",
+    client: "Castel Mimi",
+    tag: "Sterrenlunch · Nacht van de Wijn",
+    where: "Nacht van de Wijn, Utrecht",
+    year: "",
+    oneliner: "Een sterrenlunch aan één lange tafel, met een live verbinding naar de wijnmaker in Moldavië.",
+    services: ["Concept & experience", "Sterrenlunch", "Live link Moldavië", "Festivalbar"],
+    images: ["/images/castel-mimi/1.jpg"],
+    video: "/videos/castel-mimi.mp4",
+    headline: { value: "1", label: "Sterrenlunch aan één lange tafel" },
+    verified: true,
+    intro:
+      "Castel Mimi is een van de mooiste wijnkastelen van Moldavië. Rond hun topwijnen lieten we sterrenchef Tommy Janssen van restaurant Maeve een driegangenlunch maken, aan één lange tafel midden op Nacht van de Wijn, nog voordat de deuren voor het publiek opengingen.",
+    challenge:
+      "Een wijnkasteel uit Moldavië zegt het Nederlandse publiek weinig. De opdracht was om Castel Mimi niet uit te leggen, maar te laten beleven, op een manier die je niet meer vergeet.",
+    approach: [
+      "Gasten kwamen binnen met een glas Mimi Sauvignon Blanc en kregen een koptelefoon op. Daarover vertelde een van onze sommeliers kort het verhaal van het kasteel, waarna iedereen aanschoof aan de lange tafel voor de eerste gang.",
+      "Koptelefoon weer op: op grote schermen verscheen een live verbinding met Moldavië, waar de wijnmaker de gasten welkom heette en de wijnen bij de gerechten toelichtte. Tommy kwam de keuken uit om zijn gerechten te duiden. Elk gerecht was gebaseerd op de topwijnen van Castel Mimi.",
+      "Als afsluiter genoten de gasten van de ultieme ijswijn van Mimi met macarons die Tommy er speciaal bij maakte. Voor de overige 2.500 festivalbezoekers stond er daarnaast een Castel Mimi-bar op Nacht van de Wijn.",
+    ],
+    result:
+      "Een Moldavisch wijnkasteel dat niet werd uitgelegd maar beleefd: van een verhaal op de koptelefoon en een live verbinding met de wijnmaker tot een ijswijn met macarons. En via de festivalbar bereikten we daarnaast nog eens 2.500 bezoekers.",
+    results: [
+      { value: "Moldavië", label: "Live verbinding met de wijnmaker" },
+      { value: "2.500", label: "Bezoekers aan de Castel Mimi-bar" },
+      { value: "Maeve", label: "Sterrenlunch door chef Tommy Janssen" },
+    ],
+  },
 ];
 
 export const getCase = (slug) => cases.find((c) => c.slug === slug);
