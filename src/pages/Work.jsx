@@ -10,6 +10,7 @@ export default function Work() {
   const navigate = useNavigate();
   const { lang, t } = useLang();
   const selected = slug ? getCase(slug) : null;
+  const ordered = [...cases].sort((a, b) => (b.images ? 1 : 0) - (a.images ? 1 : 0));
 
   return (
     <Page>
@@ -32,7 +33,7 @@ export default function Work() {
             }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {cases.map((c, i) => (
+            {ordered.map((c, i) => (
               <CaseCard key={c.slug} c={c} index={i} />
             ))}
           </motion.div>

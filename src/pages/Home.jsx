@@ -11,7 +11,8 @@ const line = {
   enter: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const featured = cases.filter((c) => ["schlumberger", "19-crimes", "casa-rojo"].includes(c.slug));
+// Show the whole portfolio on the home page, media-rich cases first.
+const featured = [...cases].sort((a, b) => (b.images ? 1 : 0) - (a.images ? 1 : 0));
 
 export default function Home() {
   const { t } = useLang();
