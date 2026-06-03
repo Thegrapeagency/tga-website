@@ -167,6 +167,7 @@ export const cases = [
       en: ["Trade-fair activation", "French terrace", "Tasting", "Sales"],
       nl: ["Beursactivatie", "Frans terras", "Proeverij", "Verkoop"],
     },
+    images: ["/images/mouton-cadet/1.jpg", "/images/mouton-cadet/2.jpg", "/images/mouton-cadet/3.jpg"],
     headline: { value: "218", label: { en: "Tastings ten metres up", nl: "Proeverijen op tien meter hoogte" } },
     verified: true,
     oneliner: {
@@ -214,6 +215,7 @@ export const cases = [
       en: ["Premiere activation", "Rotari trolley", "Styling", "Hosting"],
       nl: ["Premièreactivatie", "Rotari-trolley", "Styling", "Hosting"],
     },
+    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg"],
     headline: { value: "600", label: { en: "Guests at the premiere", nl: "Gasten op de première" } },
     verified: true,
     oneliner: {
@@ -259,6 +261,7 @@ export const cases = [
       en: ["Alcohol-free cocktail bar", "Interactive concept", "Styling", "Staffing"],
       nl: ["Alcoholvrije cocktailbar", "Interactief concept", "Styling", "Bemensing"],
     },
+    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg"],
     headline: { value: "935", label: { en: "Guests: influencers, creators and agencies", nl: "Gasten: influencers, creators en agencies" } },
     verified: true,
     oneliner: {
@@ -304,7 +307,7 @@ export const cases = [
       en: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operations"],
       nl: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operatie"],
     },
-    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg"],
+    images: ["/images/casa-rojo/0.jpg", "/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg"],
     headline: { value: "3", label: { en: "Courses, built up from the wine", nl: "Gangen, opgebouwd vanuit de wijn" } },
     verified: true,
     oneliner: {
@@ -397,9 +400,10 @@ export const cases = [
     tag: { en: "Italy event", nl: "Italië-evenement" },
     where: { en: "Kasteel de Haar, Utrecht", nl: "Kasteel de Haar, Utrecht" },
     services: {
-      en: ["Wine bar", "Interactive tasting", "In-store activation", "Content"],
-      nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Content"],
+      en: ["Wine bar", "Interactive tasting", "In-store activation", "Campaign photoshoot", "Content"],
+      nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Campagnefotoshoot", "Content"],
     },
+    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg"],
     headline: { value: "38.000", label: { en: "Visitors over the weekend", nl: "Bezoekers in het weekend" } },
     verified: true,
     oneliner: {
