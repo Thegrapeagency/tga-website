@@ -1,0 +1,10 @@
+node_modules
+dist
+dist_*
+build_verify
+vbuild_*
+.DS_Store
+*.local
+.vercel
+public/images/**/orig*
+public/images/**/o2.tmp
