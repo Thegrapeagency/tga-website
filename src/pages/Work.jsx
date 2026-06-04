@@ -107,6 +107,11 @@ function CaseSheet({ data, lang, t, onClose }) {
               <div><dt>{t.work.where}</dt><dd>{pick(data.where, lang)}</dd></div>
               <div><dt>{t.work.services}</dt><dd>{pick(data.services, lang).join(", ")}</dd></div>
             </dl>
+            {data.link && (
+              <a className="btn btn--light case-link" href={data.link.url} target="_blank" rel="noopener noreferrer">
+                {pick(data.link.label, lang)} <span className="btn__arrow" aria-hidden="true">↗</span>
+              </a>
+            )}
           </header>
 
           {(heroVideo || cover) && (

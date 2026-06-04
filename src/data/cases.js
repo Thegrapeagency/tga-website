@@ -609,6 +609,7 @@ export const cases = [
       "/images/pour-culture/10.jpg", "/images/pour-culture/11.jpg", "/images/pour-culture/12.jpg",
     ],
     imagesContain: true,
+    link: { url: "https://www.meisjesvandewijn.nl/pour-culture", label: { en: "Visit the live site", nl: "Bekijk de live site" } },
     headline: { value: "0", label: { en: "Photos taken. That was the point.", nl: "Foto's gemaakt. Dat was de bedoeling." } },
     verified: true,
     oneliner: {
