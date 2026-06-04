@@ -120,7 +120,7 @@ function CaseSheet({ data, lang, t, onClose }) {
                 {heroVideo ? (
                   <video src={heroVideo} poster={cover} autoPlay muted loop playsInline />
                 ) : (
-                  <img className="case-hero-img" src={cover} alt={data.brand} />
+                  <img className={`case-hero-img ${data.imagesContain ? "case-hero-img--contain" : ""}`} src={cover} alt={data.brand} />
                 )}
                 <span className="case-hero-glow" />
               </motion.div>
@@ -173,12 +173,12 @@ function CaseSheet({ data, lang, t, onClose }) {
             )}
 
             {gallery.length > 0 && (
-              <div className="case-gallery">
+              <div className={`case-gallery ${data.imagesContain ? "case-gallery--contain" : ""}`}>
                 {gallery.map((src, i) => (
                   <motion.button
                     type="button"
                     key={i}
-                    className={`gal ${GAL_SPAN[i % GAL_SPAN.length]}`}
+                    className={`gal ${data.imagesContain ? "" : GAL_SPAN[i % GAL_SPAN.length]}`}
                     onClick={() => setLb(i + 1)}
                     aria-label={`${data.brand} ${i + 2}`}
                     initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
