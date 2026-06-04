@@ -18,6 +18,7 @@ export default function HeroWall({ wall }) {
 
   const rowA = [...wall, ...wall];
   const rowB = [...wall.slice().reverse(), ...wall.slice().reverse()];
+  const rowC = [...wall.slice(3), ...wall.slice(0, 3), ...wall.slice(3), ...wall.slice(0, 3)];
 
   return (
     <section className="herowall" ref={ref}>
@@ -31,6 +32,11 @@ export default function HeroWall({ wall }) {
         <div className="herowall__row">
           <div className="herowall__track herowall__track--b">
             {rowB.map((c, n) => <span className="herowall__cell" key={`b${n}`}><img src={c.images[0]} alt="" loading="lazy" /></span>)}
+          </div>
+        </div>
+        <div className="herowall__row">
+          <div className="herowall__track herowall__track--c">
+            {rowC.map((c, n) => <span className="herowall__cell" key={`c${n}`}><img src={c.images[0]} alt="" loading="lazy" /></span>)}
           </div>
         </div>
       </motion.div>
@@ -48,7 +54,7 @@ export default function HeroWall({ wall }) {
               </text>
             </mask>
           </defs>
-          <rect x="-1000" y="-820" width="3000" height="2460" fill="var(--ink-900)" mask="url(#tga-cut)" />
+          <rect x="-1000" y="-820" width="3000" height="2460" fill="#0b130d" mask="url(#tga-cut)" />
         </svg>
       </motion.div>
 

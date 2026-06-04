@@ -614,15 +614,16 @@ p { margin: 0 0 1em; }
 .herowall { position: relative; min-height: calc(100svh - 72px); display: flex; overflow: hidden; isolation: isolate; background: var(--ink-900); color: var(--cream); }
 @supports not (min-height: 100svh) { .herowall { min-height: calc(100vh - 72px); } }
 
-.herowall__wall { position: absolute; inset: -6% 0; z-index: 0; display: flex; flex-direction: column; justify-content: center; gap: clamp(10px, 1.6vw, 20px); opacity: .92; will-change: transform; }
-.herowall__row { overflow: hidden; }
-.herowall__track { display: flex; gap: clamp(10px, 1.6vw, 20px); width: max-content; will-change: transform; }
-.herowall__track--a { animation: wallA 75s linear infinite; }
-.herowall__track--b { animation: wallB 90s linear infinite; }
+.herowall__wall { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; gap: 6px; opacity: 1; will-change: transform; }
+.herowall__row { flex: 1 1 0; min-height: 0; overflow: hidden; display: flex; align-items: center; }
+.herowall__track { display: flex; gap: 6px; width: max-content; height: 100%; will-change: transform; }
+.herowall__track--a { animation: wallA 80s linear infinite; }
+.herowall__track--b { animation: wallB 95s linear infinite; }
+.herowall__track--c { animation: wallA 115s linear infinite; }
 @keyframes wallA { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes wallB { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .herowall:hover .herowall__track { animation-play-state: paused; }
-.herowall__cell { flex: 0 0 auto; width: clamp(190px, 21vw, 340px); aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; border: 1px solid rgba(243,239,204,.06); }
+.herowall__cell { flex: 0 0 auto; height: 100%; width: auto; aspect-ratio: 4 / 3; border-radius: 5px; overflow: hidden; }
 .herowall__cell img { width: 100%; height: 100%; object-fit: cover; }
 
 /* knockout window: dark panel with the brand letters cut out */
