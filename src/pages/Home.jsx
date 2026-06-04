@@ -5,7 +5,7 @@ import CaseCard from "../components/CaseCard.jsx";
 import Aurora from "../components/Aurora.jsx";
 import Reveal from "../components/Reveal.jsx";
 import Magnetic from "../components/Magnetic.jsx";
-import Showcase from "../components/Showcase.jsx";
+import HeroWall from "../components/HeroWall.jsx";
 import ScrollGrid from "../components/ScrollGrid.jsx";
 import { cases } from "../data/cases.js";
 import { bentoSpan } from "../lib/layout.js";
@@ -13,13 +13,16 @@ import { useLang } from "../i18n.jsx";
 
 // Whole portfolio, media-rich cases first.
 const featured = [...cases].sort((a, b) => (b.images ? 1 : 0) - (a.images ? 1 : 0));
-const showcaseItems = featured.filter((c) => c.images && c.images[0]).slice(0, 6);
+const withImages = featured.filter((c) => c.images && c.images[0]);
+// Curated hero set: short, punchy brand names that read big as the "type window".
+const HERO_SLUGS = ["mirabeau", "vacuvin", "19-crimes", "rotari-italie", "jean-leon", "casa-rojo"];
+const showcaseItems = HERO_SLUGS.map((s) => cases.find((c) => c.slug === s)).filter((c) => c && c.images && c.images[0]);
 
 export default function Home() {
   const { t } = useLang();
   return (
     <Page>
-      <Showcase items={showcaseItems} />
+      <HeroWall items={showcaseItems} wall={withImages} />
 
       <section className="section section--cream work-home has-scrollgrid">
         <ScrollGrid variant="light" />
