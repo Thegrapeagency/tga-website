@@ -305,8 +305,8 @@ export const cases = [
     tag: { en: "Pop-up restaurant · Werkspoorfestival", nl: "Pop-up restaurant · Werkspoorfestival" },
     where: { en: "Werkspoorkathedraal, Utrecht", nl: "Werkspoorkathedraal, Utrecht" },
     services: {
-      en: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operations"],
-      nl: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operatie"],
+      en: ["Restaurant concept & production", "Food & wine pairing", "Design (Machoman) & menu cards", "Marketing & ticket sales"],
+      nl: ["Restaurantconcept & productie", "Food & wine pairing", "Design (Machoman) & menukaarten", "Marketing & ticketverkoop"],
     },
     images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg", "/images/casa-rojo/8.jpg", "/images/casa-rojo/9.jpg", "/images/casa-rojo/10.jpg", "/images/casa-rojo/11.jpg", "/images/casa-rojo/12.jpg", "/images/casa-rojo/13.jpg"],
     headline: { value: "3", label: { en: "Courses, built up from the wine", nl: "Gangen, opgebouwd vanuit de wijn" } },
@@ -328,11 +328,13 @@ export const cases = [
         "Sevilla's chef built the menu up from the wines. Starter: sea bream with basil, pistachio and courgette with La Gabacha Sauvignon Blanc. Middle: salmorejo with asparagus, manchego and chive oil with El Gordo del Circo Verdejo. Main: Iberico cheek with sweet potato, hazelnut and Jamón Serrano with Machoman Monastrell. Plus a chocolate cheesecake for dessert.",
         "Across the Easter weekend we ran three services for 160 dinner guests: two dinners and a lunch. Alongside the restaurant, one of our sommelières gave an hour-long Casa Rojo masterclass for twenty guests, going deeper into the producer and the three wines than the service allowed.",
         "The restaurant was the centrepiece, but it sat inside a wider campaign. Two newsletters from Meisjes van de Wijn (5,000 subscribers) and one from Sevilla (9,000 subscribers) brought 19,000 newsletter impressions, each with the full menu and pairings. On top of that, organic social ran across three channels (Sevilla 16K, Werkspoorfestival 7.5K, Meisjes van de Wijn 3.5K) for 27,000 reach, plus a Machoman-inspired poster, a dedicated blog and full on-site branding.",
+        "From production to design, we ran all of it. We searched for the right restaurant partner, tasted the wines with the chef to compose the menu, and handled the full production: styling and design based on the Machoman label, the menu cards, the sommelier team, the marketing and the online ticket sales, with ad campaigns driving the bookings.",
       ],
       nl: [
         "De chef van Sevilla bouwde het menu op vanuit de wijnen. Voor: dorade met basilicum, pistache en courgette bij La Gabacha Sauvignon Blanc. Tussen: salmorejo met asperge, manchego en bieslookolie bij El Gordo del Circo Verdejo. Hoofd: ibericowang met zoete aardappel, hazelnoot en Jamon Serrano bij Machoman Monastrell. Plus een chocolade-cheesecake als dessert.",
         "Over het paasweekend draaiden we drie services voor 160 dinergasten: twee diners en een lunch. Naast het restaurant gaf een van onze sommelières een Casa Rojo-masterclass van een uur voor twintig gasten, die dieper op de producent en de drie wijnen inging dan tijdens de service kon.",
         "Het restaurant was het middelpunt, maar zat in een bredere campagne. Twee nieuwsbrieven van Meisjes van de Wijn (5.000 abonnees) en een van Sevilla (9.000 abonnees) brachten 19.000 newsletter-impressies, elk met het volledige menu en de pairings. Daarnaast liep organische social over drie kanalen (Sevilla 16K, Werkspoorfestival 7.5K, Meisjes van de Wijn 3.5K), goed voor 27.000 bereik, plus een Machoman-geïnspireerde poster, een eigen blog en volledige on-site branding.",
+        "Van productie tot vormgeving deden we alles. We zochten de juiste restaurantpartner, proefden de wijnen met de chef om het menu samen te stellen, en verzorgden de volledige productie: aankleding en design op basis van het Machoman-etiket, de menukaarten, het sommelierteam, de marketing en de online ticketverkoop, met advertentiecampagnes die de boekingen aanjoegen.",
       ],
     },
     result: {
@@ -356,7 +358,7 @@ export const cases = [
       en: ["Brand activation", "Bubble Bar", "Easter brunch", "Media strategy", "Artwork"],
       nl: ["Brand activation", "Bubble Bar", "Paasbrunch", "Mediastrategie", "Artwork"],
     },
-    images: ["/images/schlumberger/1.jpg", "/images/schlumberger/2.jpg", "/images/schlumberger/3.jpg"],
+    images: ["/images/schlumberger/1.jpg", "/images/schlumberger/2.jpg", "/images/schlumberger/3.jpg", "/images/schlumberger/4.jpg", "/images/schlumberger/5.jpg", "/images/schlumberger/6.jpg", "/images/schlumberger/7.jpg", "/images/schlumberger/8.jpg", "/images/schlumberger/9.jpg", "/images/schlumberger/10.jpg", "/images/schlumberger/11.jpg"],
     headline: { value: "342", label: { en: "Bottles of bubbles popped", nl: "Flessen bubbels ontkurkt" } },
     verified: true,
     oneliner: {
@@ -485,7 +487,7 @@ export const cases = [
     results: [
       { value: "100%", label: { en: "Visitors welcomed at the entrance", nl: "Bezoekers ontvangen bij de entree" } },
       { value: "1", label: { en: "Original taxi with its own Jean Leon sign", nl: "Originele taxi met eigen Jean Leon-bord" } },
-      { value: "[check]", label: { en: "Visitors Nacht van de Wijn", nl: "Bezoekers Nacht van de Wijn" } },
+      { value: "2.500", label: { en: "Visitors that edition", nl: "Bezoekers die editie" } },
     ],
   },
 
@@ -499,7 +501,7 @@ export const cases = [
       en: ["Concept & experience", "Michelin lunch", "Live link to Moldova", "Festival bar"],
       nl: ["Concept & experience", "Sterrenlunch", "Live link Moldavië", "Festivalbar"],
     },
-    images: ["/images/castel-mimi/1.jpg", "/images/castel-mimi/2.jpg", "/images/castel-mimi/3.jpg", "/images/castel-mimi/4.jpg"],
+    images: ["/images/castel-mimi/1.jpg", "/images/castel-mimi/2.jpg", "/images/castel-mimi/3.jpg", "/images/castel-mimi/4.jpg", "/images/castel-mimi/5.jpg", "/images/castel-mimi/6.jpg", "/images/castel-mimi/7.jpg"],
     video: "/videos/castel-mimi.mp4",
     headline: { value: "1", label: { en: "Michelin lunch at one long table", nl: "Sterrenlunch aan één lange tafel" } },
     verified: true,
@@ -545,12 +547,13 @@ export const cases = [
     tag: { en: "Michelin lunch · press & tickets", nl: "Sterrenlunch · pers & tickets" },
     where: { en: "[check]", nl: "[check]" },
     services: {
-      en: ["Concept & experience", "Michelin-level lunch", "Press day", "Ticketed lunch"],
-      nl: ["Concept & experience", "Sterrenlunch", "Persdag", "Ticketlunch"],
+      en: ["Concept & production", "Michelin-level lunch", "Service & wine QC", "Press & ticket sales"],
+      nl: ["Concept & productie", "Sterrenlunch", "Bediening & wijncontrole", "Pers & ticketverkoop"],
     },
     images: [
       "/images/bemberg/1.jpg", "/images/bemberg/2.jpg", "/images/bemberg/3.jpg", "/images/bemberg/4.jpg",
       "/images/bemberg/5.jpg", "/images/bemberg/6.jpg", "/images/bemberg/7.jpg", "/images/bemberg/8.jpg",
+      "/images/bemberg/9.jpg", "/images/bemberg/10.jpg", "/images/bemberg/11.jpg",
     ],
     headline: { value: "Onno", label: { en: "Lunch by two-Michelin-star chef Onno Kokmeijer", nl: "Sterrenlunch door tweesterrenchef Onno Kokmeijer" } },
     verified: true,
@@ -570,10 +573,12 @@ export const cases = [
       en: [
         "We paired Bemberg's top wines with a lunch by Onno Kokmeijer. A chef of his level (two Michelin stars at Ciel Bleu, number 2 in the LEKKER500) turns the wines into a reason to come, not a detail on the side.",
         "We ran it over two days: one day to receive press, one day with tickets for the public, so the lunch built both credibility and reach.",
+        "And we didn't just design it, we produced it end to end. We tasted the wines with Onno and Bemberg's brand manager to build the menu, arranged Onno's sous-chefs and rented the kitchen, set up top-level service, pre-tasted every bottle for cork taint, laid the tables, and ran the online ticket sales with ad campaigns for the public lunch.",
       ],
       nl: [
         "We koppelden de topwijnen van Bemberg aan een lunch van Onno Kokmeijer. Een chef van zijn niveau (twee Michelinsterren bij Ciel Bleu, nummer 2 in de LEKKER500) maakt van de wijnen een reden om te komen, niet een detail erbij.",
         "We deden het over twee dagen: een dag pers ontvangen, een dag met tickets voor het publiek, zodat de lunch zowel geloofwaardigheid als bereik opbouwde.",
+        "En we bedachten het niet alleen, we produceerden het van begin tot eind. We proefden de wijnen met Onno en de brand manager van Bemberg om het menu te bepalen, regelden Onno's hulpkoks en huurden de keuken, zetten bediening van topniveau neer, proefden elke fles voor op kurk, dekten de tafels en verzorgden de online ticketverkoop met advertentiecampagnes voor de publiekslunch.",
       ],
     },
     result: {
