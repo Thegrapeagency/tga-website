@@ -475,3 +475,11 @@ p { margin: 0 0 1em; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .marquee { animation: none; }
 }
+
+/* ---- Case-sheet animated backdrop + hero motion (Cowork) ---- */
+.aurora--sheet { opacity: .5; }
+.case-sheet__bar, .case-sheet__scroll { z-index: 1; }
+.case-sheet__hero-media { will-change: transform; }
+@keyframes tga-kenburns { from { transform: scale(1); } to { transform: scale(1.07); } }
+.case-hero-img { animation: tga-kenburns 22s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .case-hero-img { animation: none; } }

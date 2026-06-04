@@ -18,7 +18,7 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
-    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg"],
+    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg", "/images/mirabeau/9.jpg", "/images/mirabeau/10.jpg"],
     headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
     verified: true,
     oneliner: {
@@ -308,7 +308,7 @@ export const cases = [
       en: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operations"],
       nl: ["Pop-up restaurant", "Food & wine pairing", "Masterclass", "Operatie"],
     },
-    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg"],
+    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg", "/images/casa-rojo/8.jpg", "/images/casa-rojo/9.jpg", "/images/casa-rojo/10.jpg", "/images/casa-rojo/11.jpg", "/images/casa-rojo/12.jpg", "/images/casa-rojo/13.jpg"],
     headline: { value: "3", label: { en: "Courses, built up from the wine", nl: "Gangen, opgebouwd vanuit de wijn" } },
     verified: true,
     oneliner: {
@@ -336,8 +336,8 @@ export const cases = [
       ],
     },
     result: {
-      en: "Casa Rojo from bold label to experience at the table, at a festival drawing around 20,000 visitors over the long weekend. Visible before, during and after across multiple channels. The food proved the wine, instead of the other way around.",
-      nl: "Casa Rojo van uitgesproken etiket naar ervaring aan tafel, op een festival dat over het lange weekend rond de 20.000 bezoekers trekt. Voor, tijdens en na het weekend zichtbaar over meerdere kanalen. Het eten bewees de wijn, in plaats van andersom.",
+      en: "Casa Rojo from bold label to experience at the table, at a festival drawing around 20,000 visitors over the long weekend. Each course was built around one wine: La Gabacha Sauvignon Blanc with the sea bream, El Gordo del Circo Verdejo with the salmorejo, Machoman Monastrell with the Iberico cheek. The food proved the wine, instead of the other way around.",
+      nl: "Casa Rojo van uitgesproken etiket naar ervaring aan tafel, op een festival dat over het lange weekend rond de 20.000 bezoekers trekt. Elke gang was rond één wijn gebouwd: La Gabacha Sauvignon Blanc bij de dorade, El Gordo del Circo Verdejo bij de salmorejo, Machoman Monastrell bij de ibericowang. Het eten bewees de wijn, in plaats van andersom.",
     },
     results: [
       { value: "160", label: { en: "Dinner guests across three services", nl: "Dinergasten over drie services" } },

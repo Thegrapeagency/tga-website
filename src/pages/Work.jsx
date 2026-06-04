@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import Page from "../components/Page.jsx";
 import CaseCard from "../components/CaseCard.jsx";
 import Reveal from "../components/Reveal.jsx";
 import Lightbox from "../components/Lightbox.jsx";
+import Aurora from "../components/Aurora.jsx";
 import { cases, getCase } from "../data/cases.js";
 import { bentoSpan } from "../lib/layout.js";
 import { useLang, pick } from "../i18n.jsx";
@@ -59,6 +60,9 @@ export default function Work() {
 
 function CaseSheet({ data, lang, t, onClose }) {
   const lenis = useLenis();
+  const scrollRef = useRef(null);
+  const { scrollY } = useScroll({ container: scrollRef });
+  const heroY = useTransform(scrollY, [0, 700], [0, 90]);
   const [lb, setLb] = useState(null);
   const approach = pick(data.approach, lang) || [];
   const videos = data.videos || (data.video ? [data.video] : []);
@@ -84,6 +88,7 @@ function CaseSheet({ data, lang, t, onClose }) {
         role="dialog"
         aria-label={`${data.brand} case`}
       >
+        <Aurora className="aurora--sheet" />
         <div className="case-sheet__bar">
           <span className="case-sheet__handle" />
           <button className="case-sheet__close" onClick={onClose} aria-label={t.work.close}>
@@ -91,7 +96,7 @@ function CaseSheet({ data, lang, t, onClose }) {
           </button>
         </div>
 
-        <div className="case-sheet__scroll" data-lenis-prevent>
+        <div className="case-sheet__scroll" data-lenis-prevent ref={scrollRef}>
           <header className="case-hero-inner container">
             <p className="eyebrow on-dark">{pick(data.tag, lang)}</p>
             <h1>{data.brand}</h1>
@@ -111,14 +116,14 @@ function CaseSheet({ data, lang, t, onClose }) {
               animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 22px)" }}
               transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="case-sheet__hero-media">
+              <motion.div className="case-sheet__hero-media" style={{ y: heroY }}>
                 {heroVideo ? (
                   <video src={heroVideo} poster={cover} autoPlay muted loop playsInline />
                 ) : (
                   <img className="case-hero-img" src={cover} alt={data.brand} />
                 )}
                 <span className="case-hero-glow" />
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
