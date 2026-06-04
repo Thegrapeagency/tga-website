@@ -501,7 +501,7 @@ export const cases = [
       en: ["Concept & experience", "Michelin lunch", "Live link to Moldova", "Festival bar"],
       nl: ["Concept & experience", "Sterrenlunch", "Live link Moldavië", "Festivalbar"],
     },
-    images: ["/images/castel-mimi/1.jpg", "/images/castel-mimi/2.jpg", "/images/castel-mimi/3.jpg", "/images/castel-mimi/4.jpg", "/images/castel-mimi/5.jpg", "/images/castel-mimi/6.jpg", "/images/castel-mimi/7.jpg"],
+    images: ["/images/castel-mimi/1.jpg", "/images/castel-mimi/2.jpg", "/images/castel-mimi/3.jpg", "/images/castel-mimi/4.jpg", "/images/castel-mimi/5.jpg", "/images/castel-mimi/6.jpg", "/images/castel-mimi/7.jpg", "/images/castel-mimi/8.jpg", "/images/castel-mimi/9.jpg", "/images/castel-mimi/10.jpg", "/images/castel-mimi/11.jpg", "/images/castel-mimi/12.jpg", "/images/castel-mimi/13.jpg"],
     video: "/videos/castel-mimi.mp4",
     headline: { value: "1", label: { en: "Michelin lunch at one long table", nl: "Sterrenlunch aan één lange tafel" } },
     verified: true,
@@ -545,7 +545,7 @@ export const cases = [
     brand: "Bemberg",
     client: "Bemberg",
     tag: { en: "Michelin lunch · press & tickets", nl: "Sterrenlunch · pers & tickets" },
-    where: { en: "[check]", nl: "[check]" },
+    where: { en: "The Green Room · De Hallen Studio's, Amsterdam", nl: "The Green Room · De Hallen Studio's, Amsterdam" },
     services: {
       en: ["Concept & production", "Michelin-level lunch", "Service & wine QC", "Press & ticket sales"],
       nl: ["Concept & productie", "Sterrenlunch", "Bediening & wijncontrole", "Pers & ticketverkoop"],
