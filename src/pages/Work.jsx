@@ -1,5 +1,6 @@
 import Page from "../components/Page.jsx";
 import CaseCard from "../components/CaseCard.jsx";
+import ScrollGrid from "../components/ScrollGrid.jsx";
 import { cases } from "../data/cases.js";
 import { bentoSpan } from "../lib/layout.js";
 import { useLang } from "../i18n.jsx";
@@ -19,7 +20,8 @@ export default function Work() {
       </section>
 
       <section className="section work-grid-section">
-        <div className="container">
+        <ScrollGrid variant="light" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="work-grid">
             {ordered.map((c, i) => (
               <CaseCard key={c.slug} c={c} index={i} span={bentoSpan(i)} />

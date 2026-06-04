@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import Page from "../components/Page.jsx";
 import CaseCard from "../components/CaseCard.jsx";
 import Aurora from "../components/Aurora.jsx";
-import TechMesh from "../components/TechMesh.jsx";
 import Reveal from "../components/Reveal.jsx";
 import Magnetic from "../components/Magnetic.jsx";
 import Showcase from "../components/Showcase.jsx";
+import ScrollGrid from "../components/ScrollGrid.jsx";
 import { cases } from "../data/cases.js";
 import { bentoSpan } from "../lib/layout.js";
 import { useLang } from "../i18n.jsx";
@@ -21,7 +21,8 @@ export default function Home() {
     <Page>
       <Showcase items={showcaseItems} />
 
-      <section className="section section--cream work-home">
+      <section className="section section--cream work-home has-scrollgrid">
+        <ScrollGrid variant="light" />
         <div className="container">
           <div className="section-head">
             <Reveal as="h2">{t.home.featured}</Reveal>
@@ -37,7 +38,7 @@ export default function Home() {
 
       <section className="section section--ink">
         <Aurora />
-        <TechMesh className="techmesh--statement" />
+        <ScrollGrid variant="dark" />
         <div className="container">
           <Reveal as="p" className="statement">{t.home.statement}</Reveal>
           <Reveal delay={0.15} className="mt-l">
@@ -46,7 +47,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section--sand">
+      <section className="section section--sand has-scrollgrid">
+        <ScrollGrid variant="light" />
         <div className="container">
           <Reveal as="p" className="eyebrow">{t.home.clients}</Reveal>
           <div className="clients mt-m">

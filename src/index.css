@@ -537,13 +537,30 @@ p { margin: 0 0 1em; }
 .section--cream::before, .section--sand::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(rgba(50,80,46,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(50,80,46,.05) 1px, transparent 1px);
+    linear-gradient(rgba(50,80,46,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50,80,46,.07) 1px, transparent 1px);
   background-size: 48px 48px;
   -webkit-mask-image: radial-gradient(120% 80% at 50% 0%, #000 60%, transparent 100%);
   mask-image: radial-gradient(120% 80% at 50% 0%, #000 60%, transparent 100%);
 }
 .section--cream > .container, .section--sand > .container { position: relative; z-index: 1; }
+.has-scrollgrid::before { display: none !important; }
+
+/* ===========================================================
+   ScrollGrid — clearer, scroll-reactive async line grid
+   =========================================================== */
+.scrollgrid { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: radial-gradient(140% 105% at 50% 25%, #000 52%, transparent 100%);
+  mask-image: radial-gradient(140% 105% at 50% 25%, #000 52%, transparent 100%); }
+.scrollgrid__l { position: absolute; inset: 0; will-change: background-position; }
+/* dark surfaces (ink / green) — sand-lime lines */
+.scrollgrid--dark .scrollgrid__l1 { background-image: linear-gradient(rgba(207,224,138,.11) 1px, transparent 1px), linear-gradient(90deg, rgba(207,224,138,.11) 1px, transparent 1px); background-size: 62px 62px; }
+.scrollgrid--dark .scrollgrid__l2 { background-image: linear-gradient(rgba(207,224,138,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(207,224,138,.05) 1px, transparent 1px); background-size: 31px 31px; }
+.scrollgrid--dark .scrollgrid__l3 { background-image: linear-gradient(rgba(207,224,138,.2) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(207,224,138,.2) 1.5px, transparent 1.5px); background-size: 132px 132px; }
+/* light surfaces (cream / sand / paper) — green lines */
+.scrollgrid--light .scrollgrid__l1 { background-image: linear-gradient(rgba(50,80,46,.11) 1px, transparent 1px), linear-gradient(90deg, rgba(50,80,46,.11) 1px, transparent 1px); background-size: 62px 62px; }
+.scrollgrid--light .scrollgrid__l2 { background-image: linear-gradient(rgba(50,80,46,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(50,80,46,.055) 1px, transparent 1px); background-size: 31px 31px; }
+.scrollgrid--light .scrollgrid__l3 { background-image: linear-gradient(rgba(64,99,67,.18) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(64,99,67,.18) 1.5px, transparent 1.5px); background-size: 132px 132px; }
 
 /* ---------- Card-expand: cover grows out of the tile, then dissolves ---------- */
 .case-sheet__grow { position: absolute; inset: 0; z-index: 6; background-size: cover; background-position: center; pointer-events: none; }
