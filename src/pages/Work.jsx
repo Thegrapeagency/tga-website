@@ -138,6 +138,30 @@ function CaseSheet({ data, lang, t, onClose }) {
               <Reveal as="p" delay={0.05}>{pick(data.result, lang)}</Reveal>
             </div>
 
+            {data.timeline && (
+              <div className="case-timeline">
+                <p className="eyebrow on-dark">{t.work.timeline}</p>
+                <ol className="timeline">
+                  {data.timeline.map((step, i) => (
+                    <motion.li
+                      className="timeline__step"
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-8%" }}
+                      transition={{ duration: 0.5, delay: (i % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <span className="timeline__date">{pick(step.date, lang)}</span>
+                      <div className="timeline__content">
+                        <h4>{pick(step.title, lang)}</h4>
+                        <p>{pick(step.body, lang)}</p>
+                      </div>
+                    </motion.li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
             {videos.length > 1 && (
               <div className="case-videos">
                 {videos.slice(1).map((src, i) => (
@@ -181,6 +205,19 @@ function CaseSheet({ data, lang, t, onClose }) {
                 ))}
               </div>
             </div>
+
+            {data.quote && (
+              <motion.figure
+                className="case-quote"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <blockquote>{pick(data.quote, lang)}</blockquote>
+                {data.quote.by && <figcaption>{pick(data.quote.by, lang)}</figcaption>}
+              </motion.figure>
+            )}
 
             <div className="case-sheet__next">
               <button className="btn btn--light" onClick={onClose}>{t.work.back}</button>

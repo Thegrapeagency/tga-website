@@ -483,3 +483,18 @@ p { margin: 0 0 1em; }
 @keyframes tga-kenburns { from { transform: scale(1); } to { transform: scale(1.07); } }
 .case-hero-img { animation: tga-kenburns 22s ease-in-out infinite alternate; }
 @media (prefers-reduced-motion: reduce) { .case-hero-img { animation: none; } }
+
+/* ---- Case timeline + pull-quote (Cowork) ---- */
+.case-timeline { max-width: 760px; margin: 60px 0 0; }
+.timeline { list-style: none; margin: 18px 0 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--glow), rgba(243, 239, 204, 0.12)); }
+.timeline__step { position: relative; padding: 0 0 30px 38px; }
+.timeline__step::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink-900); border: 2px solid var(--glow); box-shadow: 0 0 0 4px rgba(207, 224, 138, 0.12); }
+.timeline__step:last-child { padding-bottom: 0; }
+.timeline__date { display: block; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sand); }
+.timeline__content h4 { font-family: var(--font-display); font-size: clamp(19px, 2.4vw, 23px); margin: 2px 0 4px; color: var(--cream); }
+.timeline__content p { font-size: 16.5px; color: rgba(243, 239, 204, 0.82); margin: 0; max-width: 60ch; }
+
+.case-quote { margin: 60px 0 0; max-width: 900px; padding: 0 0 0 28px; border-left: 3px solid var(--glow); }
+.case-quote blockquote { font-family: var(--font-display); font-size: clamp(26px, 4vw, 42px); line-height: 1.15; letter-spacing: -0.01em; color: var(--sand); margin: 0; }
+.case-quote figcaption { margin-top: 16px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(243, 239, 204, 0.6); }

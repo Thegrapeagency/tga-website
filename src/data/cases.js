@@ -591,6 +591,118 @@ export const cases = [
       { value: "50", label: { en: "Guests per shift (press + ticket day)", nl: "Gasten per shift (pers- + ticketdag)" } },
     ],
   },
+
+  {
+    slug: "pour-culture",
+    brand: "Pour Culture",
+    client: { en: "Meisjes van de Wijn (own brand)", nl: "Meisjes van de Wijn (eigen merk)" },
+    tag: { en: "Concept · identity · event", nl: "Concept · identiteit · event" },
+    where: { en: "Club Wine · Werkspoorkathedraal, Utrecht", nl: "Club Wine · Werkspoorkathedraal, Utrecht" },
+    services: {
+      en: ["Concept & brand identity", "Invitations & email campaign", "On-site posters & signage", "Speech & aftercare"],
+      nl: ["Concept & brand identity", "Uitnodiging & mailcampagne", "Posters & signage on-site", "Speech & aftercare"],
+    },
+    images: [
+      "/images/pour-culture/1.jpg", "/images/pour-culture/2.jpg", "/images/pour-culture/3.jpg",
+      "/images/pour-culture/4.jpg", "/images/pour-culture/5.jpg", "/images/pour-culture/6.jpg",
+      "/images/pour-culture/7.jpg", "/images/pour-culture/8.jpg", "/images/pour-culture/9.jpg",
+      "/images/pour-culture/10.jpg", "/images/pour-culture/11.jpg", "/images/pour-culture/12.jpg",
+    ],
+    headline: { value: "0", label: { en: "Photos taken. That was the point.", nl: "Foto's gemaakt. Dat was de bedoeling." } },
+    verified: true,
+    oneliner: {
+      en: "Ten years of running other people's parties. On 23 May, our own.",
+      nl: "Tien jaar andermans feesten. Op 23 mei ons eigen.",
+    },
+    intro: {
+      en: "Pour Culture wasn't a jubilee with canapés. It was a statement: a wine company that spends ten years running other people's parties, throwing its own for the first time. The Grape Agency built the whole thing, from concept and identity to invitations, email campaign, on-site posters, the welcome speech and the aftercare. Nothing standalone, everything in one carried-through tone.",
+      nl: "Pour Culture was geen jubileumavond met canapés. Het was een statement: een wijnbedrijf dat tien jaar lang andermans feesten organiseert, vierde voor het eerst zijn eigen. The Grape Agency bouwde het volledige traject, van concept en huisstijl tot uitnodigingen, mailcampagne, posters in het venue, welkomstwoord en aftercare. Geen onderdeel los, alles in één doorgetrokken toon.",
+    },
+    challenge: {
+      en: "Meisjes van de Wijn turned ten. The brief they wrote themselves: make a party that feels like ours. No formal jubilee, no networking drinks with canapés. We run other people's parties all year. Tonight, our own. The harder task: hold one tone from the first email to the last poster, and use it to set the rules of the night.",
+      nl: "Meisjes van de Wijn werd tien. De brief die ze aan zichzelf schreven: maak een feest dat aanvoelt als ons feest. Geen formele jubileumavond, geen netwerkborrel met canapés. We organiseren het hele jaar andermans feesten. Vanavond ons eigen. De lastigere opgave: houd één toon vast van de eerste mail tot de laatste poster, en gebruik die om de regels van de avond te zetten.",
+    },
+    approach: {
+      en: [
+        "Guests tonight, not hosts. The whole concept is an inversion. The sommeliers don't work, they party along. Self-service at the bar, no formal service. Carried through every piece, from the invitation to the aftercare mail.",
+        "Identity as behaviour. Every poster, every mail, every visual repeats the same message: this is not a regular wine-service night. So guests walk in differently, looser, ready to dance, not waiting for a sommelier to help them choose.",
+        "Deliberate scarcity of documentation. House rule #2: no photographer. A statement, not an oversight. What happens here happens for the people who were there. The aftercare mail didn't hide the choice, it made a joke of it: there simply aren't any.",
+        "The 'Confessions of a Wine Team' universe. A sub-brand of self-deprecating posters that tell the MvdW story. 'Ten years on and we still don't know how many glasses break per event.' Not ironic, not defensive. Honest, dry, with love for the craft.",
+      ],
+      nl: [
+        "Vanavond gasten, geen gastheren. Het hele concept draait om een omkering. De sommeliers werken niet, ze feesten mee. Self-service aan de bar, geen formele service. Consistent doorgevoerd in elke uiting, van de uitnodiging tot de aftercare-mail.",
+        "Identiteit als gedragsmaker. Elke poster, elke mail, elk visueel element herhaalt dezelfde boodschap: dit is geen reguliere wijnservice-avond. Daardoor komen gasten zelf ook anders binnen, losser, klaar om te dansen, niet wachtend op een sommelier die hen helpt kiezen.",
+        "Bewuste schaarste aan documentatie. Huisregel #2: geen fotograaf. Een statement, geen vergetelheid. Wat hier gebeurt, gebeurt voor de mensen die er waren. De aftercare-mail draaide die keuze niet weg maar maakte er een grap van: die zijn er namelijk niet gemaakt.",
+        "Het 'Confessions of a Wine Team'-universum. Een eigen sub-merk van zelfspot-posters die het verhaal van MvdW vertellen. '10 jaar later weten we nog steeds niet hoeveel glazen er per event sneuvelen.' Niet ironisch, niet defensief. Eerlijk, droog, met liefde voor het vak.",
+      ],
+    },
+    timeline: [
+      {
+        date: { en: "April", nl: "April" },
+        title: { en: "Concept & brand identity", nl: "Concept & brand identity" },
+        body: {
+          en: "Pour Culture as the name. A visual language of brutalist meets editorial: black, copper, wine-red, off-white. Typography in Unbounded 900, Instrument Serif and JetBrains Mono.",
+          nl: "Pour Culture als naam. Een visuele taal van brutalist meets editorial: zwart, copper, wine-red, off-white. Typografie in Unbounded 900, Instrument Serif en JetBrains Mono.",
+        },
+      },
+      {
+        date: { en: "12 May", nl: "12 mei" },
+        title: { en: "Save the date + RSVP", nl: "Save the date + RSVP" },
+        body: {
+          en: "A brutalist site at pour-culture.nl, with guest-list management and matching.",
+          nl: "Een brutalist-site op pour-culture.nl, met guestlist-management en matching.",
+        },
+      },
+      {
+        date: { en: "20 May · T-3", nl: "20 mei · T-3" },
+        title: { en: "Hype mail", nl: "Hype mail" },
+        body: {
+          en: "Subject: 'Ten years of other people's parties. Saturday, ours.' The POUR CULTURE hero banner and the timetable reveal with eight acts.",
+          nl: "Subject: 'Tien jaar andermans feesten. Zaterdag ons feest.' De POUR CULTURE hero banner en de timetable-reveal met acht acts.",
+        },
+      },
+      {
+        date: { en: "22 May · T-1", nl: "22 mei · T-1" },
+        title: { en: "Info mail", nl: "Info mail" },
+        body: {
+          en: "Subject: 'Saturday. Inside before 20:30.' Walking route, the wine line-up visual ('Beyoncé acapella in your glass') and practical info, code-red-weather joke included.",
+          nl: "Subject: 'Zaterdag. Binnen vóór 20:30.' Looproute, de wine line-up visual ('Beyoncé acapella in je glas') en praktische info, inclusief code-rood-weer-grap.",
+        },
+      },
+      {
+        date: { en: "23 May", nl: "23 mei" },
+        title: { en: "The party", nl: "Het feest" },
+        body: {
+          en: "Seven posters through the venue, an eight-minute welcome speech off an A6 cue card, a self-service wine bar and seven DJ sets from 19:45 to 01:00.",
+          nl: "Zeven posters door het venue, een welkomstwoord van acht minuten vanaf een A6-spiekbriefje, een zelf-service wijnbar en zeven DJ-sets van 19:45 tot 01:00.",
+        },
+      },
+      {
+        date: { en: "26 May · T+3", nl: "26 mei · T+3" },
+        title: { en: "Thank-you mail", nl: "Bedankmail" },
+        body: {
+          en: "Subject: 'Three days later. Still thirsty.' A recap-stats visual (130 / 7 / 167 / 0 / ∞), a Spotify playlist with the tracks, and a wink: sign up for Pour Culture 2, fifteen years of MvdW. With a callback to the bottle from the speech.",
+          nl: "Subject: 'Drie dagen later. Nog steeds dorst.' Een recap-stats visual (130 / 7 / 167 / 0 / ∞), een Spotify-playlist met de tracks, en een knipoog: aanmelden voor Pour Culture 2, vijftien jaar MvdW. Met een callback naar de fles uit de speech.",
+        },
+      },
+    ],
+    quote: {
+      en: "This is the bottle we kept for ten years. Tonight we open it.",
+      nl: "Dit is de fles die we tien jaar hebben bewaard. Vanavond trekken we 'm open.",
+      by: { en: "From Milan Gennissen's welcome speech", nl: "Uit het welkomstwoord van Milan Gennissen" },
+    },
+    result: {
+      en: "One night, six weeks of work, one tone, carried through every piece. 130 guests on the floor, 167 bottles opened, zero beers poured, unlimited refills, and not a single photo. Proof that brand identity can be more than a logo on an invitation.",
+      nl: "Eén avond, zes weken werk, één toon, doorgevoerd in elke uiting. 130 gasten op de vloer, 167 flessen open, nul biertjes, oneindig refills, en geen enkele foto. Bewijs dat brand identity meer kan zijn dan een logo op een uitnodiging.",
+    },
+    results: [
+      { value: "130", label: { en: "Guests on the floor", nl: "Gasten op de vloer" } },
+      { value: "7", label: { en: "Acts & DJ sets", nl: "Acts & DJ-sets" } },
+      { value: "167", label: { en: "Bottles opened", nl: "Flessen ontkurkt" } },
+      { value: "0", label: { en: "Beers poured", nl: "Biertjes geschonken" } },
+      { value: "∞", label: { en: "Refills (no limit)", nl: "Refills (geen limiet)" } },
+    ],
+  },
 ];
 
 export const getCase = (slug) => cases.find((c) => c.slug === slug);
