@@ -553,7 +553,7 @@ export const cases = [
       "/images/bemberg/5.jpg", "/images/bemberg/6.jpg", "/images/bemberg/7.jpg", "/images/bemberg/8.jpg",
     ],
     headline: { value: "Onno", label: { en: "Lunch by two-Michelin-star chef Onno Kokmeijer", nl: "Sterrenlunch door tweesterrenchef Onno Kokmeijer" } },
-    verified: false,
+    verified: true,
     oneliner: {
       en: "A very special wine house, brought to the table by a two-Michelin-star chef.",
       nl: "Een heel bijzonder wijnhuis, aan tafel gebracht door een tweesterrenchef.",
@@ -577,13 +577,13 @@ export const cases = [
       ],
     },
     result: {
-      en: "A wine house few knew, put on the map through a chef people do know, with one day for press and one for the public. [check] Add guest numbers once confirmed.",
-      nl: "Een wijnhuis dat weinig mensen kenden, op de kaart gezet via een chef die mensen wel kennen, met een dag pers en een dag publiek. [check] Gastaantallen volgen zodra bevestigd.",
+      en: "A wine house few knew, put on the map through a chef people do know, with one day for press and one for the public, around 50 guests per shift.",
+      nl: "Een wijnhuis dat weinig mensen kenden, op de kaart gezet via een chef die mensen wel kennen, met een dag pers en een dag publiek, zo'n 50 gasten per shift.",
     },
     results: [
       { value: "2 sterren", label: { en: "Michelin stars chef Onno earned at Ciel Bleu", nl: "Michelinsterren van chef Onno bij Ciel Bleu" } },
       { value: "#2", label: { en: "LEKKER500 ranking", nl: "LEKKER500-notering" } },
-      { value: "[check]", label: { en: "Guests (press + tickets)", nl: "Gasten (pers + tickets)" } },
+      { value: "50", label: { en: "Guests per shift (press + ticket day)", nl: "Gasten per shift (pers- + ticketdag)" } },
     ],
   },
 ];
