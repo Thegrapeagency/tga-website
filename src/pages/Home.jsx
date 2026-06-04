@@ -14,15 +14,12 @@ import { useLang } from "../i18n.jsx";
 // Whole portfolio, media-rich cases first.
 const featured = [...cases].sort((a, b) => (b.images ? 1 : 0) - (a.images ? 1 : 0));
 const withImages = featured.filter((c) => c.images && c.images[0]);
-// Curated hero set: short, punchy brand names that read big as the "type window".
-const HERO_SLUGS = ["mirabeau", "vacuvin", "19-crimes", "rotari-italie", "jean-leon", "casa-rojo"];
-const showcaseItems = HERO_SLUGS.map((s) => cases.find((c) => c.slug === s)).filter((c) => c && c.images && c.images[0]);
 
 export default function Home() {
   const { t } = useLang();
   return (
     <Page>
-      <HeroWall items={showcaseItems} wall={withImages} />
+      <HeroWall wall={withImages} />
 
       <section className="section section--cream work-home has-scrollgrid">
         <ScrollGrid variant="light" />
