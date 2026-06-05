@@ -18,12 +18,20 @@ export default function CaseSheet({ data, onClose }) {
   const dragControls = useDragControls();
   const { scrollY } = useScroll({ container: scrollRef });
   const heroY = useTransform(scrollY, [0, 700], [0, 90]);
+  // Horizontal gallery reel: pans sideways as the section scrolls through.
+  const reelRef = useRef(null);
+  const { scrollYProgress: reelProgress } = useScroll({ container: scrollRef, target: reelRef, offset: ["start end", "end start"] });
+  const reelEndPct = -Math.min(74, (data.images ? data.images.length - 1 : 0) * 8);
+  const reelX = useTransform(reelProgress, [0, 1], ["4%", `${reelEndPct}%`]);
   const [lb, setLb] = useState(null);
   const approach = pick(data.approach, lang) || [];
   const videos = data.videos || (data.video ? [data.video] : []);
   const cover = data.images && data.images[0];
   const heroVideo = videos[0];
   const gallery = data.images ? data.images.slice(1) : [];
+  // Knockout-hero font size scales down for longer brand names so they fit.
+  const bn = data.brand.length;
+  const heroFont = bn <= 7 ? 250 : bn <= 10 ? 200 : bn <= 13 ? 158 : bn <= 18 ? 120 : 95;
 
   // Card-expand: grow out of the tapped tile's footprint via clip-path, with
   // the cover photo growing along (image continuity), then dissolving to the
@@ -105,39 +113,62 @@ export default function CaseSheet({ data, onClose }) {
         </div>
 
         <div className="case-sheet__scroll" data-lenis-prevent ref={scrollRef}>
-          <header className="case-hero-inner container">
-            <p className="eyebrow on-dark">{pick(data.tag, lang)}</p>
-            <h1>{data.brand}</h1>
-            <p className="case-sub">{pick(data.oneliner, lang)}</p>
-            {!data.verified && <span className="draft-flag">{t.work.draft}</span>}
-            <dl className="case-meta">
-              <div><dt>{t.work.client}</dt><dd>{pick(data.client, lang)}</dd></div>
-              <div><dt>{t.work.where}</dt><dd>{pick(data.where, lang)}</dd></div>
-              <div><dt>{t.work.services}</dt><dd>{pick(data.services, lang).join(", ")}</dd></div>
-            </dl>
-            {data.link && (
-              <a className="btn btn--light case-link" href={data.link.url} target="_blank" rel="noopener noreferrer">
-                {pick(data.link.label, lang)} <span className="btn__arrow" aria-hidden="true">↗</span>
-              </a>
-            )}
-          </header>
-
-          {(heroVideo || cover) && (
+          {(heroVideo || cover) ? (
             <motion.div
-              className="case-sheet__hero container"
-              initial={{ opacity: 0, y: 30, clipPath: "inset(8% 4% 8% 4% round 22px)" }}
+              className="case-knockout container"
+              initial={{ opacity: 0, y: 26, clipPath: "inset(7% 3% 7% 3% round 22px)" }}
               animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0% round 22px)" }}
-              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div className="case-sheet__hero-media" style={{ y: heroY }}>
-                {heroVideo ? (
-                  <video src={heroVideo} poster={cover} autoPlay muted loop playsInline />
-                ) : (
-                  <img className={`case-hero-img ${data.imagesContain ? "case-hero-img--contain" : ""}`} src={cover} alt={data.brand} />
-                )}
-                <span className="case-hero-glow" />
-              </motion.div>
+              <div className="case-knockout__stage">
+                <motion.div className="case-knockout__media" style={{ y: heroY }}>
+                  {heroVideo ? (
+                    <video src={heroVideo} poster={cover} autoPlay muted loop playsInline />
+                  ) : (
+                    <img src={cover} alt="" />
+                  )}
+                </motion.div>
+                <div className="case-knockout__window" aria-hidden="true">
+                  <svg className="case-knockout__svg" viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                      <mask id={`kc-${data.slug}`}>
+                        <rect x="-1400" y="-600" width="4200" height="1800" fill="#fff" />
+                        <text className="case-knockout__text" x="700" y="392" textAnchor="middle" fontSize={heroFont}>{data.brand}</text>
+                      </mask>
+                    </defs>
+                    <rect x="-1400" y="-600" width="4200" height="1800" fill="#0b130d" fillOpacity="0.5" mask={`url(#kc-${data.slug})`} />
+                  </svg>
+                </div>
+                <p className="case-knockout__tag">{pick(data.tag, lang)}</p>
+                <div className="case-knockout__foot">
+                  <h1 className="sr-only">{data.brand}</h1>
+                  {!data.verified && <span className="draft-flag">{t.work.draft}</span>}
+                  <p className="case-knockout__sub">{pick(data.oneliner, lang)}</p>
+                  {data.link && (
+                    <a className="btn btn--light case-link" href={data.link.url} target="_blank" rel="noopener noreferrer">
+                      {pick(data.link.label, lang)} <span className="btn__arrow" aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+              <dl className="case-meta">
+                <div><dt>{t.work.client}</dt><dd>{pick(data.client, lang)}</dd></div>
+                <div><dt>{t.work.where}</dt><dd>{pick(data.where, lang)}</dd></div>
+                <div><dt>{t.work.services}</dt><dd>{pick(data.services, lang).join(", ")}</dd></div>
+              </dl>
             </motion.div>
+          ) : (
+            <header className="case-hero-inner container">
+              <p className="eyebrow on-dark">{pick(data.tag, lang)}</p>
+              <h1>{data.brand}</h1>
+              <p className="case-sub">{pick(data.oneliner, lang)}</p>
+              {!data.verified && <span className="draft-flag">{t.work.draft}</span>}
+              <dl className="case-meta">
+                <div><dt>{t.work.client}</dt><dd>{pick(data.client, lang)}</dd></div>
+                <div><dt>{t.work.where}</dt><dd>{pick(data.where, lang)}</dd></div>
+                <div><dt>{t.work.services}</dt><dd>{pick(data.services, lang).join(", ")}</dd></div>
+              </dl>
+            </header>
           )}
 
           <div className="container case-sheet__body">
@@ -186,22 +217,21 @@ export default function CaseSheet({ data, onClose }) {
             )}
 
             {gallery.length > 0 && (
-              <div className={`case-gallery ${data.imagesContain ? "case-gallery--contain" : ""}`}>
-                {gallery.map((src, i) => (
-                  <motion.button
-                    type="button"
-                    key={i}
-                    className={`gal ${data.imagesContain ? "" : GAL_SPAN[i % GAL_SPAN.length]}`}
-                    onClick={() => setLb(i + 1)}
-                    aria-label={`${data.brand} ${i + 2}`}
-                    initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    viewport={{ once: true, margin: "-8%" }}
-                    transition={{ duration: 0.65, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <img src={src} alt={`${data.brand} ${i + 2}`} loading="lazy" />
-                  </motion.button>
-                ))}
+              <div className={`case-reel ${data.imagesContain ? "case-reel--contain" : ""}`} ref={reelRef}>
+                <p className="eyebrow on-dark case-reel__label">{lang === "en" ? "In pictures" : "In beeld"}</p>
+                <motion.div className="case-reel__track" style={{ x: reelX }}>
+                  {gallery.map((src, i) => (
+                    <button
+                      type="button"
+                      key={i}
+                      className="case-reel__item"
+                      onClick={() => setLb(i + 1)}
+                      aria-label={`${data.brand} ${i + 2}`}
+                    >
+                      <img src={src} alt={`${data.brand} ${i + 2}`} loading="lazy" />
+                    </button>
+                  ))}
+                </motion.div>
               </div>
             )}
 
