@@ -54,7 +54,7 @@ export default function HeroWall({ wall }) {
               </text>
             </mask>
           </defs>
-          <rect x="-1000" y="-820" width="3000" height="2460" fill="#0b130d" mask="url(#tga-cut)" />
+          <rect x="-1000" y="-820" width="3000" height="2460" fill="#0b130d" fill-opacity="0.85" mask="url(#tga-cut)" />
         </svg>
       </motion.div>
 
