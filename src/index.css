@@ -639,7 +639,7 @@ p { margin: 0 0 1em; }
     rgba(11,19,13,.42); }
 
 .herowall__inner { position: relative; z-index: 3; width: 100%; max-width: var(--maxw); margin: 0 auto; display: flex; flex-direction: column; justify-content: space-between; padding-top: clamp(26px, 4vw, 52px); padding-bottom: clamp(26px, 4vw, 50px); }
-.herowall__eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--sand); margin: 0; align-self: flex-start; }
+.herowall__eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--sand); margin: 0; align-self: flex-start; text-shadow: 0 1px 10px rgba(11,19,13,.85); }
 
 .herowall__center { display: flex; align-items: center; justify-content: center; flex: 1 1 auto; min-height: 0; padding: clamp(16px, 3vw, 36px) 0; }
 .herowall__type { font-family: var(--font-display); font-weight: 400; font-size: clamp(58px, 14vw, 230px); line-height: .84; letter-spacing: -.03em; text-align: center; margin: 0; max-width: 12ch; word-break: break-word; hyphens: none;
