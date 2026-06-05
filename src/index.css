@@ -614,7 +614,8 @@ p { margin: 0 0 1em; }
 .herowall { position: relative; min-height: calc(100svh - 72px); display: flex; overflow: hidden; isolation: isolate; background: var(--ink-900); color: var(--cream); }
 @supports not (min-height: 100svh) { .herowall { min-height: calc(100vh - 72px); } }
 
-.herowall__wall { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; gap: 6px; opacity: 1; will-change: transform; }
+.herowall { contain: paint; }
+.herowall__wall { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; gap: 6px; opacity: 1; transform: translateZ(0); }
 .herowall__row { flex: 1 1 0; min-height: 0; overflow: hidden; display: flex; align-items: center; }
 .herowall__track { display: flex; gap: 6px; width: max-content; height: 100%; will-change: transform; }
 .herowall__track--a { animation: wallA 80s linear infinite; }
@@ -627,7 +628,7 @@ p { margin: 0 0 1em; }
 .herowall__cell img { width: 100%; height: 100%; object-fit: cover; }
 
 /* knockout window: dark panel with the brand letters cut out */
-.herowall__window { position: absolute; inset: 0; z-index: 1; pointer-events: none; will-change: transform; }
+.herowall__window { position: absolute; inset: 0; z-index: 1; pointer-events: none; transform: translateZ(0); backface-visibility: hidden; }
 .herowall__cut { width: 100%; height: 100%; display: block; }
 .herowall__cut-text { fill: #000; font-family: var(--font-display); font-weight: 400; font-size: 210px; letter-spacing: -7px; }
 .herowall__grid { z-index: 2; opacity: .4; }

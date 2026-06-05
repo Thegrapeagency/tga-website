@@ -7,9 +7,12 @@ import { useLang } from "../i18n.jsx";
 export default function HeroWall({ wall }) {
   const { t, lang } = useLang();
 
-  const rowA = [...wall, ...wall];
-  const rowB = [...wall.slice().reverse(), ...wall.slice().reverse()];
-  const rowC = [...wall.slice(3), ...wall.slice(0, 3), ...wall.slice(3), ...wall.slice(0, 3)];
+  // Keep the wall light: ~8 cells per row (doubled for a seamless loop), with a
+  // different offset per row for variety. Fewer image layers = smoother scroll.
+  const pick = (start, n = 8) => Array.from({ length: n }, (_, i) => wall[(start + i) % wall.length]);
+  const rowA = [...pick(0), ...pick(0)];
+  const rowB = [...pick(5).reverse(), ...pick(5).reverse()];
+  const rowC = [...pick(9), ...pick(9)];
 
   return (
     <section className="herowall">
