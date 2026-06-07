@@ -1,11 +1,37 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { useLang } from "../i18n.jsx";
 
 // Hero: a living wall of work in motion, seen THROUGH a giant knockout of
-// "THE GRAPE AGENCY". The wall moves via pure CSS (compositor) so it stays
-// smooth while scrolling — no per-frame JS transforms on the masked layer.
+// "THE GRAPE AGENCY". The wall moves via pure CSS, and pauses while scrolling /
+// when off-screen so the heavy SVG-mask layer never fights the scroll.
 export default function HeroWall({ wall }) {
   const { t, lang } = useLang();
+  const ref = useRef(null);
+
+  // Pause the marquee during active scroll and when the hero is out of view —
+  // the masked moving wall is expensive to re-composite, so don't run it then.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let tmo;
+    const onScroll = () => {
+      el.classList.add("is-scrolling");
+      clearTimeout(tmo);
+      tmo = setTimeout(() => el.classList.remove("is-scrolling"), 200);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const io = new IntersectionObserver(
+      ([e]) => el.classList.toggle("is-out", !e.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(tmo);
+      io.disconnect();
+    };
+  }, []);
 
   // Keep the wall light: ~8 cells per row (doubled for a seamless loop), with a
   // different offset per row for variety. Fewer image layers = smoother scroll.
@@ -15,7 +41,7 @@ export default function HeroWall({ wall }) {
   const rowC = [...pick(9), ...pick(9)];
 
   return (
-    <section className="herowall">
+    <section className="herowall" ref={ref}>
       <div className="herowall__wall" aria-hidden="true">
         <div className="herowall__row">
           <div className="herowall__track herowall__track--a">
@@ -46,7 +72,7 @@ export default function HeroWall({ wall }) {
               </text>
             </mask>
           </defs>
-          <rect x="-1000" y="-820" width="3000" height="2460" fill="#0b130d" fillOpacity="0.58" mask="url(#tga-cut)" />
+          <rect x="-1000" y="-820" width="3000" height="2460" fill="#0b130d" fillOpacity="0.8" mask="url(#tga-cut)" />
         </svg>
       </div>
 

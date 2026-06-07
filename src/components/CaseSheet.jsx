@@ -18,11 +18,15 @@ export default function CaseSheet({ data, onClose }) {
   const dragControls = useDragControls();
   const { scrollY } = useScroll({ container: scrollRef });
   const heroY = useTransform(scrollY, [0, 700], [0, 90]);
-  // Horizontal gallery reel: pans sideways as the section scrolls through.
-  const reelRef = useRef(null);
-  const { scrollYProgress: reelProgress } = useScroll({ container: scrollRef, target: reelRef, offset: ["start end", "end start"] });
-  const reelEndPct = -Math.min(74, (data.images ? data.images.length - 1 : 0) * 8);
-  const reelX = useTransform(reelProgress, [0, 1], ["4%", `${reelEndPct}%`]);
+  // Horizontal gallery reel: manually scrollable (swipe / arrows).
+  const trackRef = useRef(null);
+  const scrollReel = (dir) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector(".case-reel__item");
+    const step = card ? card.offsetWidth + 18 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
   const [lb, setLb] = useState(null);
   const approach = pick(data.approach, lang) || [];
   const videos = data.videos || (data.video ? [data.video] : []);
@@ -217,9 +221,21 @@ export default function CaseSheet({ data, onClose }) {
             )}
 
             {gallery.length > 0 && (
-              <div className={`case-reel ${data.imagesContain ? "case-reel--contain" : ""}`} ref={reelRef}>
-                <p className="eyebrow on-dark case-reel__label">{lang === "en" ? "In pictures" : "In beeld"}</p>
-                <motion.div className="case-reel__track" style={{ x: reelX }}>
+              <motion.div
+                className={`case-reel ${data.imagesContain ? "case-reel--contain" : ""}`}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-8%" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="case-reel__head">
+                  <p className="eyebrow on-dark case-reel__label">{lang === "en" ? "In pictures" : "In beeld"}</p>
+                  <div className="case-reel__nav">
+                    <button type="button" className="case-reel__arrow" onClick={() => scrollReel(-1)} aria-label={lang === "en" ? "Previous" : "Vorige"}>‹</button>
+                    <button type="button" className="case-reel__arrow" onClick={() => scrollReel(1)} aria-label={lang === "en" ? "Next" : "Volgende"}>›</button>
+                  </div>
+                </div>
+                <div className="case-reel__track" ref={trackRef} data-lenis-prevent>
                   {gallery.map((src, i) => (
                     <button
                       type="button"
@@ -231,8 +247,8 @@ export default function CaseSheet({ data, onClose }) {
                       <img src={src} alt={`${data.brand} ${i + 2}`} loading="lazy" />
                     </button>
                   ))}
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             )}
 
             <div className="case-results">
