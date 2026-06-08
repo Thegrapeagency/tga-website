@@ -657,7 +657,6 @@ p { margin: 0 0 1em; }
 .herowall__track--c { animation: wallA 115s linear infinite; }
 @keyframes wallA { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes wallB { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.herowall:hover .herowall__track,
 .herowall.is-scrolling .herowall__track,
 .herowall.is-out .herowall__track { animation-play-state: paused; }
 .herowall__cell { flex: 0 0 auto; height: 100%; width: auto; aspect-ratio: 4 / 3; border-radius: 5px; overflow: hidden; }
