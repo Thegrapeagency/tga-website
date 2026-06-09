@@ -127,7 +127,7 @@ export const cases = [
       en: ["Concept", "Speakeasy build", "Brand experience", "Staffing"],
       nl: ["Concept", "Speakeasy-bouw", "Brand experience", "Bemensing"],
     },
-    images: ["/images/19-crimes/1.jpg", "/images/19-crimes/2.jpg", "/images/19-crimes/3.jpg", "/images/19-crimes/4.jpg", "/images/19-crimes/5.jpg"],
+    images: ["/images/19-crimes/1.jpg", "/images/19-crimes/2.jpg", "/images/19-crimes/3.jpg", "/images/19-crimes/4.jpg", "/images/19-crimes/5.jpg", "/images/19-crimes/6.jpg", "/images/19-crimes/7.jpg", "/images/19-crimes/8.jpg", "/images/19-crimes/9.jpg"],
     video: "/videos/19-crimes.mp4",
     headline: { value: "#1", label: { en: "Best-selling bar of 20, in one night", nl: "Best verkopende bar van 20, op één avond" } },
     verified: true,
@@ -223,7 +223,7 @@ export const cases = [
       en: ["Premiere activation", "Rotari trolley", "Styling", "Hosting"],
       nl: ["Premièreactivatie", "Rotari-trolley", "Styling", "Hosting"],
     },
-    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg", "/images/rotari-premiere/3.jpg", "/images/rotari-premiere/4.jpg", "/images/rotari-premiere/5.jpg"],
+    images: ["/images/rotari-premiere/1.jpg", "/images/rotari-premiere/2.jpg", "/images/rotari-premiere/3.jpg", "/images/rotari-premiere/4.jpg", "/images/rotari-premiere/5.jpg", "/images/rotari-premiere/6.jpg", "/images/rotari-premiere/7.jpg", "/images/rotari-premiere/8.jpg", "/images/rotari-premiere/9.jpg", "/images/rotari-premiere/10.jpg", "/images/rotari-premiere/11.jpg"],
     headline: { value: "600", label: { en: "Guests at the premiere", nl: "Gasten op de première" } },
     verified: true,
     oneliner: {
@@ -269,7 +269,7 @@ export const cases = [
       en: ["Alcohol-free cocktail bar", "Interactive concept", "Styling", "Staffing"],
       nl: ["Alcoholvrije cocktailbar", "Interactief concept", "Styling", "Bemensing"],
     },
-    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg", "/images/rebels-abstinence/4.jpg", "/images/rebels-abstinence/5.jpg", "/images/rebels-abstinence/6.jpg", "/images/rebels-abstinence/7.jpg"],
+    images: ["/images/rebels-abstinence/1.jpg", "/images/rebels-abstinence/2.jpg", "/images/rebels-abstinence/3.jpg", "/images/rebels-abstinence/4.jpg", "/images/rebels-abstinence/5.jpg", "/images/rebels-abstinence/6.jpg", "/images/rebels-abstinence/7.jpg", "/images/rebels-abstinence/8.jpg", "/images/rebels-abstinence/9.jpg", "/images/rebels-abstinence/10.jpg", "/images/rebels-abstinence/11.jpg", "/images/rebels-abstinence/12.jpg", "/images/rebels-abstinence/13.jpg", "/images/rebels-abstinence/14.jpg", "/images/rebels-abstinence/15.jpg"],
     headline: { value: "935", label: { en: "Guests: influencers, creators and agencies", nl: "Gasten: influencers, creators en agencies" } },
     verified: true,
     oneliner: {
@@ -413,7 +413,7 @@ export const cases = [
       en: ["Wine bar", "Interactive tasting", "In-store activation", "Campaign photoshoot", "Content"],
       nl: ["Wijnbar", "Interactieve proeverij", "Instore-activatie", "Campagnefotoshoot", "Content"],
     },
-    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg", "/images/rotari-italie/4.jpg", "/images/rotari-italie/5.jpg", "/images/rotari-italie/6.jpg"],
+    images: ["/images/rotari-italie/1.jpg", "/images/rotari-italie/2.jpg", "/images/rotari-italie/3.jpg", "/images/rotari-italie/4.jpg", "/images/rotari-italie/5.jpg", "/images/rotari-italie/6.jpg", "/images/rotari-italie/7.jpg", "/images/rotari-italie/8.jpg", "/images/rotari-italie/9.jpg", "/images/rotari-italie/10.jpg", "/images/rotari-italie/11.jpg", "/images/rotari-italie/12.jpg", "/images/rotari-italie/13.jpg", "/images/rotari-italie/14.jpg", "/images/rotari-italie/15.jpg", "/images/rotari-italie/16.jpg"],
     headline: { value: "38.000", label: { en: "Visitors over the weekend", nl: "Bezoekers in het weekend" } },
     verified: true,
     oneliner: {
