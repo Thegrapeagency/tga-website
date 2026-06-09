@@ -315,7 +315,7 @@ export const cases = [
       en: ["Restaurant concept & production", "Food & wine pairing", "Design (Machoman) & menu cards", "Marketing & ticket sales"],
       nl: ["Restaurantconcept & productie", "Food & wine pairing", "Design (Machoman) & menukaarten", "Marketing & ticketverkoop"],
     },
-    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg", "/images/casa-rojo/8.jpg", "/images/casa-rojo/10.jpg", "/images/casa-rojo/11.jpg", "/images/casa-rojo/12.jpg", "/images/casa-rojo/13.jpg"],
+    images: ["/images/casa-rojo/1.jpg", "/images/casa-rojo/2.jpg", "/images/casa-rojo/3.jpg", "/images/casa-rojo/4.jpg", "/images/casa-rojo/5.jpg", "/images/casa-rojo/6.jpg", "/images/casa-rojo/7.jpg", "/images/casa-rojo/8.jpg", "/images/casa-rojo/10.jpg", "/images/casa-rojo/11.jpg", "/images/casa-rojo/12.jpg", "/images/casa-rojo/13.jpg", "/images/casa-rojo/14.jpg", "/images/casa-rojo/15.jpg", "/images/casa-rojo/16.jpg", "/images/casa-rojo/17.jpg", "/images/casa-rojo/18.jpg", "/images/casa-rojo/19.jpg"],
     headline: { value: "3", label: { en: "Courses, built up from the wine", nl: "Gangen, opgebouwd vanuit de wijn" } },
     verified: true,
     oneliner: {
