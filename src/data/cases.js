@@ -461,7 +461,7 @@ export const cases = [
       en: ["Concept & storytelling", "Entrance activation", "Welcome tasting", "Sommeliers in character"],
       nl: ["Concept & storytelling", "Entree-activatie", "Welkomstproeverij", "Sommeliers in rol"],
     },
-    images: ["/images/jean-leon/1.jpg", "/images/jean-leon/2.jpg", "/images/jean-leon/3.jpg"],
+    images: ["/images/jean-leon/1.jpg", "/images/jean-leon/2.jpg", "/images/jean-leon/3.jpg", "/images/jean-leon/4.jpg", "/images/jean-leon/5.jpg", "/images/jean-leon/6.jpg", "/images/jean-leon/7.jpg", "/images/jean-leon/8.jpg", "/images/jean-leon/9.jpg", "/images/jean-leon/10.jpg", "/images/jean-leon/11.jpg", "/images/jean-leon/12.jpg", "/images/jean-leon/13.jpg"],
     video: "/videos/jean-leon.mp4",
     headline: { value: "100%", label: { en: "Visitors welcomed with a glass and a story", nl: "Bezoekers ontvangen met glas én verhaal" } },
     verified: true,
