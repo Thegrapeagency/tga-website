@@ -1,12 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLang, pick } from "../i18n.jsx";
-import { setOpenOrigin } from "../lib/openOrigin.js";
 
 // span: "feat" | "wide" | "tall" | undefined  -> bento sizing
 export default function CaseCard({ c, index = 0, span }) {
   const { lang } = useLang();
-  const location = useLocation();
   const cover = c.images && c.images[0];
   const feat = span === "feat";
   const wrapCls = ["tile-wrap", span ? `tile-wrap--${span}` : ""].join(" ");
@@ -20,13 +18,7 @@ export default function CaseCard({ c, index = 0, span }) {
       viewport={{ once: true, margin: "-8% 0px" }}
       transition={{ duration: 0.6, delay: Math.min(index, 6) * 0.04, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link
-        to={`/werk/${c.slug}`}
-        state={{ background: location }}
-        className={cls}
-        data-tile={c.slug}
-        onClick={(e) => setOpenOrigin(c.slug, e.currentTarget)}
-      >
+      <Link to={`/werk/${c.slug}`} className={cls}>
         <div className="tile__media">
           {cover ? (
             <img className="tile__img" src={cover} alt={c.brand} loading="lazy" />

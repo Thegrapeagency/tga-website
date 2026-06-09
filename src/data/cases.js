@@ -18,7 +18,14 @@ export const cases = [
       en: ["Festival activation", "Terrace & pergola (built in-house)", "Concept & styling", "Content"],
       nl: ["Festivalactivatie", "Terras & pergola (eigen bouw)", "Concept & styling", "Content"],
     },
-    images: ["/images/mirabeau/1.jpg", "/images/mirabeau/2.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/4.jpg", "/images/mirabeau/5.jpg", "/images/mirabeau/6.jpg", "/images/mirabeau/7.jpg", "/images/mirabeau/8.jpg", "/images/mirabeau/9.jpg", "/images/mirabeau/10.jpg"],
+    images: [
+      "/images/mirabeau/9.jpg", "/images/mirabeau/10.jpg", "/images/mirabeau/2.jpg",
+      "/images/mirabeau/11.jpg", "/images/mirabeau/12.jpg", "/images/mirabeau/6.jpg",
+      "/images/mirabeau/5.jpg", "/images/mirabeau/13.jpg", "/images/mirabeau/4.jpg",
+      "/images/mirabeau/14.jpg", "/images/mirabeau/3.jpg", "/images/mirabeau/15.jpg",
+      "/images/mirabeau/16.jpg", "/images/mirabeau/17.jpg", "/images/mirabeau/7.jpg",
+      "/images/mirabeau/18.jpg", "/images/mirabeau/8.jpg",
+    ],
     headline: { value: "145K", label: { en: "Combined festival reach", nl: "Festivalbereik samen" } },
     verified: true,
     oneliner: {
