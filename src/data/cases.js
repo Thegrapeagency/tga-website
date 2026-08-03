@@ -9,6 +9,60 @@
 
 export const cases = [
   {
+    slug: "19-crimes-jera",
+    brand: "19 Crimes",
+    client: "19 Crimes · Treasury Wine Estates",
+    tag: { en: "Confession booth · Jera On Air", nl: "Biechthokje · Jera On Air" },
+    where: { en: "Jera On Air, Ysselsteyn", nl: "Jera On Air, Ysselsteyn" },
+    services: {
+      en: ["Concept", "Booth design & build", "Character casting", "Custom app", "Staffing"],
+      nl: ["Concept", "Ontwerp & bouw hokje", "Casting", "Custom app", "Bemensing"],
+    },
+    images: [
+      "/images/19-crimes-jera/1.jpg", "/images/19-crimes-jera/2.jpg", "/images/19-crimes-jera/3.jpg",
+      "/images/19-crimes-jera/4.jpg", "/images/19-crimes-jera/5.jpg", "/images/19-crimes-jera/6.jpg",
+      "/images/19-crimes-jera/7.jpg", "/images/19-crimes-jera/8.jpg", "/images/19-crimes-jera/9.jpg",
+      "/images/19-crimes-jera/10.jpg",
+    ],
+    headline: { value: "1.008", label: { en: "19 Crimes bottles across the festival", nl: "19 Crimes-flessen over het hele festival" } },
+    verified: true,
+    oneliner: {
+      en: "A wine brand works at a hardcore festival the moment you stop pouring tastings and start hearing confessions.",
+      nl: "Een wijnmerk werkt op een hardcorefestival zodra je stopt met proefjes schenken en begint met biechten horen.",
+    },
+    intro: {
+      en: "Jera On Air is the biggest punk, hardcore and metal festival in the Netherlands. Three days on a field in Ysselsteyn, around 15.000 people a day, with Architects, The Offspring, Papa Roach and Rise Against on the bill. 19 Crimes wanted to stand there, in a crowd with very little patience for anything that smells corporate.",
+      nl: "Jera On Air is het grootste punk-, hardcore- en metalfestival van Nederland. Drie dagen op een veld in Ysselsteyn, zo'n 15.000 mensen per dag, met Architects, The Offspring, Papa Roach en Rise Against op de affiche. 19 Crimes wilde daar staan, in een publiek met weinig geduld voor alles wat naar corporate ruikt.",
+    },
+    challenge: {
+      en: "This crowd comes for beer and bands, not for wine. A tasting stand would have been ignored within the hour. 19 Crimes is built on rule breakers and banished convicts, so the activation had to earn its attention the same way: by doing something nobody expects on a festival field.",
+      nl: "Dit publiek komt voor bier en bands, niet voor wijn. Een proefstand was binnen een uur genegeerd. 19 Crimes is gebouwd op regelbrekers en verbannen veroordeelden, dus de activatie moest haar aandacht op dezelfde manier verdienen: door iets te doen wat niemand op een festivalveld verwacht.",
+    },
+    approach: {
+      en: [
+        "We built a gothic confession booth in matte black and gold, red velvet on the inside and the nineteen festival crimes printed down the side panels. Each one punishable by confession, so nobody had to stand there wondering what to say.",
+        "Belgian actor Alain Rinckhout played the Wine Priest for three full days, sinister but playful and never breaking character. He worked the queue as hard as the booth. People came for him and stayed for the wine.",
+        "Confess your crime, take a drop of wine on your forehead and walk out with a handwritten penance card. That card carried a QR code and a discount at the bar, so the theatre pushed people straight on to a full glass.",
+        "We built the Wine Priest app ourselves, because nothing out there logs a confession halfway through a festival. Ten seconds of audio, transcribed and rewritten in the 19 Crimes tone of voice, offline first so a weak festival signal never broke it.",
+      ],
+      nl: [
+        "We bouwden een gotisch biechthokje in mat zwart met goud, rood fluweel aan de binnenkant en de negentien festivalmisdaden op de zijpanelen. Elk daarvan strafbaar met een biecht, zodat niemand hoefde te bedenken wat hij moest zeggen.",
+        "De Belgische acteur Alain Rinckhout speelde drie dagen lang de Wine Priest, duister maar speels en nooit uit zijn rol. Hij bewerkte de rij net zo hard als het hokje. Mensen kwamen voor hem en bleven voor de wijn.",
+        "Biecht je misdaad, krijg een druppel wijn op je voorhoofd en loop naar buiten met een handgeschreven boetekaart. Op die kaart stond een QR-code en korting aan de bar, dus het theater duwde mensen meteen door naar een vol glas.",
+        "De Wine Priest-app bouwden we zelf, want er bestaat niets dat midden op een festival een biecht vastlegt. Tien seconden audio, getranscribeerd en herschreven in de tone of voice van 19 Crimes, offline first zodat slecht bereik het nooit brak.",
+      ],
+    },
+    result: {
+      en: "The booth pulled a crowd from the first afternoon on. 59 confessions were logged, and those were only the strongest ones. The bar next to it poured 815 glasses, the regular bars on the terrain sold another 380 bottles, and across the festival 1.008 bottles of 19 Crimes went out. Every bar on site was pouring the brand.",
+      nl: "Het hokje trok vanaf de eerste middag publiek. Er werden 59 biechten gelogd, en dat waren alleen de sterkste. De bar ernaast schonk 815 glazen, de reguliere bars op het terrein verkochten nog eens 380 flessen en over het hele festival gingen er 1.008 flessen 19 Crimes doorheen. Elke bar op het terrein schonk het merk.",
+    },
+    results: [
+      { value: "815", label: { en: "Glasses poured at the activation bar", nl: "Glazen geschonken aan de activatiebar" } },
+      { value: "59", label: { en: "Confessions logged, the strongest ones", nl: "Gelogde biechten, alleen de sterkste" } },
+      { value: "15.000", label: { en: "Festivalgoers a day, three days long", nl: "Festivalgangers per dag, drie dagen lang" } },
+    ],
+  },
+  {
     slug: "mirabeau",
     brand: "Mirabeau",
     client: "Maison Mirabeau",
