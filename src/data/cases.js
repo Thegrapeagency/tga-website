@@ -24,7 +24,7 @@ export const cases = [
       "/images/19-crimes-jera/7.jpg", "/images/19-crimes-jera/8.jpg", "/images/19-crimes-jera/9.jpg",
       "/images/19-crimes-jera/10.jpg",
     ],
-    headline: { value: "478", label: { en: "19 Crimes bottles across the festival", nl: "19 Crimes-flessen over het hele festival" } },
+    headline: { value: "478", label: { en: "Bottles over the regular bars", nl: "Flessen over de reguliere bars" } },
     verified: true,
     oneliner: {
       en: "A wine brand works at a hardcore festival the moment you stop pouring tastings and start hearing confessions.",
@@ -53,8 +53,8 @@ export const cases = [
       ],
     },
     result: {
-      en: "The booth pulled a crowd from the first afternoon on. 59 confessions were logged, and those were only the strongest ones. The bar next to it poured 815 glasses, the regular bars on the terrain sold another 380 bottles, and across the festival around 478 bottles of 19 Crimes went out. Every bar on site was pouring the brand.",
-      nl: "Het hokje trok vanaf de eerste middag publiek. Er werden 59 biechten gelogd, en dat waren alleen de sterkste. De bar ernaast schonk 815 glazen, de reguliere bars op het terrein verkochten nog eens 380 flessen en over het hele festival gingen er ongeveer 478 flessen 19 Crimes doorheen. Elke bar op het terrein schonk het merk.",
+      en: "The booth pulled a crowd from the first afternoon on. 59 confessions were logged, and those were only the strongest ones. The bar next to it poured 815 glasses, five to a bottle, and the regular bars on the terrain sold 478 bottles of 19 Crimes. Every bar on site was pouring the brand.",
+      nl: "Het hokje trok vanaf de eerste middag publiek. Er werden 59 biechten gelogd, en dat waren alleen de sterkste. De bar ernaast schonk 815 glazen, vijf uit een fles, en de reguliere bars op het terrein verkochten 478 flessen 19 Crimes. Elke bar op het terrein schonk het merk.",
     },
     results: [
       { value: "815", label: { en: "Glasses poured at the activation bar", nl: "Glazen geschonken aan de activatiebar" } },
