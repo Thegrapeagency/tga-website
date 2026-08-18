@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Technisch betaaldossier Festival POS - The Grape Agency">
+<title>Festival POS Betaaldossier</title>
+<style>
+/* ============================ TOKENS ============================ */
+:root{
+  --ground:#EDF0EF;
+  --surface:#FFFFFF;
+  --surface-2:#F6F8F7;
+  --surface-3:#E7ECEA;
+  --ink:#0F1618;
+  --ink-2:#48575A;
+  --ink-3:#7A888B;
+  --line:#D6DEDC;
+  --line-2:#C2CDCA;
+  --accent:#0A5C5A;
+  --accent-ink:#083F3E;
+  --accent-soft:#DCEAE7;
+  --on-accent:#FFFFFF;
+  --on-accent-ink:#FFFFFF;
+  --ok:#1A6B42;      --ok-bg:#DEEEE4;
+  --warn:#8A5400;    --warn-bg:#F5E9D3;
+  --stop:#8E2F2A;    --stop-bg:#F4DFDD;
+  --keypad:#1B2426;
+  --keypad-ink:#DCE6E4;
+  --shadow:0 1px 2px rgba(15,22,24,.06), 0 8px 24px -12px rgba(15,22,24,.18);
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1214;
+    --surface:#141C1E;
+    --surface-2:#1A2325;
+    --surface-3:#212C2E;
+    --ink:#E6EDEB;
+    --ink-2:#A2B1B2;
+    --ink-3:#788789;
+    --line:#26312F;
+    --line-2:#33403E;
+    --accent:#59CBC0;
+    --accent-ink:#8FE0D7;
+    --accent-soft:#123430;
+    --on-accent:#06211F;
+    --on-accent-ink:#06211F;
+    --ok:#5FC98C;      --ok-bg:#122E20;
+    --warn:#DDA53F;    --warn-bg:#33270F;
+    --stop:#EF8B81;    --stop-bg:#331A18;
+    --keypad:#080D0E;
+    --keypad-ink:#CFDDDA;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1214;
+  --surface:#141C1E;
+  --surface-2:#1A2325;
+  --surface-3:#212C2E;
+  --ink:#E6EDEB;
+  --ink-2:#A2B1B2;
+  --ink-3:#788789;
+  --line:#26312F;
+  --line-2:#33403E;
+  --accent:#59CBC0;
+  --accent-ink:#8FE0D7;
+  --accent-soft:#123430;
+  --on-accent:#06211F;
+  --on-accent-ink:#06211F;
+  --ok:#5FC98C;      --ok-bg:#122E20;
+  --warn:#DDA53F;    --warn-bg:#33270F;
+  --stop:#EF8B81;    --stop-bg:#331A18;
+  --keypad:#080D0E;
+  --keypad-ink:#CFDDDA;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{text-wrap:balance;margin:0;font-weight:600}
+p{margin:0}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* ============================ LAYOUT ============================ */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.col{max-width:660px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.stack{display:flex;flex-direction:column;gap:20px}
+.stack-s{display:flex;flex-direction:column;gap:10px}
+.stack-l{display:flex;flex-direction:column;gap:36px}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+h2{font-family:var(--mono);font-size:clamp(21px,2.4vw,27px);letter-spacing:-.01em;line-height:1.25}
+h3{font-size:17px;letter-spacing:-.005em}
+.lede{font-size:18px;line-height:1.65;color:var(--ink-2)}
+.small{font-size:14px;color:var(--ink-2)}
+.tiny{font-size:12.5px;color:var(--ink-3)}
+strong{font-weight:600;color:var(--ink)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ============================ MASTHEAD ============================ */
+header.mast{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.mast-inner{padding:44px 0 40px;display:flex;flex-direction:column;gap:26px}
+.mast-top{display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between}
+.wordmark{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-ink)}
+h1{
+  font-family:var(--mono);
+  font-size:clamp(28px,4.6vw,46px);
+  line-height:1.1;
+  letter-spacing:-.03em;
+  max-width:16ch;
+}
+.mast-meta{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.mast-meta div{padding:12px 18px;border-right:1px solid var(--line);flex:1 1 170px}
+.mast-meta div:last-child{border-right:0}
+.mast-meta dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 3px}
+.mast-meta dd{margin:0;font-size:14px;font-weight:500}
+
+/* ============================ CHIPS / CALLOUTS ============================ */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;white-space:nowrap;
+}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.chip.stop{background:var(--stop-bg);color:var(--stop)}
+.chip.neutral{background:var(--surface-3);color:var(--ink-2)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+
+.note{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:3px;
+  padding:16px 20px;
+}
+.note.warn{border-left-color:var(--warn)}
+.note.stop{border-left-color:var(--stop)}
+.note h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+
+/* ============================ PANELS ============================ */
+.panel{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.panel-head{
+  padding:12px 16px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+.panel-body{padding:18px}
+
+/* ============================ TABLES ============================ */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);background:var(--surface-2);font-weight:500;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td.k{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+td .num{font-variant-numeric:tabular-nums}
+
+/* ============================ CODE ============================ */
+pre{
+  margin:0;
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.7;
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:16px;
+  overflow-x:auto;
+  color:var(--ink);
+}
+code{font-family:var(--mono);font-size:.92em;background:var(--surface-3);padding:1px 5px;border-radius:2px}
+pre code{background:none;padding:0;font-size:inherit}
+.c-key{color:var(--accent-ink)}
+.c-cmt{color:var(--ink-3);font-style:italic}
+.c-str{color:var(--ok)}
+
+/* ============================ DEMO ============================ */
+.demo{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+@media (max-width:900px){.demo{grid-template-columns:1fr}}
+
+.till{background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);overflow:hidden}
+.till-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 14px;background:var(--keypad);color:var(--keypad-ink);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+}
+.till-bar .state{display:flex;align-items:center;gap:12px}
+.led{display:inline-flex;align-items:center;gap:6px}
+.led .dot{background:#5FC98C}
+.led.off .dot{background:#DDA53F}
+.grid-prod{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
+@media (max-width:460px){.grid-prod{grid-template-columns:repeat(2,1fr)}}
+.prod{
+  appearance:none;cursor:pointer;text-align:left;
+  border:1px solid var(--line-2);border-radius:3px;
+  background:var(--surface-2);color:var(--ink);
+  padding:12px 10px;min-height:76px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:8px;
+  font-family:inherit;font-size:13.5px;line-height:1.25;font-weight:500;
+  transition:transform .08s ease, background .12s ease, border-color .12s ease;
+}
+.prod:hover{background:var(--surface-3);border-color:var(--accent)}
+.prod:active{transform:translateY(1px)}
+.prod .price{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.prod .vat{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink-3)}
+.prod-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+
+.cart{border-top:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:10px}
+.cart ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:150px;overflow-y:auto}
+.cart li{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px}
+.cart li .q{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink-3);width:2.4em}
+.cart li .a{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.cart .empty{color:var(--ink-3);font-size:14px;font-style:italic}
+.total{
+  display:flex;align-items:baseline;justify-content:space-between;
+  border-top:1px solid var(--line);padding-top:10px;
+}
+.total .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.total .amt{font-family:var(--mono);font-size:26px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+button.btn{
+  appearance:none;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:3px;padding:11px 16px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink);
+  transition:background .12s ease,border-color .12s ease;
+}
+button.btn:hover:not(:disabled){border-color:var(--accent);background:var(--surface-3)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+button.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);flex:1}
+button.btn.primary:hover:not(:disabled){background:var(--accent-ink);border-color:var(--accent-ink);color:var(--on-accent-ink)}
+
+.switches{display:flex;flex-wrap:wrap;gap:14px;padding:12px 14px;border-top:1px solid var(--line);background:var(--surface-2)}
+.switches label{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);cursor:pointer}
+.switches input{accent-color:var(--accent);width:15px;height:15px}
+
+/* console */
+.console{background:var(--keypad);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.console-head{
+  padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.09);
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#7E9A96;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.log{
+  font-family:var(--mono);font-size:12px;line-height:1.65;color:var(--keypad-ink);
+  padding:14px;height:420px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;
+}
+.log .t{color:#5E7C79}
+.log .out{color:#7FD3C8}
+.log .in{color:#E4C87C}
+.log .ok{color:#7FD98F}
+.log .err{color:#F09189}
+.log .cmt{color:#5E7C79}
+.log-empty{color:#5E7C79;font-style:italic}
+
+/* ============================ CHECKLIST ============================ */
+.req{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:4px;background:var(--surface);overflow:hidden}
+.req-item{display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line);align-items:start}
+.req-item:last-child{border-bottom:0}
+.req-item .idx{font-family:var(--mono);font-size:12px;color:var(--ink-3);padding-top:2px;font-variant-numeric:tabular-nums}
+.req-item h4{font-size:15px;margin-bottom:3px}
+.req-item p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+@media (max-width:620px){
+  .req-item{grid-template-columns:auto 1fr}
+  .req-item .chip{grid-column:2}
+}
+
+/* ============================ Q LIST ============================ */
+.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.qlist li{
+  display:grid;grid-template-columns:22px 1fr;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.5;
+}
+.qlist li:last-child{border-bottom:0}
+.qlist .box{width:14px;height:14px;border:1.5px solid var(--line-2);border-radius:2px;margin-top:4px}
+
+/* fill-in fields */
+.fill{
+  font-family:var(--mono);font-size:13.5px;
+  background:var(--surface-2);border:0;border-bottom:1.5px solid var(--line-2);
+  color:var(--ink);padding:4px 6px;width:100%;max-width:220px;border-radius:2px 2px 0 0;
+}
+.fill::placeholder{color:var(--ink-3);font-style:italic}
+.fill:focus{border-bottom-color:var(--accent);outline:none;background:var(--accent-soft)}
+
+/* diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px;overflow-x:auto;box-shadow:var(--shadow)}
+.diagram svg{display:block;min-width:660px;width:100%;height:auto}
+
+/* two-col */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+
+footer{border-top:1px solid var(--line);background:var(--surface);padding:32px 0 44px;margin-top:20px}
+
+@media print{
+  body{background:#fff}
+  .console{break-inside:avoid}
+  section{break-inside:auto;padding:28px 0}
+  .panel,.till,.req,.tablewrap{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap mast-inner">
+    <div class="mast-top">
+      <span class="wordmark">Festival POS &nbsp;/&nbsp; The Grape Agency</span>
+      <span class="chip neutral"><span class="dot"></span>Vertrouwelijk &middot; augustus 2026</span>
+    </div>
+    <h1>Betaaldossier voor acquirers</h1>
+    <p class="lede col">Wij hebben de kassasoftware zelf gebouwd en draaien die al. Wat we zoeken is een
+      betaalpartner die de transactie verwerkt en ons zijn terminal laat aansturen. Dit document laat
+      zien wat er staat, waar jullie inprikken, en wat we nodig hebben om dat te laten werken.</p>
+    <dl class="mast-meta">
+      <div><dt>Systeem</dt><dd>Eigen POS + backoffice</dd></div>
+      <div><dt>Eerste inzet</dt><dd>Nacht van de Wijn, nov 2026</dd></div>
+      <div><dt>Kassa's</dt><dd class="num">10 tot 20, meerdere bars</dd></div>
+      <div><dt>Gezocht</dt><dd>Acquiring + terminal-SDK</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ==================== 1. DE VRAAG ==================== -->
+<section>
+  <div class="stack col">
+    <p class="eyebrow">De vraag</p>
+    <h2>Wat we wel en niet van jullie willen afnemen</h2>
+    <p>Bij de vorige gesprekken liep het vast op het verdienmodel: er werd een abonnement op
+      kassasoftware aangeboden terwijl wij die software zelf hebben gebouwd. Wij betalen graag per
+      transactie, maar niet voor een kassa-app, een productbeheerscherm of een rapportagepakket dat
+      we niet gaan gebruiken. Om dat gesprek scherp te houden, hier de scheidslijn.</p>
+  </div>
+  <div class="duo" style="margin-top:26px">
+    <div class="panel">
+      <div class="panel-head"><span>Wel afnemen</span><span class="chip ok"><span class="dot"></span>Jullie domein</span></div>
+      <div class="panel-body stack-s">
+        <p class="small"><strong>Acquiring en settlement.</strong> Kaarttransacties verwerken, geld uitbetalen, chargebacks afhandelen.</p>
+        <p class="small"><strong>De terminal, of Tap to Pay.</strong> Hardware of telefoon, met een SDK of app-koppeling die wij vanuit onze eigen kassa mogen starten.</p>
+        <p class="small"><strong>Een refund-API.</strong> Server-side, zodat onze supervisorflow een echte terugboeking kan doen.</p>
+        <p class="small"><strong>Webhooks en een settlementrapport.</strong> Voor onze reconciliatie per bar en per dag.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Niet afnemen</span><span class="chip stop"><span class="dot"></span>Hebben we zelf</span></div>
+      <div class="panel-body stack-s">
+        <p class="small"><strong>Kassa-app.</strong> Onze bar-app draait, is getest en is op onze eigen flow gebouwd.</p>
+        <p class="small"><strong>Productbeheer en prijzen.</strong> Zit in onze backoffice, inclusief varianten en voorraad.</p>
+        <p class="small"><strong>Rapportage en dagstaat.</strong> Eigen dashboard met btw-splitsing, export en afrekening per bar.</p>
+        <p class="small"><strong>Personeelsbeheer en rechten.</strong> Pincode-login, rollen en supervisorautorisatie zitten in onze database.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="margin-top:22px">
+    <div class="note">
+      <h4>Waar het op neerkomt</h4>
+      <p class="small">Wij zijn een merchant met eigen software, geen klant voor een kassapakket. De
+        ideale offerte is dus: een tarief per transactie, terminals in huur of koop, en toegang tot
+        de integratie. Als een abonnement onvermijdelijk is, dan graag onderbouwd met wat we er
+        concreet voor terugkrijgen bovenop de verwerking.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. DEMO ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:24px">
+    <p class="eyebrow">Demo</p>
+    <h2>De kassa, en wat de terminal te zien krijgt</h2>
+    <p>Links staat de bar-app zoals die op de vloer draait. Rechts loopt mee wat er op het
+      integratiepunt gebeurt: precies de aanroep die jullie SDK zou krijgen en het antwoord dat wij
+      terug verwachten. Sla wat producten aan en reken af. Met de schakelaars onderin bootst u een
+      weigering of een wegvallend netwerk na.</p>
+  </div>
+
+  <div class="demo">
+    <div class="till">
+      <div class="till-bar">
+        <span>Bar 1 &middot; Kassa A</span>
+        <span class="state">
+          <span class="led" id="netled"><span class="dot"></span><span id="nettext">Online</span></span>
+          <span id="queue" class="num">Wachtrij 0</span>
+        </span>
+      </div>
+      <div class="grid-prod" id="grid"></div>
+      <div class="cart">
+        <ul id="cart"><li class="empty">Nog niets aangeslagen</li></ul>
+        <div class="total">
+          <span class="lbl">Te betalen</span>
+          <span class="amt" id="total">&euro;&nbsp;0,00</span>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="pay" disabled>Betalen met kaart</button>
+          <button class="btn" id="clear" disabled>Wissen</button>
+          <button class="btn" id="refund" disabled>Terugboeken</button>
+        </div>
+      </div>
+      <div class="switches">
+        <label><input type="checkbox" id="swOffline"> Netwerk weg</label>
+        <label><input type="checkbox" id="swDecline"> Kaart weigeren</label>
+        <label><input type="checkbox" id="swSlow"> Trage terminal</label>
+      </div>
+    </div>
+
+    <div class="console">
+      <div class="console-head">
+        <span>Integratiepunt &middot; PaymentTerminal</span>
+        <button class="btn" id="wipe" style="padding:4px 9px;font-size:10px;background:transparent;border-color:#2C3B39;color:#7E9A96">Leeg</button>
+      </div>
+      <div class="log" id="log"><span class="log-empty">Wachtend op een transactie. Sla links een product aan.</span></div>
+    </div>
+  </div>
+
+  <div class="col" style="margin-top:22px">
+    <div class="note warn">
+      <h4>Eerlijk over de status</h4>
+      <p class="small">In deze demo is de terminal gesimuleerd. In de echte kassa staat op dezelfde
+        plek nu een mock-adapter die de betaling zonder pas goedkeurt, zodat we de rest van de keten
+        konden testen. Alles eromheen &mdash; bon, voorraad, offline wachtrij, synchronisatie,
+        terugboeking met supervisorpincode, dagstaat &mdash; is af en werkt. Het enige dat ontbreekt is
+        de echte kaartafhandeling. Dat is precies het stuk dat we bij jullie willen beleggen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. ARCHITECTUUR ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:24px">
+    <p class="eyebrow">Architectuur</p>
+    <h2>Hoe het systeem in elkaar zit</h2>
+    <p>Drie lagen. De bar-app op het toestel, onze backend in de cloud, en daartussen een
+      betaaladapter met vier methodes. Die adapter is bewust het enige raakvlak met een
+      betaalpartij, zodat wisselen van provider geen herbouw van de kassa betekent.</p>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 400" role="img" aria-label="Schema van de POS-architectuur: bar-app, betaaladapter, terminal en backend">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+          <path d="M0,0 L7,3.2 L0,6.4 Z" fill="var(--ink-3)"/>
+        </marker>
+        <marker id="ara" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+          <path d="M0,0 L7,3.2 L0,6.4 Z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g font-family="ui-monospace, monospace" font-size="10.5" fill="var(--ink-2)">
+
+        <!-- bar app -->
+        <rect x="20" y="34" width="196" height="126" rx="4" fill="var(--surface-2)" stroke="var(--line-2)"/>
+        <text x="34" y="56" fill="var(--ink)" font-size="12" font-weight="600">Bar-app (kassa)</text>
+        <text x="34" y="76">React, draait op het toestel</text>
+        <text x="34" y="94">Productgrid &middot; mandje &middot; bon</text>
+        <text x="34" y="112">Lokale wachtrij bij netwerkuitval</text>
+        <text x="34" y="130">Pincode-login personeel</text>
+        <text x="34" y="148" fill="var(--ink-3)">Geen kaartdata, geen PAN</text>
+
+        <!-- adapter -->
+        <rect x="262" y="34" width="176" height="126" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+        <text x="276" y="56" fill="var(--accent-ink)" font-size="12" font-weight="600">Betaaladapter</text>
+        <text x="276" y="76" fill="var(--accent-ink)">charge()</text>
+        <text x="276" y="94" fill="var(--accent-ink)">refund()</text>
+        <text x="276" y="112" fill="var(--accent-ink)">status()</text>
+        <text x="276" y="130" fill="var(--accent-ink)">capabilities()</text>
+        <text x="276" y="150" fill="var(--accent-ink)" font-size="9.5">Hier prikt de acquirer in</text>
+
+        <!-- terminal -->
+        <rect x="484" y="34" width="196" height="126" rx="4" fill="var(--surface-2)" stroke="var(--line-2)"/>
+        <text x="498" y="56" fill="var(--ink)" font-size="12" font-weight="600">Terminal / Tap to Pay</text>
+        <text x="498" y="76">Uw SDK of app-koppeling</text>
+        <text x="498" y="94">EMV, contactloos, pin</text>
+        <text x="498" y="112">Kaartschema en autorisatie</text>
+        <text x="498" y="136" fill="var(--ink-3)">Kaartgegevens blijven</text>
+        <text x="498" y="150" fill="var(--ink-3)">volledig binnen dit blok</text>
+
+        <!-- arrows top row -->
+        <line x1="218" y1="86" x2="256" y2="86" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ara)"/>
+        <text x="222" y="78" fill="var(--accent-ink)" font-size="9">bedrag</text>
+        <line x1="440" y1="86" x2="478" y2="86" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ara)"/>
+        <text x="444" y="78" fill="var(--accent-ink)" font-size="9">start</text>
+        <line x1="478" y1="118" x2="440" y2="118" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ara)"/>
+        <text x="444" y="134" fill="var(--accent-ink)" font-size="9">resultaat</text>
+        <line x1="256" y1="118" x2="218" y2="118" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ara)"/>
+        <text x="222" y="134" fill="var(--accent-ink)" font-size="9">referentie</text>
+
+        <!-- backend -->
+        <rect x="20" y="222" width="418" height="148" rx="4" fill="var(--surface-2)" stroke="var(--line-2)"/>
+        <text x="34" y="244" fill="var(--ink)" font-size="12" font-weight="600">Onze backend</text>
+        <text x="34" y="264">Postgres met rijbeveiliging per organisatie</text>
+        <text x="34" y="282">Orders, regels, betalingen, terugboekingen</text>
+        <text x="34" y="300">Voorraad, dagstaat, btw-splitsing</text>
+        <text x="34" y="318">Sleutelfunctie: dubbele boekingen uitsluiten</text>
+        <text x="34" y="342" fill="var(--ink-3)">Opgeslagen van de betaling: bedrag, methode,</text>
+        <text x="34" y="356" fill="var(--ink-3)">status en uw transactiereferentie. Verder niets.</text>
+
+        <line x1="118" y1="164" x2="118" y2="216" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="126" y="192" font-size="9">bon synchroniseren</text>
+
+        <!-- backoffice -->
+        <rect x="484" y="222" width="196" height="148" rx="4" fill="var(--surface-2)" stroke="var(--line-2)"/>
+        <text x="498" y="244" fill="var(--ink)" font-size="12" font-weight="600">Backoffice</text>
+        <text x="498" y="264">Producten en prijzen</text>
+        <text x="498" y="282">Kassa's en personeel</text>
+        <text x="498" y="300">Live omzet per bar</text>
+        <text x="498" y="318">Dagstaat, export, pdf</text>
+        <text x="498" y="342" fill="var(--ink-3)">Hier landt straks ook de</text>
+        <text x="498" y="356" fill="var(--ink-3)">settlement-afstemming</text>
+
+        <line x1="444" y1="296" x2="478" y2="296" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#ar)"/>
+        <line x1="582" y1="216" x2="582" y2="164" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="500" y="196" font-size="9">webhook en settlement</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ==================== 4. INTEGRATIEPUNT ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Integratiepunt</p>
+    <h2>De vier methodes die ingevuld moeten worden</h2>
+    <p>Dit is de volledige koppeling, letterlijk zoals hij in onze code staat. Een nieuwe provider
+      aansluiten betekent: deze vier methodes implementeren tegen jullie SDK. Aan de kassa, de
+      wachtrij, de bon of de rapportage verandert dan niets.</p>
+  </div>
+
+  <pre><code><span class="c-cmt">// Wat wij naar de terminal sturen</span>
+<span class="c-key">interface</span> ChargeRequest {
+  orderId:         string
+  amountCents:     number   <span class="c-cmt">// altijd in eurocent, incl. btw</span>
+  idempotencyKey:  string   <span class="c-cmt">// uniek per bon, voorkomt dubbel afrekenen</span>
+  description?:    string
+}
+
+<span class="c-cmt">// Wat wij terug moeten krijgen</span>
+<span class="c-key">interface</span> PaymentResult {
+  ok:           boolean
+  status:       <span class="c-str">'succeeded'</span> | <span class="c-str">'failed'</span> | <span class="c-str">'canceled'</span> | <span class="c-str">'pending'</span>
+  providerRef?: string    <span class="c-cmt">// uw transactie-id, dit slaan wij op</span>
+  offline?:     boolean   <span class="c-cmt">// via store-and-forward geaccepteerd?</span>
+  error?:       string
+}
+
+<span class="c-key">interface</span> PaymentTerminal {
+  capabilities(): { offline: boolean, tap: boolean, reader: boolean }
+
+  <span class="c-cmt">/* Start een kaartbetaling en wacht op het eindresultaat. */</span>
+  charge(req: ChargeRequest): Promise&lt;PaymentResult&gt;
+
+  <span class="c-cmt">/* Volledige of gedeeltelijke terugboeking, na supervisorpincode. */</span>
+  refund(providerRef: string, amountCents: number): Promise&lt;RefundResult&gt;
+
+  <span class="c-cmt">/* Status opvragen na een verbroken verbinding, voor herstel. */</span>
+  status(providerRef: string): Promise&lt;PaymentResult&gt;
+}</code></pre>
+
+  <div class="col" style="margin-top:20px">
+    <div class="note">
+      <h4>Let op deze twee</h4>
+      <p class="small"><code>idempotencyKey</code> is voor ons cruciaal. Op een festivalvloer valt
+        wifi weg midden in een transactie. Wij moeten een aanroep veilig kunnen herhalen zonder dat
+        de gast twee keer betaalt. Kan uw SDK een idempotentiesleutel of eigen referentie meekrijgen?</p>
+      <p class="small" style="margin-top:8px"><code>status()</code> is ons herstelpad. Als de app
+        crasht of het toestel opnieuw start terwijl de kaart al is aangeboden, moeten we achteraf
+        kunnen vaststellen of die transactie is doorgegaan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. TRANSACTIEFLOW ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Transactieflow</p>
+    <h2>Van tap tot dagstaat</h2>
+    <p>De volgorde is bewust zo gekozen dat een netwerkstoring nooit tot omzetverlies leidt en
+      een dubbele boeking uitgesloten is.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:34px">&nbsp;</th><th>Stap</th><th>Waar</th><th>Wat er gebeurt</th></tr></thead>
+      <tbody>
+        <tr><td class="k">1</td><td>Aanslaan</td><td>Kassa</td><td>Medewerker tikt producten aan. Prijzen komen uit de lokale catalogus, dus dit werkt ook zonder netwerk.</td></tr>
+        <tr><td class="k">2</td><td>Bon vastleggen</td><td>Kassa</td><td>De bon krijgt een uniek lokaal id en een idempotentiesleutel, nog voordat er betaald wordt.</td></tr>
+        <tr><td class="k">3</td><td>Kaart aanbieden</td><td>Terminal</td><td><code>charge()</code> start de betaling met bedrag en sleutel. Gast tapt of pint. Kaartgegevens blijven binnen de terminal.</td></tr>
+        <tr><td class="k">4</td><td>Resultaat</td><td>Terminal</td><td>Wij krijgen goedgekeurd of geweigerd terug, met uw transactiereferentie. Geweigerd betekent: bon blijft open, gast kan opnieuw of anders betalen.</td></tr>
+        <tr><td class="k">5</td><td>Wachtrij</td><td>Kassa</td><td>De bon gaat lokaal in de wachtrij. Bij netwerk gaat hij direct door, anders blijft hij staan tot de verbinding terug is.</td></tr>
+        <tr><td class="k">6</td><td>Synchronisatie</td><td>Backend</td><td>Elke 5 seconden wordt de wachtrij aangeboden. De server herberekent het totaal uit de regels en weigert een bon die al bestaat.</td></tr>
+        <tr><td class="k">7</td><td>Vastlegging</td><td>Backend</td><td>Order, regels en betaling worden opgeslagen, voorraad wordt afgeboekt, uw referentie wordt bewaard.</td></tr>
+        <tr><td class="k">8</td><td>Terugboeken</td><td>Kassa</td><td>Alleen op de kassa waar verkocht is, alleen met supervisorpincode. Server boekt de order terug en roept uw refund-API aan.</td></tr>
+        <tr><td class="k">9</td><td>Afrekening</td><td>Backoffice</td><td>Dagstaat per bar met btw-splitsing. Hier willen we uw settlementbestand naast leggen.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== 6. WAT WE NODIG HEBBEN ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Benodigdheden</p>
+    <h2>Wat we van de betaalpartner nodig hebben</h2>
+    <p>Deze lijst is het werkbestand voor het gesprek. Groen is wat wij al hebben geregeld, amber
+      is wat we van de provider moeten horen voordat we kunnen bouwen.</p>
+  </div>
+
+  <div class="req">
+    <div class="req-item">
+      <span class="idx">01</span>
+      <div><h4>Een integratie die wij vanuit onze eigen app mogen starten</h4>
+        <p>Een SDK, een app-naar-app koppeling of een lokale terminal-API. Doorslaggevend: onze kassa
+          blijft het scherm dat de medewerker bedient, de terminal doet alleen de betaling.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">02</span>
+      <div><h4>Testomgeving met sleutels en testkaarten</h4>
+        <p>Wij willen eerst tegen een sandbox bouwen en pas daarna live. Graag ook een testterminal
+          of leentoestel voor de integratieperiode.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">03</span>
+      <div><h4>Refund via API, niet alleen via een portaal</h4>
+        <p>Onze terugboeking start aan de bar met een supervisorpincode. Handmatig in een dashboard
+          klikken is op een festivalavond geen werkbare route.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">04</span>
+      <div><h4>Idempotentie of een eigen referentie per transactie</h4>
+        <p>Zodat een herhaalde aanroep na een verbindingsfout nooit tot een tweede afschrijving leidt.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">05</span>
+      <div><h4>Store-and-forward, of een duidelijk nee</h4>
+        <p>Als de terminal offline kan doorbetalen tot een bepaald bedrag, willen we de grenzen en het
+          risico weten. Kan het niet, dan bouwen we een andere terugval en is dat ook prima, als we
+          het maar weten voordat er 1.500 mensen binnen staan.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">06</span>
+      <div><h4>Settlementbestand of rapportage-API</h4>
+        <p>Per dag, met transactiereferenties, zodat we onze eigen omzet per bar tegen uw uitbetaling
+          kunnen afstemmen.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">07</span>
+      <div><h4>Meerdere kassa's op &#xE9;&#xE9;n contract</h4>
+        <p>10 tot 20 toestellen tegelijk actief, verdeeld over meerdere bars, elk herleidbaar in de
+          rapportage. Wij koppelen zelf al elke kassa aan een bar en een medewerker.</p></div>
+      <span class="chip warn"><span class="dot"></span>Te bevestigen</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">08</span>
+      <div><h4>De kassasoftware zelf</h4>
+        <p>Gebouwd, getest en in gebruik. Inclusief backoffice, voorraad, dagstaat en rechten.</p></div>
+      <span class="chip ok"><span class="dot"></span>Geregeld</span>
+    </div>
+    <div class="req-item">
+      <span class="idx">09</span>
+      <div><h4>Ticketverkoop en online betalingen</h4>
+        <p>Draait live met een eigen koppeling, inclusief webhook, terugboeking en kortingscodes.
+          Dit hoeft niet mee in de deal, maar laat zien dat we dit type integratie al hebben gedaan.</p></div>
+      <span class="chip ok"><span class="dot"></span>Geregeld</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7. SPECS ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Specificaties</p>
+    <h2>Technische kenmerken</h2>
+    <p>Voor de techneut aan de andere kant van de tafel. Dit is de feitelijke staat van het systeem,
+      niet een wensenlijst.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <tbody>
+        <tr><td class="k">Kassa-app</td><td>Webapplicatie in React, draait in de browser van het toestel. Werkt volledig door bij netwerkuitval. Geen installatie per toestel nodig.</td></tr>
+        <tr><td class="k">Backoffice</td><td>Aparte webapplicatie voor beheer, live omzet, voorraad, dagstaat en export.</td></tr>
+        <tr><td class="k">Backend</td><td>Postgres met rijbeveiliging, plus serverfuncties voor alle kassaverkeer. Kassa's schrijven nooit rechtstreeks in de database.</td></tr>
+        <tr><td class="k">Kassa-authenticatie</td><td>Elk toestel heeft een eigen token van 24 willekeurige bytes. Intrekken kan per toestel, waarna die kassa direct dood is.</td></tr>
+        <tr><td class="k">Personeel</td><td>Login met pincode, gehasht opgeslagen. Na 5 mislukte pogingen binnen 15 minuten gaat het account op slot.</td></tr>
+        <tr><td class="k">Bedragen</td><td>Altijd hele eurocenten, nooit kommagetallen. Munteenheid EUR.</td></tr>
+        <tr><td class="k">Btw</td><td>Consumentenprijzen inclusief btw, tarief per product vastgelegd en per bonregel meegeschreven. Splitsing gebeurt in de dagstaat, standaard 21 procent voor wijn en 9 procent voor food.</td></tr>
+        <tr><td class="k">Betaalmethodes</td><td>Kaart contactloos of pin als hoofdroute. Betaalverzoek per QR als terugval. Cashless opzet, geen contant geld aan de bar.</td></tr>
+        <tr><td class="k">Bon</td><td>Digitaal, geen bonprinter. Scheelt hardware, papier en storingen.</td></tr>
+        <tr><td class="k">Offline gedrag</td><td>Bonnen gaan lokaal in een wachtrij en worden elke 5 seconden aangeboden. Na 10 mislukte pogingen gaat een bon apart zodat de rest niet blokkeert. Niets gaat verloren.</td></tr>
+        <tr><td class="k">Dubbele boekingen</td><td>Elke bon heeft een unieke sleutel met een uniciteitsregel in de database. Een tweede aanbieding van dezelfde bon wordt bevestigd maar niet nogmaals geboekt.</td></tr>
+        <tr><td class="k">Bedragcontrole</td><td>De server vertrouwt het totaal van de kassa niet en herberekent het uit de bonregels. Ook productverwijzingen worden gecontroleerd tegen het juiste evenement.</td></tr>
+        <tr><td class="k">Terugboeken</td><td>Alleen op de verkopende kassa, alleen door een supervisor of beheerder, met pincode. Dubbel terugboeken wordt door de database geblokkeerd. Voorraad gaat terug op basis van wat er destijds is afgeboekt.</td></tr>
+        <tr><td class="k">Kaartgegevens</td><td>Komen niet in ons systeem. Wij bewaren van de betaling alleen bedrag, methode, status en de transactiereferentie van de provider. Daarmee blijft onze PCI-scope minimaal.</td></tr>
+        <tr><td class="k">Meerdere organisaties</td><td>Het platform is multi-tenant opgezet met scheiding per organisatie, evenement en standhouder. Elke organisatie is straks zijn eigen contractpartij bij de betaalprovider.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== 8. HARDWARE ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Hardware</p>
+    <h2>Waar het op moet draaien</h2>
+    <p>Onze kassa is een webapplicatie. Dat geeft veel vrijheid in hardware, maar roept &#xE9;&#xE9;n
+      belangrijke vraag op die per provider anders ligt.</p>
+  </div>
+
+  <div class="duo">
+    <div class="panel">
+      <div class="panel-head"><span>Scenario A</span><span class="chip neutral">Voorkeur</span></div>
+      <div class="panel-body stack-s">
+        <p class="small"><strong>Telefoon of tablet als kassa, losse terminal ernaast.</strong></p>
+        <p class="small">Onze app draait in de browser, de terminal wordt aangestuurd via een SDK of
+          een lokale koppeling. Medewerker kijkt op &#xE9;&#xE9;n scherm, gast tapt op de terminal.</p>
+        <p class="tiny">Vraag: heeft u een terminal die zich vanuit een externe applicatie laat
+          aansturen, en over welk kanaal loopt dat? Netwerk, bluetooth of cloud?</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Scenario B</span><span class="chip neutral">Ook goed</span></div>
+      <div class="panel-body stack-s">
+        <p class="small"><strong>Alles op uw Android-terminal.</strong></p>
+        <p class="small">Onze kassa draait dan in de browser of als schil op het toestel zelf, en
+          roept de betaalapp aan. &#xC9;&#xE9;n apparaat per medewerker, minder om kwijt te raken.</p>
+        <p class="tiny">Vraag: mag een eigen applicatie op de terminal draaien, en hoe verloopt de
+          goedkeuring en distributie daarvan?</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Scenario C</span><span class="chip neutral">Interessant</span></div>
+      <div class="panel-body stack-s">
+        <p class="small"><strong>Telefoon als pinapparaat, zonder losse terminal.</strong></p>
+        <p class="small">Scheelt hardware, huur en logistiek bij twintig kassa's. Vooral aantrekkelijk
+          voor kleinere bars en pop-ups.</p>
+        <p class="tiny">Vraag: ondersteunt u dit, op welke toestellen, en moet elk toestel apart als
+          terminal geregistreerd worden?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col" style="margin-top:24px">
+    <h3 style="margin-bottom:10px">Onze omgeving op locatie</h3>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td class="k">Locatie</td><td>Binnenlocatie, grote industri&#xEB;le hal. Betonnen vloer, staalconstructie, veel mensen.</td></tr>
+          <tr><td class="k">Netwerk</td><td>Eigen wifi op de vloer, met mobiel netwerk als terugval. Wij gaan er in het ontwerp van uit dat het netwerk een keer wegvalt.</td></tr>
+          <tr><td class="k">Kassa's</td><td>10 tot 20 tegelijk actief, verdeeld over meerdere bars, plus standhouders met een eigen kassa.</td></tr>
+          <tr><td class="k">Bonhoogte</td><td>Klein. Vaak &#xE9;&#xE9;n of twee glazen wijn. Daarom weegt een vast bedrag per transactie zwaarder dan het percentage.</td></tr>
+          <tr><td class="k">Piekmoment</td><td>Korte, harde pieken rond de wissel van programmaonderdelen. Snelheid per transactie telt zwaarder dan doorvoer per uur.</td></tr>
+          <tr><td class="k">Stroom</td><td>Beperkt aantal punten per bar. Toestellen moeten een avond meegaan of makkelijk wisselbaar zijn.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 9. COMMERCIEEL ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Commercieel kader</p>
+    <h2>Waar we op willen uitkomen</h2>
+    <p>De velden hieronder zijn leeg gelaten om ter plekke in te vullen. Ze zijn wel de kern van het
+      gesprek: bij kleine bonnen bepaalt het vaste bedrag per transactie de uitkomst, niet het
+      percentage.</p>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Onderwerp</th><th style="width:38%">Onze inzet</th><th style="width:26%">Aanbod provider</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Percentage per transactie</td><td class="small">Scherp tarief, passend bij het volume van een meerdaags festival.</td><td><input class="fill" placeholder="%" aria-label="Percentage per transactie"></td></tr>
+        <tr><td class="k">Vast bedrag per transactie</td><td class="small">Zo laag mogelijk. Bij een bon van rond de zeven euro is dit de zwaarste post.</td><td><input class="fill" placeholder="&euro; per transactie" aria-label="Vast bedrag per transactie"></td></tr>
+        <tr><td class="k">Abonnement of vaste kosten</td><td class="small">Bij voorkeur geen. Wij nemen geen software af.</td><td><input class="fill" placeholder="&euro; per maand" aria-label="Abonnementskosten"></td></tr>
+        <tr><td class="k">Terminals</td><td class="small">Huur per evenement heeft de voorkeur boven koop van twintig stuks.</td><td><input class="fill" placeholder="huur of koop" aria-label="Terminalkosten"></td></tr>
+        <tr><td class="k">Uitbetaaltermijn</td><td class="small">Snel na het evenement, want leveranciers willen betaald worden.</td><td><input class="fill" placeholder="werkdagen" aria-label="Uitbetaaltermijn"></td></tr>
+        <tr><td class="k">Reserve of vasthouden</td><td class="small">Geen weekendomzet die wekenlang vaststaat. Dit is voor ons een breekpunt.</td><td><input class="fill" placeholder="beleid" aria-label="Reservebeleid"></td></tr>
+        <tr><td class="k">Doorverkoop aan organisatoren</td><td class="small">Wij bouwen dit uit tot een platform voor andere organisatoren. Is er een partnerregeling?</td><td><input class="fill" placeholder="regeling" aria-label="Partnerregeling"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col" style="margin-top:22px">
+    <div class="note">
+      <h4>Het perspectief dat de moeite waard is om te noemen</h4>
+      <p class="small">Dit systeem is niet gebouwd voor &#xE9;&#xE9;n festival. Het draait multi-tenant en we
+        zetten het door als platform voor andere organisatoren, die dan elk hun eigen
+        betaalcontract afsluiten. Voor een acquirer betekent dat: niet &#xE9;&#xE9;n merchant, maar een
+        instroom van merchants die allemaal via dezelfde integratie binnenkomen. Dat is een gesprek
+        waard naast het tarief.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. VRAGENLIJST ==================== -->
+<section>
+  <div class="stack col" style="margin-bottom:22px">
+    <p class="eyebrow">Gespreksagenda</p>
+    <h2>Vragen om mee terug te komen</h2>
+    <p>Afvinklijst voor tijdens het gesprek. Met de antwoorden op deze punten kunnen we een
+      koppeling bouwen en een besluit nemen.</p>
+  </div>
+
+  <div class="duo">
+    <div class="panel">
+      <div class="panel-head"><span>Techniek</span></div>
+      <div class="panel-body">
+        <ul class="qlist">
+          <li><span class="box"></span><span>Kunnen we jullie terminal vanuit onze eigen applicatie starten? Via welke SDK of koppeling?</span></li>
+          <li><span class="box"></span><span>Is er documentatie die we vooraf mogen inzien?</span></li>
+          <li><span class="box"></span><span>Krijgen we een testomgeving met sleutels, testkaarten en een leentoestel?</span></li>
+          <li><span class="box"></span><span>Kunnen we een eigen referentie of idempotentiesleutel meegeven per transactie?</span></li>
+          <li><span class="box"></span><span>Kunnen we achteraf de status van een transactie opvragen na een verbindingsfout?</span></li>
+          <li><span class="box"></span><span>Is terugboeken via de API mogelijk, ook gedeeltelijk?</span></li>
+          <li><span class="box"></span><span>Doet de terminal aan store-and-forward? Tot welk bedrag en met welk risico?</span></li>
+          <li><span class="box"></span><span>Krijgen we webhooks bij statuswijzigingen?</span></li>
+          <li><span class="box"></span><span>Is er een settlementbestand of rapportage-API met transactiereferenties?</span></li>
+          <li><span class="box"></span><span>Ondersteunen jullie telefoon als pinapparaat, en op welke toestellen?</span></li>
+          <li><span class="box"></span><span>Hoeveel toestellen kunnen er onder &#xE9;&#xE9;n contract, en zijn ze los herleidbaar?</span></li>
+          <li><span class="box"></span><span>Hoe lang duurt een transactie in de praktijk, van aanbieden tot goedkeuring?</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Commercieel en organisatorisch</span></div>
+      <div class="panel-body">
+        <ul class="qlist">
+          <li><span class="box"></span><span>Wat is het tarief per transactie, uitgesplitst in percentage en vast bedrag?</span></li>
+          <li><span class="box"></span><span>Zijn er vaste maandkosten, en waarvoor precies?</span></li>
+          <li><span class="box"></span><span>Wat kost een terminal, en kan het per evenement gehuurd worden?</span></li>
+          <li><span class="box"></span><span>Wat is de uitbetaaltermijn rond een evenement?</span></li>
+          <li><span class="box"></span><span>Wordt er een reserve ingehouden of omzet vastgehouden bij een piek?</span></li>
+          <li><span class="box"></span><span>Hoe lang duurt de aansluiting en de kennisprocedure?</span></li>
+          <li><span class="box"></span><span>Is er ondersteuning tijdens het evenement zelf, ook in het weekend en 's avonds?</span></li>
+          <li><span class="box"></span><span>Wat gebeurt er bij een storing op de avond zelf? Wie belt wie?</span></li>
+          <li><span class="box"></span><span>Is er een partnerregeling voor organisatoren die wij aanbrengen?</span></li>
+          <li><span class="box"></span><span>Kunnen standhouders een eigen contract krijgen onder dezelfde integratie?</span></li>
+          <li><span class="box"></span><span>Welke verplichtingen liggen er bij ons op het gebied van PCI?</span></li>
+          <li><span class="box"></span><span>Kunnen we een referentie spreken die iets vergelijkbaars draait?</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 11. ROADMAP ==================== -->
+<section>
+  <div class="stack col">
+    <p class="eyebrow">Vervolg</p>
+    <h2>Wat er na een akkoord gebeurt</h2>
+    <p>Het bouwwerk staat, dus de integratie zelf is overzichtelijk werk. De doorlooptijd wordt
+      bepaald door de aansluitprocedure, niet door onze code.</p>
+  </div>
+  <div class="tablewrap" style="margin-top:20px">
+    <table>
+      <thead><tr><th style="width:34px">&nbsp;</th><th>Fase</th><th>Inhoud</th><th>Afhankelijk van</th></tr></thead>
+      <tbody>
+        <tr><td class="k">1</td><td>Aansluiten</td><td>Contract, kennisprocedure, testsleutels, documentatie</td><td>Provider</td></tr>
+        <tr><td class="k">2</td><td>Koppelen</td><td>De vier methodes implementeren tegen de sandbox</td><td>Ons, kort werk</td></tr>
+        <tr><td class="k">3</td><td>Testen</td><td>Goedgekeurd, geweigerd, afgebroken, netwerk weg, dubbele aanroep, terugboeking</td><td>Testterminal</td></tr>
+        <tr><td class="k">4</td><td>Proefdraaien</td><td>E&#xE9;n bar op een klein evenement, echt geld, volledige afstemming achteraf</td><td>Live sleutels</td></tr>
+        <tr><td class="k">5</td><td>Uitrollen</td><td>Alle kassa's, met een geoefende terugvalroute per bar</td><td>Terminals op tijd</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col" style="margin-top:22px">
+    <div class="note stop">
+      <h4>Waar we op letten in de planning</h4>
+      <p class="small">Het eerste grote moment staat vast in november. We willen ruim daarvoor een
+        keer met echt geld hebben gedraaid op een kleiner evenement. Doorlooptijd van de
+        aansluitprocedure is daarom een selectiecriterium, niet alleen het tarief.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap col stack-s">
+    <p class="tiny">Festival POS is ontwikkeld door The Grape Agency voor Nacht van de Wijn en
+      Meisjes van de Wijn. Dit document is bedoeld voor gesprekken met betaaldienstverleners en
+      bevat geen vertrouwelijke gegevens van derden.</p>
+    <p class="tiny">De demo op deze pagina draait volledig lokaal in de browser. Er wordt niets
+      verstuurd, opgeslagen of verwerkt.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var PRODUCTS = [
+    {id:"p_rood",  name:"Glas rood",        cents:650,  vat:21},
+    {id:"p_wit",   name:"Glas wit",         cents:650,  vat:21},
+    {id:"p_bub",   name:"Bubbels",          cents:750,  vat:21},
+    {id:"p_oranje",name:"Oranjewijn",       cents:800,  vat:21},
+    {id:"p_fles",  name:"Fles huiswijn",    cents:3200, vat:21},
+    {id:"p_alcvrij",name:"Alcoholvrij",     cents:550,  vat:21},
+    {id:"p_water", name:"Water",            cents:300,  vat:9},
+    {id:"p_kaas",  name:"Kaasplankje",      cents:900,  vat:9},
+    {id:"p_brood", name:"Brood met olie",   cents:600,  vat:9}
+  ];
+
+  var cart = [];        // {id,name,cents,vat,qty}
+  var queue = 0;
+  var lastRef = null;
+  var busy = false;
+  var seq = 0;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var grid = $("grid"), cartEl = $("cart"), totalEl = $("total"), logEl = $("log");
+  var payBtn = $("pay"), clearBtn = $("clear"), refundBtn = $("refund");
+  var swOffline = $("swOffline"), swDecline = $("swDecline"), swSlow = $("swSlow");
+
+  function euro(c){
+    return "\u20AC\u00A0" + (c/100).toFixed(2).replace(".", ",");
+  }
+  function total(){
+    return cart.reduce(function(s,l){ return s + l.cents * l.qty; }, 0);
+  }
+  function uuid(){
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c){
+      var r = Math.random()*16|0, v = c === "x" ? r : (r&0x3|0x8);
+      return v.toString(16);
+    });
+  }
+  function stamp(){
+    var d = new Date();
+    var p = function(n){ return String(n).padStart(2,"0"); };
+    return p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());
+  }
+
+  var logged = false;
+  function line(cls, text){
+    if (!logged){ logEl.innerHTML = ""; logged = true; }
+    var row = document.createElement("div");
+    var t = document.createElement("span");
+    t.className = "t";
+    t.textContent = stamp() + "  ";
+    var b = document.createElement("span");
+    b.className = cls;
+    b.textContent = text;
+    row.appendChild(t); row.appendChild(b);
+    logEl.appendChild(row);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function blank(){
+    if (!logged) return;
+    var row = document.createElement("div");
+    row.innerHTML = "&nbsp;";
+    logEl.appendChild(row);
+  }
+
+  // ---------- render ----------
+  PRODUCTS.forEach(function(p){
+    var b = document.createElement("button");
+    b.className = "prod";
+    b.type = "button";
+    var top = document.createElement("span");
+    top.textContent = p.name;
+    var row = document.createElement("span");
+    row.className = "prod-row";
+    var pr = document.createElement("span");
+    pr.className = "price";
+    pr.textContent = euro(p.cents);
+    var vt = document.createElement("span");
+    vt.className = "vat";
+    vt.textContent = p.vat + "%";
+    row.appendChild(pr); row.appendChild(vt);
+    b.appendChild(top); b.appendChild(row);
+    b.addEventListener("click", function(){ add(p); });
+    grid.appendChild(b);
+  });
+
+  function add(p){
+    if (busy) return;
+    var hit = null;
+    for (var i=0;i<cart.length;i++){ if (cart[i].id === p.id){ hit = cart[i]; break; } }
+    if (hit) hit.qty += 1;
+    else cart.push({id:p.id, name:p.name, cents:p.cents, vat:p.vat, qty:1});
+    render();
+  }
+
+  function render(){
+    cartEl.innerHTML = "";
+    if (!cart.length){
+      var li = document.createElement("li");
+      li.className = "empty";
+      li.textContent = "Nog niets aangeslagen";
+      cartEl.appendChild(li);
+    } else {
+      cart.forEach(function(l){
+        var li = document.createElement("li");
+        var q = document.createElement("span");
+        q.className = "q"; q.textContent = l.qty + "\u00D7";
+        var n = document.createElement("span");
+        n.style.flex = "1"; n.textContent = l.name;
+        var a = document.createElement("span");
+        a.className = "a"; a.textContent = euro(l.cents * l.qty);
+        li.appendChild(q); li.appendChild(n); li.appendChild(a);
+        cartEl.appendChild(li);
+      });
+    }
+    totalEl.textContent = euro(total());
+    payBtn.disabled = busy || cart.length === 0;
+    clearBtn.disabled = busy || cart.length === 0;
+    refundBtn.disabled = busy || !lastRef;
+    $("queue").textContent = "Wachtrij " + queue;
+    var led = $("netled");
+    if (swOffline.checked){ led.classList.add("off"); $("nettext").textContent = "Offline"; }
+    else { led.classList.remove("off"); $("nettext").textContent = "Online"; }
+  }
+
+  function wait(ms){
+    return new Promise(function(res){ setTimeout(res, ms); });
+  }
+
+  // ---------- de eigenlijke betaalflow ----------
+  async function pay(){
+    if (busy || !cart.length) return;
+    busy = true; render();
+
+    var amount = total();
+    var key = uuid();
+    var orderId = "ord_" + (++seq).toString().padStart(4, "0");
+    var slow = swSlow.checked;
+
+    line("cmt", "\u2500\u2500 nieuwe bon \u2500\u2500");
+    line("cmt", "Bon lokaal vastgelegd voordat de kaart wordt aangeboden.");
+    line("out", "terminal.charge({");
+    line("out", '  orderId: "' + orderId + '",');
+    line("out", "  amountCents: " + amount + ",");
+    line("out", '  idempotencyKey: "' + key + '",');
+    line("out", '  description: "Bar 1 \u00B7 ' + cart.reduce(function(s,l){return s+l.qty;},0) + ' artikelen"');
+    line("out", "})");
+
+    await wait(slow ? 900 : 320);
+    line("cmt", "Terminal wacht op de kaart\u2026");
+    await wait(slow ? 2600 : 900);
+
+    if (swDecline.checked){
+      line("in", "\u2190 PaymentResult {");
+      line("err", "    ok: false,");
+      line("err", '    status: "failed",');
+      line("err", '    error: "card_declined"');
+      line("in", "  }");
+      line("cmt", "Bon blijft open. Medewerker kan opnieuw aanbieden of een andere kaart vragen.");
+      blank();
+      busy = false; render();
+      return;
+    }
+
+    var ref = "trx_" + Math.random().toString(36).slice(2, 12);
+    lastRef = {ref: ref, amount: amount, order: orderId};
+    line("in", "\u2190 PaymentResult {");
+    line("ok",  "    ok: true,");
+    line("ok",  '    status: "succeeded",');
+    line("ok",  '    providerRef: "' + ref + '",');
+    line("in",  "    offline: false");
+    line("in",  "  }");
+    line("cmt", "Alleen deze referentie slaan wij op. Geen kaartnummer, geen naam.");
+
+    cart = [];
+    queue += 1;
+    render();
+
+    await wait(300);
+    if (swOffline.checked){
+      line("err", "Synchronisatie mislukt: geen verbinding.");
+      line("cmt", "Bon staat in de lokale wachtrij en wordt elke 5 seconden opnieuw aangeboden.");
+      line("cmt", "De verkoop is dus niet weg. Zet 'Netwerk weg' uit om dit te zien.");
+      blank();
+      busy = false; render();
+      return;
+    }
+    flush(amount, key, ref, orderId);
+    busy = false; render();
+  }
+
+  async function flush(amount, key, ref, orderId){
+    line("out", "POS \u2192 backend: bon aanbieden");
+    line("out", '  idempotency_key: "' + key + '"');
+    await wait(420);
+    line("ok", "\u2190 { synced: 1, failed: 0 }");
+    line("cmt", "Server heeft het totaal uit de bonregels herberekend en op " + euro(amount).replace("\u00A0"," ") + " uitgekomen.");
+    queue = Math.max(0, queue - 1);
+    render();
+
+    await wait(260);
+    line("out", "POS \u2192 backend: zelfde bon nog eens (netwerkhapering)");
+    await wait(320);
+    line("ok", "\u2190 { synced: 1, failed: 0 }  \u2190 bestaande bon, niets opnieuw geboekt");
+    line("cmt", "Dat is de reden dat wij een idempotentiesleutel per transactie nodig hebben.");
+    blank();
+  }
+
+  async function refund(){
+    if (busy || !lastRef) return;
+    busy = true; render();
+    var r = lastRef;
+
+    line("cmt", "\u2500\u2500 terugboeking \u2500\u2500");
+    line("cmt", "Alleen mogelijk op de kassa die de bon heeft verkocht.");
+    line("out", "Supervisorpincode gevraagd\u2026");
+    await wait(700);
+    line("ok", "Pincode akkoord \u00B7 rol: supervisor");
+    line("out", "backend \u2192 terminal.refund({");
+    line("out", '  providerRef: "' + r.ref + '",');
+    line("out", "  amountCents: " + r.amount);
+    line("out", "})");
+    await wait(swSlow.checked ? 1800 : 800);
+    line("in", "\u2190 RefundResult {");
+    line("ok", "    ok: true,");
+    line("ok", '    status: "succeeded"');
+    line("in", "  }");
+    line("cmt", "Order op terugbetaald gezet, voorraad teruggeboekt, supervisor vastgelegd bij de terugboeking.");
+    blank();
+    lastRef = null;
+    busy = false; render();
+  }
+
+  payBtn.addEventListener("click", pay);
+  refundBtn.addEventListener("click", refund);
+  clearBtn.addEventListener("click", function(){ if (busy) return; cart = []; render(); });
+  swOffline.addEventListener("change", function(){
+    render();
+    if (!swOffline.checked && queue > 0){
+      line("cmt", "Verbinding terug. Wachtrij wordt aangeboden\u2026");
+      setTimeout(function(){
+        line("ok", "\u2190 { synced: " + queue + ", failed: 0 }");
+        line("cmt", "Alles alsnog geboekt. Er is geen omzet verloren gegaan.");
+        blank();
+        queue = 0; render();
+      }, 700);
+    }
+  });
+  $("wipe").addEventListener("click", function(){
+    logEl.innerHTML = '<span class="log-empty">Leeg. Sla links een product aan.</span>';
+    logged = false;
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
