@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mistrelle Carousel Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23DA9089'/%3E%3C/svg%3E">
+<script src="logos.js"></script>
+<script src="lib/html-to-image.js"></script>
+<script src="lib/jszip.min.js"></script>
+<style>
+@font-face{font-family:"Caladea";src:url(fonts/caladea-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:"Caladea";src:url(fonts/caladea-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Caladea";src:url(fonts/caladea-700-normal.woff2) format("woff2");font-weight:700;font-style:normal;font-display:block}
+
+:root{
+  /* Mistrelle palet (brandbook 2027, slide 9 en 10) */
+  --wit:#FFFFFF; --zwart:#231F20; --rose:#DA9089; --rose-2:#BD887E; --creme:#F3E9E2; --gray:#D6D1CB; --taupe:#A47F74;
+  /* UI */
+  --ui-bg:#F7F4F1; --ui-panel:#FFFFFF; --ui-line:#E7E1DC; --ui-ink:#231F20; --ui-soft:#7A6F6B; --ui-focus:#DA9089;
+  --serif:"Caladea","Cambria",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--ui-bg);color:var(--ui-ink);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:280px 1fr 360px;grid-template-rows:60px 1fr;height:100vh}
+header{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line)}
+header .brand{display:flex;align-items:center;gap:10px}
+header .brand svg{height:22px;width:auto}
+header .brand span{font-family:var(--serif);font-size:18px;letter-spacing:.02em}
+header .brand small{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ui-soft);margin-left:4px}
+header .grow{flex:1}
+.seg{display:inline-flex;border:1px solid var(--ui-line);border-radius:999px;padding:3px;background:#fff}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:999px;cursor:pointer;font-size:12px;color:var(--ui-soft)}
+.seg button.on{background:var(--zwart);color:#fff}
+.btn{border:1px solid var(--ui-line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:#cfc6c0}
+.btn.dark{background:var(--zwart);border-color:var(--zwart);color:#fff}
+.btn.dark:hover{background:#000}
+.btn.rose{background:var(--rose);border-color:var(--rose);color:#fff}
+.btn.small{padding:5px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:default}
+.icon{width:30px;height:30px;padding:0;justify-content:center;border-radius:50%}
+
+aside{background:var(--ui-panel);overflow-y:auto}
+aside.left{border-right:1px solid var(--ui-line);padding:16px}
+aside.right{border-left:1px solid var(--ui-line);padding:16px 18px 40px}
+h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ui-soft);font-weight:600;margin:18px 0 10px}
+h3:first-child{margin-top:0}
+
+.presets{display:grid;gap:6px}
+.preset{text-align:left;border:1px solid var(--ui-line);background:#fff;border-radius:10px;padding:9px 11px;cursor:pointer}
+.preset b{display:block;font-weight:600;font-size:13px}
+.preset span{font-size:12px;color:var(--ui-soft)}
+.preset:hover{border-color:var(--rose)}
+
+.slist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.sitem{display:grid;grid-template-columns:20px 64px 1fr;align-items:center;gap:8px;border:1px solid var(--ui-line);border-radius:10px;padding:6px;cursor:pointer;background:#fff;position:relative}
+.sitem.on{border-color:var(--zwart);box-shadow:0 0 0 1px var(--zwart)}
+.sitem .n{font-size:11px;color:var(--ui-soft);text-align:center}
+.sitem .th{width:64px;overflow:hidden;border-radius:4px;background:#eee;position:relative}
+.sitem .th>div{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none}
+.sitem .meta b{display:block;font-size:12px;font-weight:600}
+.sitem .meta span{display:block;font-size:12px;color:var(--ui-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.sitem .warn{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:#E0A030}
+.sitem.dragging{opacity:.4}
+.sitem.over{border-style:dashed;border-color:var(--rose)}
+.addrow{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+main{position:relative;overflow:hidden;display:flex;flex-direction:column}
+.stagebar{display:flex;align-items:center;gap:10px;padding:12px 18px;color:var(--ui-soft);font-size:12px}
+.stagebar .grow{flex:1}
+.stage{flex:1;overflow-x:auto;overflow-y:hidden;display:flex;align-items:center;padding:0 40px 30px;gap:0;scroll-behavior:smooth}
+.frame{flex:none;position:relative;margin-right:2px;cursor:pointer}
+.frame .holder{position:absolute;left:0;top:0;transform-origin:0 0}
+.frame.on::after{content:"";position:absolute;inset:-6px;border:2px solid var(--zwart);border-radius:4px;pointer-events:none}
+.frame .tag{position:absolute;top:-26px;left:0;font-size:11px;color:var(--ui-soft);letter-spacing:.08em}
+.frame.drop::before{content:"Laat los om de foto te plaatsen";position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:rgba(218,144,137,.85);color:#fff;font-size:14px}
+.seam{flex:none;width:0;align-self:stretch}
+.hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:12px;color:var(--ui-soft)}
+
+/* form */
+.field{margin-bottom:12px}
+.field label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:5px}
+.field label em{font-style:normal;font-weight:400;color:var(--ui-soft)}
+.field input[type=text],.field textarea,.field select{width:100%;border:1px solid var(--ui-line);border-radius:8px;padding:8px 10px;background:#fff;outline:none}
+.field textarea{resize:vertical;min-height:76px;line-height:1.45}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--ui-focus);box-shadow:0 0 0 3px rgba(218,144,137,.18)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:34px;height:34px;border-radius:50%;border:1px solid var(--ui-line);cursor:pointer;position:relative}
+.sw.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--zwart)}
+.sw.photo{background:linear-gradient(135deg,#caa58f,#7b5f55);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.sw[disabled]{opacity:.3;cursor:not-allowed}
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.types button{border:1px solid var(--ui-line);background:#fff;border-radius:8px;padding:8px 4px;font-size:11px;cursor:pointer;line-height:1.2}
+.types button.on{border-color:var(--zwart);background:var(--zwart);color:#fff}
+.drop{border:1.5px dashed #d6ccc6;border-radius:10px;padding:14px;text-align:center;color:var(--ui-soft);font-size:12px;cursor:pointer;background:#fdfbfa}
+.drop:hover{border-color:var(--rose);color:var(--ui-ink)}
+.photoctl{display:grid;gap:8px;margin-top:10px}
+.photoctl .r{display:grid;grid-template-columns:70px 1fr 36px;align-items:center;gap:8px;font-size:12px;color:var(--ui-soft)}
+input[type=range]{width:100%;accent-color:var(--zwart)}
+.check{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0;cursor:pointer}
+.check input{accent-color:var(--zwart);width:16px;height:16px}
+.guard{border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.45;margin-bottom:6px}
+.guard.ok{background:#EEF3EC;color:#3f5a3c}
+.guard.w{background:#FBF1E1;color:#7a5418}
+.guard b{font-weight:600}
+.sep{height:1px;background:var(--ui-line);margin:16px 0}
+.muted{color:var(--ui-soft);font-size:12px;line-height:1.5}
+
+/* modal / IG preview */
+.modal{position:fixed;inset:0;background:rgba(35,31,32,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.open{display:flex}
+.phone{width:390px;max-width:100%;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.phone .top{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.phone .av{width:32px;height:32px;border-radius:50%;overflow:hidden}
+.phone .top b{font-size:13px}
+.phone .top span{font-size:11px;color:#888;display:block}
+.phone .rail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.phone .rail::-webkit-scrollbar{display:none}
+.phone .cell{flex:none;width:100%;scroll-snap-align:start;position:relative;overflow:hidden;background:#eee}
+.phone .cell>div{position:absolute;left:0;top:0;transform-origin:0 0}
+.phone .dots{display:flex;justify-content:center;gap:4px;padding:10px}
+.phone .dots i{width:6px;height:6px;border-radius:50%;background:#ccc}
+.phone .dots i.on{background:#3897f0}
+.phone .cap{padding:0 14px 16px;font-size:13px;line-height:1.45}
+.phone .cap textarea{width:100%;border:1px dashed #ddd;border-radius:8px;padding:8px;min-height:70px;font-size:13px;resize:vertical}
+.close{position:absolute;top:18px;right:18px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--zwart);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:240px 1fr;grid-template-rows:60px 1fr auto;height:auto;min-height:100vh}
+  aside.right{grid-column:1/-1;border-left:0;border-top:1px solid var(--ui-line)}
+  main{min-height:70vh}
+}
+@media (max-width:720px){
+  .app{display:flex;flex-direction:column}
+  header{flex-wrap:wrap;height:auto;padding:10px 16px;gap:8px;order:0}
+  main{order:1} aside.right{order:2} aside.left{order:3}
+  aside.left{border-right:0;border-bottom:1px solid var(--ui-line)}
+  main{min-height:60vh}
+  .stage{padding:0 16px 30px}
+  .hide-m{display:none}
+}
+
+/* ================= SLIDES (1080 breed, exportmaat) ================= */
+.slide{position:relative;width:1080px;overflow:hidden;font-family:var(--serif);color:var(--zwart);background:var(--wit)}
+.slide *{box-sizing:border-box}
+.t-wit{background:var(--wit);--fg:var(--zwart);--fg2:rgba(35,31,32,.72)}
+.t-creme{background:var(--creme);--fg:var(--zwart);--fg2:rgba(35,31,32,.72)}
+.t-zwart{background:var(--zwart);--fg:#fff;--fg2:rgba(255,255,255,.78)}
+.t-rose{background:var(--rose);--fg:#fff;--fg2:rgba(255,255,255,.9)}
+.t-foto{background:#3a3230;--fg:#fff;--fg2:rgba(255,255,255,.9)}
+.slide .ph{position:absolute;inset:0;overflow:hidden;background:linear-gradient(160deg,#e9ddd4,#cdb8ab)}
+.slide .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.slide .ph .empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:28%;gap:14px;color:rgba(35,31,32,.45);font-family:var(--sans);font-size:30px;letter-spacing:.02em}
+.slide .ph .empty svg{width:90px;height:90px;opacity:.5}
+.slide .shade{position:absolute;inset:0;pointer-events:none}
+.slide .lbl{font-size:25px;letter-spacing:.24em;text-transform:uppercase;color:var(--fg2);font-weight:400}
+.slide .ttl{font-weight:400;line-height:1.08;color:var(--fg);margin:0;letter-spacing:-.005em}
+.slide .acc{font-style:italic;color:var(--fg);line-height:1.2}
+.slide .bdy{font-size:34px;line-height:1.5;color:var(--fg2);white-space:pre-line}
+.slide .rule{width:72px;height:3px;background:var(--rose);border:0;margin:0}
+.t-rose .rule{background:#fff}
+.slide .count{position:absolute;top:84px;right:96px;font-size:22px;letter-spacing:.2em;color:var(--fg2);font-family:var(--serif)}
+.slide .swipe{position:absolute;bottom:84px;right:96px;display:flex;align-items:center;gap:14px;font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg2)}
+.slide .swipe svg{width:44px;height:14px}
+.slide .logo{display:block}
+.slide .logo svg{display:block;width:100%;height:auto}
+.slide .kader{position:absolute;pointer-events:none}
+.slide .legal{position:absolute;left:0;right:0;bottom:84px;text-align:center;font-family:var(--serif);font-size:20px;letter-spacing:.06em;color:var(--fg2)}
+.slide .legal b{font-weight:700;letter-spacing:.08em;margin-left:14px;border:1.5px solid currentColor;padding:2px 8px;border-radius:4px;font-size:17px}
+.slide .fit{overflow:hidden}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="brand"><span id="hdrLogo"></span><small class="hide-m">Carousel studio</small></div>
+    <div class="grow"></div>
+    <div class="seg" id="fmtSeg" role="group" aria-label="Formaat">
+      <button data-f="45" class="on">Feed 4:5</button><button data-f="11">1:1</button><button data-f="916">Story 9:16</button>
+    </div>
+    <button class="btn hide-m" id="igBtn">Bekijk als post</button>
+    <button class="btn" id="dlOne">Download slide</button>
+    <button class="btn dark" id="dlAll">Download alles (.zip)</button>
+  </header>
+
+  <aside class="left">
+    <h3>Start met een opzet</h3>
+    <div class="presets" id="presets"></div>
+    <h3>Slides</h3>
+    <ul class="slist" id="slist"></ul>
+    <div class="addrow">
+      <button class="btn small" id="addSlide">+ Slide</button>
+      <button class="btn small" id="dupSlide">Dupliceer</button>
+      <button class="btn small" id="delSlide">Verwijder</button>
+    </div>
+    <div class="sep"></div>
+    <h3>Project</h3>
+    <div class="field"><label>Instagram-account</label><input type="text" id="handle"></div>
+    <label class="check"><input type="checkbox" id="optCount"> Slidenummers tonen</label>
+    <label class="check"><input type="checkbox" id="optSwipe"> Swipe-hint tonen</label>
+    <label class="check"><input type="checkbox" id="optLegal"> NIX18-regel op laatste slide</label>
+    <div class="addrow">
+      <button class="btn small" id="saveJson">Project opslaan</button>
+      <button class="btn small" id="openJson">Project openen</button>
+      <input type="file" id="jsonFile" accept=".json,application/json" hidden>
+    </div>
+    <p class="muted" style="margin-top:12px">Je werk wordt automatisch bewaard in deze browser. Wil je het delen met een collega, gebruik dan Project opslaan.</p>
+  </aside>
+
+  <main>
+    <div class="stagebar"><span id="stageInfo"></span><span class="grow"></span><span class="hide-m">Sleep een foto op een slide · sleep in de foto om te verschuiven</span></div>
+    <div class="stage" id="stage"></div>
+  </main>
+
+  <aside class="right" id="editor"></aside>
+</div>
+
+<div class="modal" id="igModal" aria-hidden="true">
+  <button class="btn icon close" id="igClose" aria-label="Sluiten">✕</button>
+  <div class="phone">
+    <div class="top"><div class="av" id="igAv"></div><div><b id="igHandle"></b><span>Coteaux d'Aix-en-Provence</span></div></div>
+    <div class="rail" id="igRail"></div>
+    <div class="dots" id="igDots"></div>
+    <div class="cap"><textarea id="igCap" placeholder="Schrijf hier je caption om te zien hoe hij leest"></textarea></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<input type="file" id="photoFile" accept="image/*" hidden>
+
+<script>
+(function(){
+"use strict";
+const L = window.MLOGO;
+const FORMATS = {"45":[1080,1350],"11":[1080,1080],"916":[1080,1920]};
+const TYPES = {
+  cover:{n:"Cover",photo:true,themes:["foto","creme","wit","zwart","rose"]},
+  photo:{n:"Foto",photo:true,themes:["foto"]},
+  split:{n:"Foto + tekst",photo:true,themes:["wit","creme","zwart","rose"]},
+  text:{n:"Tekst",photo:false,themes:["wit","creme","zwart","rose"]},
+  quote:{n:"Quote",photo:true,themes:["creme","wit","zwart","rose"]},
+  event:{n:"Fête",photo:false,themes:["creme","wit","zwart","rose"]},
+  product:{n:"Product",photo:true,themes:["wit","creme"]},
+  end:{n:"Afsluiter",photo:false,themes:["wit","creme","zwart","rose"]}
+};
+const THEMES = {wit:"#FFFFFF",creme:"#F3E9E2",zwart:"#231F20",rose:"#DA9089",foto:null};
+const THEME_N = {wit:"Wit",creme:"Crème 9244 C",zwart:"Zwart",rose:"Rosé 7606 C",foto:"Foto"};
+const PRODUCTS = ["Mistrelle Rosé","Mistrelle Blanc","Mistrelle La Petite","Mistrelle La Mondaine"];
+
+/* ---------- logo ---------- */
+function svg(kind, tone){
+  const a=L[kind]; let b=a.body;
+  if(tone==="white"){ b=b.replace(/#231F20/g,"#FFFFFF").replace(/#DA9089/g,"#FFFFFF").replace(/#BD887E/g,"#FFFFFF"); }
+  if(kind==="circle"){
+    if(tone==="white") b=L.circle.body.replace(/#DA9089/g,"__R").replace(/#FFFFFF/g,"#DA9089").replace(/__R/g,"#FFFFFF");
+    else b=L.circle.body;
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+a.vb+'" preserveAspectRatio="xMidYMid meet">'+b+'</svg>';
+}
+const toneFor = t => (t==="zwart"||t==="rose"||t==="foto") ? "white" : "color";
+function logo(kind, tone, w, extra){ return '<div class="logo" style="width:'+w+'px;'+(extra||"")+'">'+svg(kind,tone)+'</div>'; }
+
+/* ---------- state ---------- */
+let uid=1; const nid=()=> "s"+(Date.now().toString(36))+(uid++);
+function blank(type, over){
+  const base={id:nid(),type,theme:TYPES[type].themes[0],label:"",title:"",accent:"",body:"",
+    photo:null,fx:50,fy:50,zoom:1,dim:45,align:"left",logoOn:true,
+    date:"",time:"",place:"",name:"",role:"",product:"Mistrelle Rosé",cta:""};
+  return Object.assign(base, over||{});
+}
+const PRESETS = {
+  fete:{n:"Fête des Amis",d:"Aankondiging van een Fête, 5 slides",slides:()=>[
+    blank("cover",{theme:"foto",label:"Fête des Amis",title:"Zondag schuiven we aan op het terras",accent:"Neem je vrienden mee."}),
+    blank("text",{theme:"creme",label:"Wat je kunt verwachten",title:"Een lange tafel en de zon in je gezicht",body:"Een koel glas Mistrelle Rosé bij binnenkomst, kleine gerechten uit de keuken en alle tijd voor elkaar."}),
+    blank("photo",{label:"The World of Mistrelle",title:"Hoed op, zonnebril mee"}),
+    blank("event",{theme:"wit",label:"Fête des Amis",title:"Naam van de zaak",date:"Zondag 6 juni",time:"15.00 tot 18.00 uur",place:"Straat 1, Plaats",body:"Gratis, wel even aanmelden. Er zijn veertig plekken.",cta:"Aanmelden via de link in bio"}),
+    blank("end",{theme:"creme",accent:"Mistrelle neemt je mee.",body:"Tag je foto met #mistrellemoments"})
+  ]},
+  amie:{n:"Meet l'Amie",d:"Interview met een Ami, 4 slides",slides:()=>[
+    blank("cover",{theme:"foto",label:"Meet l'Amie",title:"Maak kennis met Lotte",accent:"Gastvrouw van Paviljoen Zuid."}),
+    blank("quote",{theme:"creme",body:"Op zondag wil ik dat mensen blijven hangen. De tafel vol, de zon erop en niemand die op de klok kijkt.",name:"Lotte",role:"Paviljoen Zuid, Zandvoort"}),
+    blank("split",{theme:"wit",label:"Haar perfecte moment",title:"Het eerste glas na de lunchdrukte",body:"Als de keuken even stil is, schenkt ze voor het team een glas Mistrelle Rosé in. Op het terras, met uitzicht op zee."}),
+    blank("end",{theme:"rose",accent:"Waar neemt Mistrelle jou mee?",body:"Kom langs bij Paviljoen Zuid"})
+  ]},
+  product:{n:"Productintro",d:"Fles en moment, 3 slides",slides:()=>[
+    blank("cover",{theme:"foto",label:"The World of Mistrelle",title:"Zon op het terras, de eerste slok",accent:"Het perfecte moment."}),
+    blank("product",{theme:"wit",product:"Mistrelle Rosé",title:"Fris, elegant en zonovergoten",body:"De rosé die van een gewone middag een bijzonder moment maakt."}),
+    blank("end",{theme:"creme",accent:"Mistrelle vous emmène.",body:"Verkrijgbaar bij onze horecapartners"})
+  ]},
+  leeg:{n:"Leeg beginnen",d:"Eén lege cover",slides:()=>[ blank("cover",{theme:"creme",label:"The World of Mistrelle",title:"Waar neemt Mistrelle je mee?"}) ]}
+};
+
+let state = {fmt:"45",handle:"@mistrelle",count:true,swipe:true,legal:true,sel:0,slides:PRESETS.fete.slides()};
+const cur = ()=> state.slides[state.sel];
+
+/* ---------- persistence (IndexedDB, met nette fallback) ---------- */
+const DBN="mistrelle-carousel", KEY="project-v1";
+function idb(){ return new Promise((res,rej)=>{ try{ const r=indexedDB.open(DBN,1); r.onupgradeneeded=()=>r.result.createObjectStore("kv"); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);}catch(e){rej(e)} }); }
+async function save(){ try{ const db=await idb(); db.transaction("kv","readwrite").objectStore("kv").put(JSON.stringify(state),KEY);}catch(e){} }
+async function load(){ try{ const db=await idb(); return await new Promise(res=>{ const q=db.transaction("kv").objectStore("kv").get(KEY); q.onsuccess=()=>res(q.result?JSON.parse(q.result):null); q.onerror=()=>res(null);}); }catch(e){ return null; } }
+let saveT; const persist=()=>{ clearTimeout(saveT); saveT=setTimeout(save,400); };
+
+/* ---------- helpers ---------- */
+const esc = s => String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $ = id => document.getElementById(id);
+function toast(m){ const t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200); }
+const pad = n => String(n).padStart(2,"0");
+function kader(w,h,col){
+  const n=Math.round(w*0.055), d=Math.round(w*0.055);
+  const p=`M1.5,1.5 L${w/2-n},1.5 L${w/2},${d} L${w/2+n},1.5 L${w-1.5},1.5 L${w-1.5},${h-1.5} L${w/2+n},${h-1.5} L${w/2},${h-d} L${w/2-n},${h-1.5} L1.5,${h-1.5} Z`;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="${p}" fill="none" stroke="${col}" stroke-width="3"/></svg>`;
+}
+function photoHTML(s, opts){
+  opts=opts||{};
+  const img = s.photo ? `<img src="${s.photo}" alt="" style="object-position:${s.fx}% ${s.fy}%;transform:scale(${s.zoom});transform-origin:${s.fx}% ${s.fy}%">`
+    : `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 8"/></svg>Sleep hier een foto</div>`;
+  return `<div class="ph" data-photo="1" style="${opts.style||""}">${img}</div>`;
+}
+const arrow = '<svg viewBox="0 0 44 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 7h42M36 1l6 6-6 6"/></svg>';
+
+/* ---------- slide templates ---------- */
+function render(s, i, total){
+  const [W,H]=FORMATS[state.fmt]; const tall=H>=1900, sq=H<=1080;
+  const t = s.theme; const tone=toneFor(t);
+  const M = 88; // marge
+  let inner="";
+  const L_ = s.label?`<div class="lbl">${esc(s.label)}</div>`:"";
+  const T_ = (sz,max)=> s.title?`<h1 class="ttl fit" data-fit="${sz}" data-min="44" style="font-size:${sz}px;max-height:${max}px">${esc(s.title)}</h1>`:"";
+  const A_ = sz=> s.accent?`<div class="acc" style="font-size:${sz}px">${esc(s.accent)}</div>`:"";
+  const B_ = (sz,max)=> s.body?`<div class="bdy fit" data-fit="${sz||34}" data-min="24" style="font-size:${sz||34}px;max-height:${max}px">${esc(s.body)}</div>`:"";
+  const shade = (dir)=> `<div class="shade" style="background:linear-gradient(${dir||"to top"},rgba(20,14,12,${(s.dim/100)*0.9}) 0%,rgba(20,14,12,${(s.dim/100)*0.35}) 45%,rgba(20,14,12,0) 75%)"></div>`;
+
+  if(s.type==="cover"){
+    if(t==="foto"){
+      inner = photoHTML(s)+shade()+
+        (s.logoOn?logo("primary","white",300,`position:absolute;left:50%;top:${tall?150:84}px;transform:translateX(-50%)`):"")+
+        `<div style="position:absolute;left:${M}px;right:${M}px;bottom:${tall?260:150}px;display:flex;flex-direction:column;gap:26px;text-align:${s.align}">${L_}${T_(sq?92:104, sq?330:420)}${A_(48)}</div>`;
+    } else {
+      inner = `<div class="kader" style="left:48px;top:48px">${kader(W-96,H-96,"#D6D1CB")}</div>`+
+        `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 ${M+40}px;gap:34px">
+          ${s.logoOn?logo("primary",tone,sq?340:380):""}
+          <hr class="rule">${L_}${T_(sq?80:92, sq?300:380)}${A_(46)}</div>`;
+    }
+  }
+  else if(s.type==="photo"){
+    inner = photoHTML(s)+(s.title||s.label?shade():"")+
+      `<div style="position:absolute;left:${M}px;right:${M}px;bottom:${tall?240:110}px;display:flex;flex-direction:column;gap:18px;text-align:${s.align}">${L_}${s.title?`<div class="acc fit" data-fit="54" data-min="34" style="font-size:54px;max-height:240px">${esc(s.title)}</div>`:""}</div>`+
+      (s.logoOn?logo("circle","color",92,`position:absolute;left:${M}px;top:${tall?140:72}px`):"");
+  }
+  else if(s.type==="split"){
+    const ph = Math.round(H*(tall?0.5:0.52));
+    inner = `<div style="position:absolute;left:0;right:0;top:0;height:${ph}px">${photoHTML(s)}</div>`+
+      `<div style="position:absolute;left:${M}px;right:${M}px;top:${ph+64}px;bottom:${tall?200:96}px;display:flex;flex-direction:column;gap:24px">${L_}${T_(sq?60:70, 250)}${B_(sq?30:34, tall?520:(sq?170:300))}</div>`+
+      (s.logoOn?logo("hat",tone,96,`position:absolute;right:${M}px;bottom:${tall?200:80}px`):"");
+  }
+  else if(s.type==="text"){
+    inner = `<div class="kader" style="left:48px;top:48px">${kader(W-96,H-96,"#D6D1CB")}</div>`+
+      `<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:${s.align==="center"?"center":"flex-start"};text-align:${s.align};padding:0 ${M+40}px;gap:30px">
+        ${s.logoOn?logo("hat",tone,110):""}${L_}${T_(sq?74:84, sq?300:380)}${A_(44)}${B_(34, sq?300:(tall?700:420))}</div>`;
+  }
+  else if(s.type==="quote"){
+    const hasP=!!s.photo; const r=tall?300:(sq?200:240);
+    inner = `<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 ${M+30}px;gap:34px">
+        ${hasP?`<div style="width:${r}px;height:${r}px;border-radius:50%;overflow:hidden;position:relative">${photoHTML(s)}</div>`:""}
+        <div style="font-size:180px;line-height:.6;height:70px;color:${t==="rose"?"#fff":"var(--rose)"};font-family:var(--serif)">“</div>
+        <div class="acc fit" data-fit="${sq?56:62}" data-min="34" style="font-size:${sq?56:62}px;line-height:1.28;max-height:${sq?430:(tall?820:600)}px">${esc(s.body)}</div>
+        <hr class="rule">
+        <div><div style="font-size:38px;color:var(--fg)">${esc(s.name)}</div><div class="lbl" style="margin-top:10px">${esc(s.role)}</div></div>
+      </div>`+(s.logoOn?logo("primary",tone,180,`position:absolute;right:${M}px;bottom:${tall?200:84}px`):"");
+  }
+  else if(s.type==="event"){
+    inner = `<div class="kader" style="left:48px;top:48px">${kader(W-96,H-96,"#D6D1CB")}</div>`+
+      `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 ${M+50}px;gap:26px">
+        ${s.logoOn?logo("hat",tone,120):""}${L_}${T_(sq?72:82, 260)}
+        <hr class="rule" style="margin:8px 0">
+        ${s.date?`<div style="font-size:${sq?50:56}px;color:var(--fg)">${esc(s.date)}</div>`:""}
+        ${s.time?`<div class="acc" style="font-size:40px">${esc(s.time)}</div>`:""}
+        ${s.place?`<div class="lbl" style="letter-spacing:.18em">${esc(s.place)}</div>`:""}
+        ${B_(32, sq?120:220)}
+        ${s.cta?`<div style="margin-top:16px;font-size:26px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg);border:2px solid currentColor;padding:20px 38px;border-radius:999px">${esc(s.cta)}</div>`:""}
+      </div>`;
+  }
+  else if(s.type==="product"){
+    const petite = /Petite/.test(s.product);
+    const ph = s.photo ? `<div style="position:absolute;left:0;right:0;top:${tall?200:70}px;height:${Math.round(H*(tall?0.48:0.5))}px">
+        <img src="${s.photo}" alt="" style="width:100%;height:100%;object-fit:contain;object-position:${s.fx}% ${s.fy}%;transform:scale(${s.zoom});transform-origin:50% 60%"></div>`
+      : `<div style="position:absolute;left:50%;top:${tall?200:70}px;height:${Math.round(H*(tall?0.48:0.5))}px;width:380px;transform:translateX(-50%)" data-photo="1">${photoHTML(s,{style:"border-radius:8px"})}</div>`;
+    inner = ph+`<div style="position:absolute;left:${M}px;right:${M}px;bottom:${tall?220:90}px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px">
+        <div class="lbl" style="color:var(--fg)">${esc(s.product)}</div>
+        ${T_(sq?60:68, 170)}${B_(32, sq?100:150)}
+        ${!petite?`<div style="width:300px;margin-top:6px">${svg("herkomst",tone)}</div>`:""}
+      </div>`;
+  }
+  else if(s.type==="end"){
+    inner = `<div class="kader" style="left:48px;top:48px">${kader(W-96,H-96,"#D6D1CB")}</div>`+
+      `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 ${M+40}px;gap:36px">
+        ${logo("circle",tone,sq?150:180)}
+        ${s.accent?`<div class="acc" style="font-size:${sq?62:72}px">${esc(s.accent)}</div>`:""}
+        <hr class="rule">
+        <div style="font-size:40px;color:var(--fg)">${esc(state.handle)}</div>
+        ${s.body?`<div class="lbl" style="letter-spacing:.12em;text-transform:none;font-size:28px">${esc(s.body)}</div>`:""}
+      </div>`;
+  }
+  const last = i===total-1;
+  const showCount = state.count && total>1 && s.type!=="end";
+  const showSwipe = state.swipe && !last && i===0;
+  const legal = state.legal && last ? `<div class="legal">Geniet, maar drink met mate<b>NIX18</b></div>` : "";
+  return `<div class="slide t-${t}" style="width:${W}px;height:${H}px" data-i="${i}">${inner}
+    ${showCount?`<div class="count">${pad(i+1)} / ${pad(total)}</div>`:""}
+    ${showSwipe?`<div class="swipe">Swipe ${arrow}</div>`:""}${legal}</div>`;
+}
+
+/* tekst passend maken: kleiner tot hij in zijn vak past */
+function fitAll(root){
+  root.querySelectorAll(".fit").forEach(el=>{
+    let sz=+el.dataset.fit, min=+el.dataset.min; el.style.fontSize=sz+"px";
+    let guard=0; while(el.scrollHeight>el.clientHeight+2 && sz>min && guard++<60){ sz-=2; el.style.fontSize=sz+"px"; }
+  });
+}
+
+/* ---------- brand guard ---------- */
+const JARGON=/\b(tertiair\w*|malolactisch\w*|afdronk|aroma'?s?|tannine\w*|complex\w*|terroir)\b/i;
+function checks(s,i,total){
+  const w=[]; const all=[s.label,s.title,s.accent,s.body,s.cta].join(" ");
+  if(TYPES[s.type].photo && !s.photo && (s.type!=="split"||true) && !(s.type==="cover"&&s.theme!=="foto") && s.type!=="quote") w.push("Nog geen foto geplaatst.");
+  if(s.title && /\.\s*$/.test(s.title) && !/vous emmène\.|neemt je mee\./i.test(s.title)) w.push("Koppen zonder punt aan het eind. Alleen de merkzin krijgt een punt.");
+  if(/\bMISTRELLE\b/.test(all)) w.push("Schrijf <b>Mistrelle</b> in lopende tekst. Kapitalen alleen in het logo.");
+  if(/!/.test(all)) w.push("Mistrelle nodigt uit en roept niet. Liever geen uitroeptekens.");
+  if(/€|\bkorting\b|\baanbieding\b|\bactie\b/i.test(all)) w.push("Geen prijsposts op Instagram.");
+  if(JARGON.test(all)) w.push("Geen wijnjargon. Beschrijf wat je voelt, ziet en proeft.");
+  if(/Petite/.test(s.product||"") && s.type==="product" && /provence/i.test(all)) w.push("La Petite is Méditerranée IGP. Geen Provence-herkomst noemen.");
+  if(/Petite/.test(all) && /provence/i.test(all) && s.type!=="product") w.push("La Petite is Méditerranée IGP. Geen Provence-herkomst noemen.");
+  const words=(s.body||"").trim().split(/\s+/).filter(Boolean).length;
+  if(words>40) w.push(`Veel tekst voor één slide (${words} woorden). Probeer onder de 40.`);
+  if(/aix.?en.?provence/i.test(all) && !/Coteaux d'Aix-en-Provence/.test(all)) w.push("Herkomst altijd exact: Coteaux d'Aix-en-Provence.");
+  if(/\b(rijden|auto rijden|bob|achter het stuur)\b/i.test(all)) w.push("Geen koppeling tussen alcohol en rijden.");
+  if(i===total-1 && !state.legal) w.push("Zet de NIX18-regel aan op de laatste slide.");
+  return w;
+}
+
+/* ---------- views ---------- */
+let scale=.4;
+function computeScale(){
+  const [W,H]=FORMATS[state.fmt]; const st=$("stage"); const h=Math.max(260, st.clientHeight-100);
+  scale=Math.min(h/H, 520/W);
+}
+function drawStage(){
+  computeScale();
+  const [W,H]=FORMATS[state.fmt]; const st=$("stage"); const total=state.slides.length;
+  st.innerHTML = state.slides.map((s,i)=>`<div class="frame${i===state.sel?" on":""}" data-i="${i}" style="width:${W*scale}px;height:${H*scale}px">
+      <div class="tag">${pad(i+1)} · ${TYPES[s.type].n}</div>
+      <div class="holder" style="transform:scale(${scale})">${render(s,i,total)}</div></div>`).join("");
+  fitAll(st);
+  $("stageInfo").textContent = `${total} slide${total>1?"s":""} · ${W} × ${H} px`;
+  drawList();
+}
+function redrawOne(i){
+  const fr=$("stage").querySelector(`.frame[data-i="${i}"] .holder`); if(!fr) return drawStage();
+  fr.innerHTML = render(state.slides[i],i,state.slides.length); fitAll(fr); drawList();
+}
+function drawList(){
+  const [W,H]=FORMATS[state.fmt]; const k=64/W; const total=state.slides.length;
+  $("slist").innerHTML = state.slides.map((s,i)=>{
+    const warn=checks(s,i,total).length;
+    return `<li class="sitem${i===state.sel?" on":""}" draggable="true" data-i="${i}">
+      <span class="n">${i+1}</span>
+      <div class="th" style="height:${H*k}px"><div style="transform:scale(${k})">${render(s,i,total)}</div></div>
+      <div class="meta"><b>${TYPES[s.type].n}</b><span>${esc(s.title||s.accent||s.body||s.product||"")}</span></div>
+      ${warn?'<i class="warn" title="Let op"></i>':""}</li>`;
+  }).join("");
+}
+function drawEditor(){
+  const s=cur(); const T=TYPES[s.type]; const tone=s.theme;
+  const f=(k,lbl,ph,hint,area)=>`<div class="field"><label>${lbl}${hint?`<em>${hint}</em>`:""}</label>${area?`<textarea data-k="${k}" placeholder="${esc(ph||"")}">${esc(s[k])}</textarea>`:`<input type="text" data-k="${k}" value="${esc(s[k])}" placeholder="${esc(ph||"")}">`}</div>`;
+  let h=`<h3>Slide ${state.sel+1}</h3>
+    <div class="types">${Object.keys(TYPES).map(k=>`<button data-type="${k}" class="${k===s.type?"on":""}">${TYPES[k].n}</button>`).join("")}</div>
+    <h3>Achtergrond</h3>
+    <div class="swatches">${Object.keys(THEMES).map(k=>{
+      const ok=T.themes.includes(k);
+      return `<button class="sw${k==="foto"?" photo":""}${k===tone?" on":""}" data-theme="${k}" ${ok?"":"disabled"} title="${THEME_N[k]}${ok?"":" (niet bij dit type)"}" style="${THEMES[k]?"background:"+THEMES[k]:""}">${k==="foto"?"foto":""}</button>`;}).join("")}</div>
+    <h3>Tekst</h3>`;
+  if(s.type==="quote"){
+    h+=f("body","Quote","Wat zegt de Ami?","",true)+`<div class="row2">${f("name","Naam","Lotte")}${f("role","Zaak en plaats","Paviljoen Zuid, Zandvoort")}</div>`;
+  } else if(s.type==="end"){
+    h+=f("accent","Merkzin of slotzin","Mistrelle vous emmène.","italic")+f("body","Onderregel","Tag je foto met #mistrellemoments");
+    h+=`<p class="muted">Het account komt uit de projectinstellingen links.</p>`;
+  } else if(s.type==="product"){
+    h+=`<div class="field"><label>Product</label><select data-k="product">${PRODUCTS.map(p=>`<option${p===s.product?" selected":""}>${p}</option>`).join("")}</select></div>`;
+    h+=f("title","Kop","Fris, elegant en zonovergoten","zinsvorm")+f("body","Tekst","Eén of twee zinnen over het moment","",true);
+  } else {
+    if(s.type!=="photo") h+=f("label","Label","The World of Mistrelle","kapitalen");
+    else h+=f("label","Label","The World of Mistrelle","optioneel");
+    h+=f("title", s.type==="photo"?"Onderschrift":"Kop", "Waar neemt Mistrelle je mee?", s.type==="photo"?"italic":"zinsvorm, geen punt", s.type!=="photo");
+    if(["cover","text"].includes(s.type)) h+=f("accent","Accentregel","Het perfecte moment.","italic, max. één regel");
+    if(["text","split","event"].includes(s.type)) h+=f("body","Tekst","Zon op het terras, een lange lunch met vrienden…","",true);
+    if(s.type==="event") h+=`<div class="row2">${f("date","Datum","Zondag 6 juni")}${f("time","Tijd","15.00 tot 18.00 uur")}</div>`+f("place","Adres","Straat 1, Plaats")+f("cta","Knop","Aanmelden via de link in bio");
+  }
+  if(["cover","photo","text"].includes(s.type)){
+    h+=`<div class="field"><label>Uitlijning</label><div class="seg" id="alignSeg"><button data-al="left" class="${s.align==="left"?"on":""}">Links</button><button data-al="center" class="${s.align==="center"?"on":""}">Midden</button></div></div>`;
+  }
+  if(s.type!=="end") h+=`<label class="check"><input type="checkbox" data-k="logoOn" ${s.logoOn?"checked":""}> Logo op deze slide</label>`;
+
+  const photoNeeded = T.photo && !(s.type==="cover" && s.theme!=="foto");
+  if(photoNeeded){
+    h+=`<h3>Foto</h3><div class="drop" id="pickPhoto">${s.photo?"Andere foto kiezen":"Kies een foto of sleep hem op de slide"}<br><span style="font-size:11px">${s.type==="product"?"Gebruik de echte packshot, op wit of transparant":"Golden hour, natuurlijk licht, veel lucht"}</span></div>`;
+    if(s.photo){
+      h+=`<div class="photoctl">
+        <div class="r">Zoom<input type="range" min="1" max="2.5" step="0.01" data-r="zoom" value="${s.zoom}"><span>${Math.round(s.zoom*100)}%</span></div>
+        ${s.type!=="product"?`<div class="r">Links/rechts<input type="range" min="0" max="100" data-r="fx" value="${s.fx}"><span>${Math.round(s.fx)}</span></div>
+        <div class="r">Boven/onder<input type="range" min="0" max="100" data-r="fy" value="${s.fy}"><span>${Math.round(s.fy)}</span></div>`:""}
+        ${["cover","photo"].includes(s.type)?`<div class="r">Verloop<input type="range" min="0" max="100" data-r="dim" value="${s.dim}"><span>${s.dim}</span></div>`:""}
+        <button class="btn small" id="rmPhoto" style="justify-self:start">Foto verwijderen</button></div>`;
+    }
+  }
+  const w=checks(s,state.sel,state.slides.length);
+  h+=`<h3>Merkcheck</h3>`+(w.length? w.map(x=>`<div class="guard w">${x}</div>`).join("") : `<div class="guard ok"><b>Klopt met het brandbook.</b> Rustig, veel wit, rosé als accent.</div>`);
+  h+=`<p class="muted" style="margin-top:10px">Logo's zijn de originele bestanden van John Jewell Design. Letter: Caladea, gelijk aan Cambria in maat en ritme.</p>`;
+  $("editor").innerHTML=h;
+}
+function refreshGuard(){
+  const s=cur(); const w=checks(s,state.sel,state.slides.length);
+  const ed=$("editor"); const hs=[...ed.querySelectorAll("h3")].find(x=>x.textContent==="Merkcheck"); if(!hs) return;
+  while(hs.nextElementSibling && hs.nextElementSibling.classList.contains("guard")) hs.nextElementSibling.remove();
+  hs.insertAdjacentHTML("afterend", w.length? w.map(x=>`<div class="guard w">${x}</div>`).join("") : `<div class="guard ok"><b>Klopt met het brandbook.</b> Rustig, veel wit, rosé als accent.</div>`);
+}
+function all(){ drawStage(); drawEditor(); syncHeader(); persist(); }
+function select(i){ state.sel=Math.max(0,Math.min(state.slides.length-1,i)); drawStage(); drawEditor(); persist();
+  const fr=$("stage").querySelector(`.frame[data-i="${state.sel}"]`); if(fr) fr.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"}); }
+function syncHeader(){
+  document.querySelectorAll("#fmtSeg button").forEach(b=>b.classList.toggle("on",b.dataset.f===state.fmt));
+  $("handle").value=state.handle; $("optCount").checked=state.count; $("optSwipe").checked=state.swipe; $("optLegal").checked=state.legal;
+}
+
+/* ---------- foto's ---------- */
+function readImage(file){
+  return new Promise((res,rej)=>{
+    if(!file || !/^image\//.test(file.type)) return rej(new Error("Geen afbeelding"));
+    const fr=new FileReader(); fr.onload=()=>{ const im=new Image(); im.onload=()=>{
+      const max=2400; let w=im.naturalWidth,h=im.naturalHeight; const k=Math.min(1,max/Math.max(w,h)); w=Math.round(w*k); h=Math.round(h*k);
+      const c=document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d"); x.drawImage(im,0,0,w,h);
+      const png = file.type==="image/png"; // packshots met transparantie behouden
+      res(c.toDataURL(png?"image/png":"image/jpeg",0.9)); }; im.onerror=rej; im.src=fr.result; }; fr.onerror=rej; fr.readAsDataURL(file);
+  });
+}
+async function setPhoto(i,file){
+  try{ const d=await readImage(file); Object.assign(state.slides[i],{photo:d,fx:50,fy:50,zoom:1});
+    if(state.slides[i].type==="cover") state.slides[i].theme="foto";
+    state.sel=i; all(); toast("Foto geplaatst"); }
+  catch(e){ toast("Dat bestand kan ik niet openen"); }
+}
+
+/* ---------- export ---------- */
+async function snap(i){
+  const [W,H]=FORMATS[state.fmt];
+  const host=document.createElement("div"); host.style.cssText="position:fixed;left:-99999px;top:0;";
+  host.innerHTML=render(state.slides[i],i,state.slides.length); document.body.appendChild(host);
+  const node=host.firstElementChild; fitAll(host);
+  await document.fonts.ready;
+  try{ return await htmlToImage.toPng(node,{width:W,height:H,pixelRatio:1,cacheBust:false}); }
+  finally{ host.remove(); }
+}
+function dl(url,name){ const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); }
+const fname = i => `mistrelle-${pad(i+1)}-${cur()?state.slides[i].type:""}.png`;
+async function exportOne(){ const b=$("dlOne"); b.disabled=true; try{ dl(await snap(state.sel), fname(state.sel)); toast("Slide gedownload"); }catch(e){ console.error(e); toast("Export mislukt, probeer het nog eens"); } b.disabled=false; }
+async function exportAll(){
+  const b=$("dlAll"); b.disabled=true; const old=b.textContent;
+  try{ const z=new JSZip(); for(let i=0;i<state.slides.length;i++){ b.textContent=`Bezig ${i+1}/${state.slides.length}`; const u=await snap(i); z.file(fname(i), u.split(",")[1], {base64:true}); }
+    const blob=await z.generateAsync({type:"blob"}); const url=URL.createObjectURL(blob); dl(url,`mistrelle-carousel-${new Date().toISOString().slice(0,10)}.zip`); setTimeout(()=>URL.revokeObjectURL(url),4000); toast("Alle slides gedownload");
+  }catch(e){ console.error(e); toast("Export mislukt, probeer het nog eens"); }
+  b.textContent=old; b.disabled=false;
+}
+
+/* ---------- IG preview ---------- */
+function openIG(){
+  const [W,H]=FORMATS[state.fmt]; const cw=Math.min(390, window.innerWidth-32); const k=cw/W; const total=state.slides.length;
+  $("igRail").innerHTML=state.slides.map((s,i)=>`<div class="cell" style="height:${H*k}px"><div style="transform:scale(${k})">${render(s,i,total)}</div></div>`).join("");
+  fitAll($("igRail"));
+  $("igDots").innerHTML=state.slides.map((_,i)=>`<i class="${i===0?"on":""}"></i>`).join("");
+  $("igHandle").textContent=state.handle.replace(/^@/,""); $("igAv").innerHTML=svg("circle","color");
+  $("igModal").classList.add("open"); $("igRail").scrollLeft=0;
+}
+$("igRail").addEventListener("scroll",e=>{ const r=e.target; const i=Math.round(r.scrollLeft/r.clientWidth); [...$("igDots").children].forEach((d,j)=>d.classList.toggle("on",j===i)); });
+$("igClose").onclick=()=>$("igModal").classList.remove("open");
+$("igModal").addEventListener("click",e=>{ if(e.target.id==="igModal") $("igModal").classList.remove("open"); });
+
+/* ---------- events ---------- */
+$("presets").innerHTML=Object.entries(PRESETS).map(([k,p])=>`<button class="preset" data-p="${k}"><b>${p.n}</b><span>${p.d}</span></button>`).join("");
+$("presets").addEventListener("click",e=>{ const b=e.target.closest(".preset"); if(!b) return;
+  const has=state.slides.some(s=>s.photo||s.title); if(has && !confirm("Dit vervangt je huidige slides. Doorgaan?")) return;
+  state.slides=PRESETS[b.dataset.p].slides(); state.sel=0; all(); });
+document.querySelectorAll("#fmtSeg button").forEach(b=>b.onclick=()=>{ state.fmt=b.dataset.f; all(); });
+$("handle").addEventListener("input",e=>{ state.handle=e.target.value; drawStage(); persist(); });
+$("optCount").onchange=e=>{ state.count=e.target.checked; drawStage(); persist(); };
+$("optSwipe").onchange=e=>{ state.swipe=e.target.checked; drawStage(); persist(); };
+$("optLegal").onchange=e=>{ state.legal=e.target.checked; drawStage(); refreshGuard(); persist(); };
+$("addSlide").onclick=()=>{ const t=cur()?cur().theme:"creme"; state.slides.splice(state.sel+1,0,blank("text",{theme:["wit","creme","zwart","rose"].includes(t)?t:"creme",label:"The World of Mistrelle"})); select(state.sel+1); };
+$("dupSlide").onclick=()=>{ const c=JSON.parse(JSON.stringify(cur())); c.id=nid(); state.slides.splice(state.sel+1,0,c); select(state.sel+1); };
+$("delSlide").onclick=()=>{ if(state.slides.length<2) return toast("Een carousel heeft minstens één slide"); state.slides.splice(state.sel,1); select(Math.min(state.sel,state.slides.length-1)); };
+$("dlOne").onclick=exportOne; $("dlAll").onclick=exportAll; $("igBtn").onclick=openIG;
+$("saveJson").onclick=()=>{ const b=new Blob([JSON.stringify(state)],{type:"application/json"}); const u=URL.createObjectURL(b); dl(u,"mistrelle-carousel.json"); setTimeout(()=>URL.revokeObjectURL(u),3000); };
+$("openJson").onclick=()=>$("jsonFile").click();
+$("jsonFile").onchange=async e=>{ const f=e.target.files[0]; if(!f) return; try{ const s=JSON.parse(await f.text()); if(!s.slides) throw 0; state=Object.assign(state,s); state.sel=0; all(); toast("Project geopend"); }catch(_){ toast("Dit is geen carousel-project"); } e.target.value=""; };
+
+/* lijst: selecteren + slepen om te ordenen */
+let dragFrom=null;
+$("slist").addEventListener("click",e=>{ const li=e.target.closest(".sitem"); if(li) select(+li.dataset.i); });
+$("slist").addEventListener("dragstart",e=>{ const li=e.target.closest(".sitem"); if(!li) return; dragFrom=+li.dataset.i; li.classList.add("dragging"); e.dataTransfer.effectAllowed="move"; });
+$("slist").addEventListener("dragover",e=>{ const li=e.target.closest(".sitem"); if(!li||dragFrom===null) return; e.preventDefault(); document.querySelectorAll(".sitem.over").forEach(x=>x.classList.remove("over")); li.classList.add("over"); });
+$("slist").addEventListener("drop",e=>{ const li=e.target.closest(".sitem"); if(!li||dragFrom===null) return; e.preventDefault(); const to=+li.dataset.i; const [m]=state.slides.splice(dragFrom,1); state.slides.splice(to,0,m); dragFrom=null; select(to); });
+$("slist").addEventListener("dragend",()=>{ dragFrom=null; drawList(); });
+
+/* editor */
+$("editor").addEventListener("input",e=>{
+  const s=cur(); const k=e.target.dataset.k, r=e.target.dataset.r;
+  if(k){ s[k] = e.target.type==="checkbox" ? e.target.checked : e.target.value; redrawOne(state.sel); refreshGuard(); persist(); }
+  if(r){ s[r]=+e.target.value; const sp=e.target.nextElementSibling; if(sp) sp.textContent = r==="zoom"?Math.round(s.zoom*100)+"%":Math.round(s[r]); redrawOne(state.sel); persist(); }
+});
+$("editor").addEventListener("change",e=>{ if(e.target.tagName==="SELECT"||e.target.type==="checkbox"){ const k=e.target.dataset.k; if(k){ cur()[k]= e.target.type==="checkbox"?e.target.checked:e.target.value; redrawOne(state.sel); refreshGuard(); persist(); } } });
+$("editor").addEventListener("click",e=>{
+  const s=cur();
+  const ty=e.target.closest("[data-type]"); if(ty){ const nt=ty.dataset.type; s.type=nt; if(!TYPES[nt].themes.includes(s.theme)) s.theme=TYPES[nt].themes[0]; if(nt==="cover"&&s.photo) s.theme="foto"; all(); return; }
+  const th=e.target.closest("[data-theme]"); if(th && !th.disabled){ s.theme=th.dataset.theme; all(); return; }
+  const al=e.target.closest("[data-al]"); if(al){ s.align=al.dataset.al; all(); return; }
+  if(e.target.closest("#pickPhoto")){ $("photoFile").click(); return; }
+  if(e.target.closest("#rmPhoto")){ s.photo=null; if(s.type==="cover") s.theme="creme"; all(); return; }
+});
+$("photoFile").onchange=e=>{ const f=e.target.files[0]; if(f) setPhoto(state.sel,f); e.target.value=""; };
+
+/* stage: klikken, foto slepen, bestanden droppen */
+const stage=$("stage"); let pan=null;
+stage.addEventListener("pointerdown",e=>{
+  const fr=e.target.closest(".frame"); if(!fr) return; const i=+fr.dataset.i;
+  if(i!==state.sel){ select(i); return; }
+  const s=cur(); const ph=e.target.closest("[data-photo]");
+  if(ph && s.photo && s.type!=="product"){ const r=ph.getBoundingClientRect(); pan={x:e.clientX,y:e.clientY,fx:s.fx,fy:s.fy,w:r.width,h:r.height}; fr.setPointerCapture(e.pointerId); e.preventDefault(); }
+  else if(ph && !s.photo){ $("photoFile").click(); }
+});
+stage.addEventListener("pointermove",e=>{ if(!pan) return; const s=cur();
+  s.fx=Math.max(0,Math.min(100,pan.fx-(e.clientX-pan.x)/pan.w*100/s.zoom*1.2));
+  s.fy=Math.max(0,Math.min(100,pan.fy-(e.clientY-pan.y)/pan.h*100/s.zoom*1.2));
+  const img=stage.querySelector(`.frame[data-i="${state.sel}"] .ph img`); if(img){ img.style.objectPosition=`${s.fx}% ${s.fy}%`; img.style.transformOrigin=`${s.fx}% ${s.fy}%`; }
+});
+stage.addEventListener("pointerup",()=>{ if(pan){ pan=null; drawEditor(); drawList(); persist(); } });
+stage.addEventListener("wheel",e=>{ const fr=e.target.closest(".frame.on"); if(!fr||!cur().photo||!e.target.closest("[data-photo], .ph")) return; if(!e.ctrlKey && Math.abs(e.deltaY)<Math.abs(e.deltaX)) return; e.preventDefault(); const s=cur(); s.zoom=Math.max(1,Math.min(2.5,s.zoom-e.deltaY*0.0015)); redrawOne(state.sel); clearTimeout(stage._w); stage._w=setTimeout(()=>{drawEditor();persist();},250); },{passive:false});
+["dragenter","dragover"].forEach(ev=>stage.addEventListener(ev,e=>{ if(!e.dataTransfer||![...e.dataTransfer.types].includes("Files")) return; e.preventDefault(); const fr=e.target.closest(".frame"); stage.querySelectorAll(".frame.drop").forEach(x=>x!==fr&&x.classList.remove("drop")); if(fr) fr.classList.add("drop"); }));
+stage.addEventListener("dragleave",e=>{ const fr=e.target.closest(".frame"); if(fr && !fr.contains(e.relatedTarget)) fr.classList.remove("drop"); });
+stage.addEventListener("drop",e=>{ e.preventDefault(); const fr=e.target.closest(".frame"); stage.querySelectorAll(".frame.drop").forEach(x=>x.classList.remove("drop")); const f=e.dataTransfer.files[0]; if(!f) return;
+  const i= fr? +fr.dataset.i : state.sel; const s=state.slides[i];
+  if(!TYPES[s.type].photo){ s.type="split"; s.theme=TYPES.split.themes.includes(s.theme)?s.theme:"wit"; }
+  setPhoto(i,f); });
+window.addEventListener("dragover",e=>e.preventDefault()); window.addEventListener("drop",e=>e.preventDefault());
+document.addEventListener("paste",e=>{ const it=[...(e.clipboardData||{}).items||[]].find(x=>x.type.startsWith("image/")); if(it){ const s=cur(); if(!TYPES[s.type].photo){ s.type="split"; } setPhoto(state.sel,it.getAsFile()); } });
+document.addEventListener("keydown",e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  if(e.key==="ArrowRight") select(state.sel+1); if(e.key==="ArrowLeft") select(state.sel-1);
+  if(e.key==="Escape") $("igModal").classList.remove("open");
+});
+let rT; window.addEventListener("resize",()=>{ clearTimeout(rT); rT=setTimeout(drawStage,120); });
+
+/* ---------- start ---------- */
+$("hdrLogo").innerHTML='<span style="display:inline-block;width:132px">'+svg("primary","color")+'</span>';
+(async()=>{ const saved=await load(); if(saved && saved.slides && saved.slides.length){ state=Object.assign(state,saved); state.sel=Math.min(state.sel||0,state.slides.length-1); }
+  await document.fonts.load('400 40px "Caladea"').catch(()=>{}); await document.fonts.load('italic 400 40px "Caladea"').catch(()=>{});
+  all(); })();
+})();
+</script>
+</body>
+</html>

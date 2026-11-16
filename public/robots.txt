@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /pos-dossier/
+Disallow: /mistrelle-carousel/
