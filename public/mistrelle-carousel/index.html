@@ -230,7 +230,7 @@ main{position:relative;display:flex;flex-direction:column;background:var(--stage
 
     <h2>Bewaren en delen</h2>
     <div class="btnrow"><button class="btn small" id="saveJson">Project opslaan</button><button class="btn small" id="openJson">Project openen</button></div>
-    <p class="muted">Alles wat je maakt staat vanzelf in je bibliotheek, in deze browser. Wil je het delen met een collega, sla het project dan op als bestand.</p>
+    <p class="muted">Alles wat je maakt staat vanzelf in de gedeelde bibliotheek. Iedereen die de studio opent ziet dezelfde carousels. Een los bestand opslaan kan ook.</p>
     <input type="file" id="jsonFile" accept=".json,application/json" hidden>
     <input type="file" id="photoFile" accept="image/*" hidden>
   </aside>
@@ -267,7 +267,7 @@ main{position:relative;display:flex;flex-direction:column;background:var(--stage
 </div>
 <div class="modal" id="libModal">
   <div class="libbox" role="dialog" aria-label="Bibliotheek">
-    <div class="libhead"><div><h3>Bibliotheek</h3><p>Alles wat je maakt wordt hier vanzelf bewaard, in deze browser.</p></div>
+    <div class="libhead"><div><h3>Bibliotheek</h3><p id="libSub">Alles wat je maakt wordt hier vanzelf bewaard en gedeeld met iedereen die de studio opent.</p></div>
       <input type="search" id="libQ" placeholder="Zoek op naam" aria-label="Zoek in de bibliotheek">
       <button class="btn ic" id="libClose" aria-label="Sluiten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
     <div class="libgrid" id="libGrid"></div>
@@ -705,6 +705,28 @@ async function setPhoto(i,file){
   catch(e){ toast("Dat bestand kan ik niet openen. Kies een jpg of png."); }
 }
 
+/* ---------- gedeelde bibliotheek (Supabase, valt terug op deze browser) ---------- */
+const CL={u:"https://ogzpdhasoxmblesbcrpz.supabase.co/rest/v1/",k:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nenBkaGFzb3htYmxlc2JjcnB6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2NjIyMTIsImV4cCI6MjA4NjIzODIxMn0.qcZSgk-3665NVJCjlYuCGbwJiBthYilUb-ppunGUM_o",t:"mistrelle"};
+async function cl(path,o){ o=o||{}; const r=await fetch(CL.u+path,{method:o.m||"GET",headers:Object.assign({apikey:CL.k,Authorization:"Bearer "+CL.k,"Content-Type":"application/json"},o.p?{Prefer:o.p}:{}),body:o.b?JSON.stringify(o.b):undefined}); if(!r.ok) throw new Error(r.status); return o.m?null:r.json(); }
+let upDone=new Set(), chain=Promise.resolve();
+function setNet(ok){ $("libSub").textContent=ok?"Alles wat je maakt wordt hier vanzelf bewaard en gedeeld met iedereen die de studio opent.":"Geen verbinding met de gedeelde bibliotheek. Je werk staat in deze browser en wordt gedeeld zodra het weer kan."; }
+async function cloudPush(e,json){ try{ const st=JSON.parse(json), ids=[...new Set(st.slides.map(s=>s.photo).filter(id=>id&&photos[id]&&!upDone.has(id)))];
+    for(const id of ids){ await cl("carousel_photos?on_conflict=id",{m:"POST",p:"resolution=ignore-duplicates,return=minimal",b:{id,tool:CL.t,data:photos[id]}}); upDone.add(id); }
+    if(ids.length) kvSet("up",JSON.stringify([...upDone]));
+    await cl("carousel_library?on_conflict=id",{m:"POST",p:"resolution=merge-duplicates,return=minimal",b:{id:e.id,tool:CL.t,name:e.name||"",fmt:e.fmt,n:e.n,thumb:e.thumb,state:st,deleted:false,updated_at:new Date(e.at).toISOString()}});
+    const cur=lib.find(x=>x.id===e.id); if(cur&&cur.at===e.at){ cur.c=1; kvSet("lib",JSON.stringify(lib)); } setNet(true); }catch(err){ setNet(false); } }
+const push=(e,json)=>(chain=chain.then(()=>cloudPush(e,json)));
+async function cloudSync(){ try{ const rows=await cl("carousel_library?tool=eq."+CL.t+"&deleted=is.false&select=id,name,fmt,n,thumb,updated_at&order=updated_at.desc");
+    const cloud=rows.map(r=>({id:r.id,name:r.name,fmt:r.fmt,n:r.n,thumb:r.thumb,at:Date.parse(r.updated_at),c:1}));
+    const pend=lib.filter(e=>!e.c&&!cloud.find(c=>c.id===e.id&&c.at>=e.at));
+    lib=[...pend,...cloud.filter(c=>!pend.find(x=>x.id===c.id))].sort((a,b)=>b.at-a.at); kvSet("lib",JSON.stringify(lib)); setNet(true); syncLib();
+    for(const e of pend){ const raw=await kvGet("lib:"+e.id); if(raw){ await loadPhotos(JSON.parse(raw)); push(e,raw); } }
+  }catch(err){ setNet(false); } }
+async function getRaw(id){ try{ const r=await cl("carousel_library?id=eq."+encodeURIComponent(id)+"&select=state"); if(r[0]){ const raw=JSON.stringify(r[0].state); kvSet("lib:"+id,raw); return raw; } }catch(e){} return kvGet("lib:"+id); }
+async function cloudPhotos(s){ const miss=[...new Set(s.slides.map(x=>x.photo).filter(id=>id&&!photos[id]))]; if(!miss.length) return;
+  try{ const rows=await cl("carousel_photos?id=in.("+miss.map(encodeURIComponent).join(",")+")&select=id,data"); rows.forEach(r=>{ photos[r.id]=r.data; kvSet("p:"+r.id,r.data); upDone.add(r.id); }); kvSet("up",JSON.stringify([...upDone])); }catch(e){} }
+const cloudDel=(id,del)=>cl("carousel_library?id=eq."+encodeURIComponent(id),{m:"PATCH",p:"return=minimal",b:{deleted:del}}).catch(()=>{});
+
 /* ---------- bibliotheek ---------- */
 let lib=[], libT, base="";
 const FN={"45":"4:5","11":"1:1","916":"9:16"}, NONAME="Naamloze carousel";
@@ -713,21 +735,21 @@ function thumbOf(){ try{ const [W,H]=fmt(), big=document.createElement("canvas")
 async function libSave(force){ clearTimeout(libT); if(!ready) return; const now=sig(); if(!force&&now===base) return; base=now;
   if(!state.libId){ state.libId=nid("c"); await kvSet("state",JSON.stringify(state)); }
   const e={id:state.libId,name:state.name||"",at:Date.now(),n:frameCount(),fmt:state.fmt,thumb:thumbOf()};
-  lib=[e,...lib.filter(x=>x.id!==e.id)]; await kvSet("lib:"+e.id,JSON.stringify(state)); await kvSet("lib",JSON.stringify(lib)); syncLib(); }
+  lib=[e,...lib.filter(x=>x.id!==e.id)]; await kvSet("lib:"+e.id,JSON.stringify(state)); await kvSet("lib",JSON.stringify(lib)); syncLib(); push(e,JSON.stringify(state)); }
 function syncLib(){ $("libN").textContent=lib.length||""; const p=$("projName"); if(document.activeElement!==p&&p.value!==(state.name||"")) p.value=state.name||""; if($("libModal").classList.contains("open")) drawLib(); }
 const loadPhotos=s=>Promise.all(s.slides.filter(x=>x.photo).map(async x=>{ if(!photos[x.photo]){ const d=await kvGet("p:"+x.photo); if(d) photos[x.photo]=d; } }));
 function fresh(){ base=sig(); hist=[]; hi=-1; all(); syncLib(); $("stage").scrollLeft=0; }
-async function libOpen(id){ if(id===state.libId) return closeLib(); const raw=await kvGet("lib:"+id); if(!raw) return toast("Deze carousel kan ik niet meer vinden."); await libSave();
-  const s=migrate(JSON.parse(raw)); await loadPhotos(s); state=s; state.sel=0; closeLib(); fresh(); toast("Geopend: "+(s.name||NONAME)); }
+async function libOpen(id){ if(id===state.libId) return closeLib(); await libSave(); const raw=await getRaw(id); if(!raw) return toast("Deze carousel kan ik niet meer vinden.");
+  const s=migrate(JSON.parse(raw)); await loadPhotos(s); await cloudPhotos(s); state=s; state.sel=0; closeLib(); fresh(); toast("Geopend: "+(s.name||NONAME)); }
 async function libNew(){ await libSave(); state=Object.assign({},state,{slides:PRESETS.leeg.slides(),caption:"",sel:0,name:"",libId:null}); closeLib(); fresh(); toast("Nieuwe carousel. Kies links een opzet of begin meteen."); }
-async function libDup(id){ if(id===state.libId) await libSave(); const raw=await kvGet("lib:"+id), e=lib.find(x=>x.id===id); if(!raw||!e) return; const s=JSON.parse(raw); s.libId=nid("c"); s.name=(e.name||NONAME)+" kopie";
-  await kvSet("lib:"+s.libId,JSON.stringify(s)); lib=[Object.assign({},e,{id:s.libId,name:s.name,at:Date.now()}),...lib]; await kvSet("lib",JSON.stringify(lib)); syncLib(); toast("Kopie gemaakt"); }
-function libDel(id){ const e=lib.find(x=>x.id===id); if(!e) return; const wasCur=state.libId===id; lib=lib.filter(x=>x.id!==id); kvSet("lib",JSON.stringify(lib)); if(wasCur){ state.libId=null; base=sig(); kvSet("state",JSON.stringify(state)); } syncLib();
-  toast("Verwijderd uit de bibliotheek","Terugzetten",()=>{ lib=[e,...lib.filter(x=>x.id!==id)]; kvSet("lib",JSON.stringify(lib)); if(wasCur&&!state.libId){ state.libId=id; kvSet("state",JSON.stringify(state)); } syncLib(); }); }
+async function libDup(id){ if(id===state.libId) await libSave(); const raw=await getRaw(id), e=lib.find(x=>x.id===id); if(!raw||!e) return; const s=JSON.parse(raw); s.libId=nid("c"); s.name=(e.name||NONAME)+" kopie";
+  await kvSet("lib:"+s.libId,JSON.stringify(s)); const ne=Object.assign({},e,{id:s.libId,name:s.name,at:Date.now(),c:0}); lib=[ne,...lib]; await kvSet("lib",JSON.stringify(lib)); syncLib(); await loadPhotos(s); await cloudPhotos(s); push(ne,JSON.stringify(s)); toast("Kopie gemaakt"); }
+function libDel(id){ const e=lib.find(x=>x.id===id); if(!e) return; const wasCur=state.libId===id; lib=lib.filter(x=>x.id!==id); kvSet("lib",JSON.stringify(lib)); if(wasCur){ state.libId=null; base=sig(); kvSet("state",JSON.stringify(state)); } syncLib(); cloudDel(id,true);
+  toast("Verwijderd uit de bibliotheek","Terugzetten",()=>{ lib=[e,...lib.filter(x=>x.id!==id)]; kvSet("lib",JSON.stringify(lib)); if(wasCur&&!state.libId){ state.libId=id; kvSet("state",JSON.stringify(state)); } syncLib(); cloudDel(id,false); }); }
 function drawLib(){ const q=$("libQ").value.trim().toLowerCase(), list=lib.filter(e=>!q||(e.name||NONAME).toLowerCase().includes(q));
   $("libGrid").innerHTML=(q?"":`<div class="lcard"><button class="lth new" data-new><span>+</span>Nieuwe carousel</button></div>`)+list.map(e=>{ const nm=esc(e.name||NONAME), on=e.id===state.libId;
     return `<div class="lcard${on?" cur":""}" data-id="${e.id}"><button class="lth" data-open aria-label="Open ${nm}">${e.thumb?`<img src="${e.thumb}" alt="">`:""}${on?"<i>Nu open</i>":""}</button><div class="lmeta"><b>${nm}</b><small>${e.n} ${e.n===1?"slide":"slides"} · ${FN[e.fmt]||""} · ${new Date(e.at).toLocaleDateString("nl-NL",{day:"numeric",month:"short"})}</small></div><div class="lact"><button data-dup>Dupliceer</button><button data-del>Verwijder</button></div></div>`; }).join("")+(q&&!list.length?`<p class="muted">Niets gevonden met die naam.</p>`:""); }
-async function openLib(){ await libSave(); $("libQ").value=""; drawLib(); $("libModal").classList.add("open"); }
+async function openLib(){ await libSave(); $("libQ").value=""; drawLib(); $("libModal").classList.add("open"); cloudSync(); }
 const closeLib=()=>$("libModal").classList.remove("open");
 $("libBtn").onclick=openLib; $("libClose").onclick=closeLib; $("libQ").oninput=drawLib;
 $("libModal").addEventListener("click",e=>{ if(e.target.id==="libModal") return closeLib(); if(e.target.closest("[data-new]")) return libNew(); const c=e.target.closest(".lcard[data-id]"); if(!c) return; const id=c.dataset.id;
@@ -860,7 +882,9 @@ $("hdrLogo").innerHTML=logoSVG("primary","color");
   await Promise.all(state.slides.filter(s=>s.photo).map(async s=>{ if(!photos[s.photo]){ const d=await kvGet("p:"+s.photo); if(d) photos[s.photo]=d; } }));
   await Promise.all([loadLogos(),Promise.race([Promise.all(['400 40px "Caladea"','italic 400 40px "Caladea"','700 40px "Caladea"'].map(f=>document.fonts.load(f))).catch(()=>{}),new Promise(r=>setTimeout(r,2500))])]);
   try{ lib=JSON.parse(await kvGet("lib")||"[]"); }catch(e){ lib=[]; }
-  all(); ready=true; base=sig(); syncLib(); if(saved&&!state.libId) libSave(true);
+  try{ upDone=new Set(JSON.parse(await kvGet("up")||"[]")); }catch(e){}
+  all(); ready=true; base=sig(); syncLib(); if(saved&&!state.libId) await libSave(true);
+  cloudSync(); window.addEventListener("focus",()=>cloudSync());
   document.fonts.ready.then(paintAll);
 })();
 })();
